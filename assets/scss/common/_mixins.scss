@@ -1,0 +1,18 @@
+@mixin font ($size: false, $color: false, $weight: false,  $lh: false) {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    @if $size { font-size: $size; }
+    @if $color { color: $color; }
+    @if $weight { font-weight: $weight; }
+    @if $lh { line-height: $lh; }
+}
+
+@mixin button_gradient () {
+    border-radius: 10px;
+    border: 1px solid $redish;
+    padding: 10px 20px;
+    @include font (18px, $greyInk, 500, 1);
+    &:hover {
+        background-image: linear-gradient(to right, $pink , $redish);
+        color: $white;
+    }
+}

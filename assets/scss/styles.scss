@@ -1,0 +1,35 @@
+// global styles 
+/* -- COMMON -- */
+@import './common/mixins.scss';
+@import './common/variables.scss';
+
+
+/* -- COMPONENTS -- */
+@import './components/formItem.scss';
+@import './components/listItems.scss';
+@import './components/login.scss';
+@import './components/navigation.scss';
+@import './components/popin.scss';
+@import './components/searchbar.scss';
+
+
+
+#app {
+    margin-top: 40px;
+    @include font (16px, $greyInk, 300,  1.5);
+}
+
+.h2 {
+    @include font (26px, $grey, 300, 1.2em);
+}
+
+p {
+    margin: 0; 
+}
+
+button, 
+input {
+    &:focus {
+        outline: none;
+    }
+}

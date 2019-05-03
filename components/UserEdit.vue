@@ -1,0 +1,85 @@
+<template>
+    <div>
+        <h2 class="h2">Edit user</h2>
+        <form action="" class="">
+            <div>
+                <label for="firstname" class="item__form-label" >Firstname</label>
+                <input type="text" 
+                name="firstname"
+                class="item__form-input" v-model="currentUser.firstName" value="">
+            </div>
+            <div>
+                <label for="lastname" class="item__form-label" >Lastname</label>
+                <input type="text" 
+                name="lastname"
+                class="item__form-input" placeholder="Lastname" v-model="currentUser.lastName">
+            </div>
+            <div>
+                <label for="email" class="item__form-label" >Email</label>
+                <input type="email" 
+                name="email" 
+                class="item__form-input" placeholder="Email" v-model="currentUser.email">
+            </div>
+            <div> <!-- house -->
+                <label for="housename" class="item__form-label" >House</label>
+                <input type="text" 
+                name="housename" readonly
+                class="item__form-input" value="user.house" v-model="currentUser.house">
+            </div>
+            <div> <!-- buttons -->
+                <input v-on:click.prevent="updateUser(user.id)" type="submit" name="action" value="OK" class="item__form-submit validate" />
+            </div>
+        </form>
+    </div>
+</template>
+
+<script>
+import store from '../store/index'
+import axios from 'axios'
+
+export default {
+    props: {
+        user: Object
+    },
+    data() {
+        return {
+            token: store.token,
+            currentUser: {     
+                id: '135',
+                firstName: 'HEY',
+                lastName: 'YOU', 
+                email: 'eee@ee.fr',
+                house: 'eeeee'
+            } 
+        }
+    },
+    methods: {
+        // API : PUT MODIFICATION REQUEST
+        updateUser(id) {
+            this.currentUser.id = id
+            console.log('laaaaaa: ', this.currentUser)
+            axios({
+                method: 'PUT',
+                url: 'http://ulysse.idequanet.com/ben/web/api/user/edit/' + this.currentUser.id,
+                data: { 
+                    user : {
+                        firstname : this.currentUser.firstName,
+                        lastname : this.currentUser.lastName,
+                        email : this.currentUser.email
+                    }
+                },
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    Authorization: `BEARER ${this.token}`
+                },
+            }).then(response => {
+                this.$emit('modified-user', response.data.data.user) 
+            }).catch(error => {
+                console.log(error)
+            });
+        }
+    }
+}
+
+</script>
+

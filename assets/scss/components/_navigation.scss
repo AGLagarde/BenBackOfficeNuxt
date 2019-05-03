@@ -1,0 +1,34 @@
+.navigation {
+    position: fixed; 
+    top: 0; 
+    bottom: 0; 
+    width: $widthNav;
+    left: 0; 
+    margin: 0;
+    padding-top: 3%;
+    background-image: linear-gradient($pink, $redish 10%);
+    img {
+        color: $white;
+        // filter: url(#FFF);
+        margin-bottom: 50px;
+    }
+    ul {
+        list-style-type: none;
+        width: 100%;
+        margin-block-start: 0; 
+        padding-inline-start: 0;
+        margin-left: 10px;
+    }
+    &__item, 
+    &__item a {
+        width: 100%;
+        text-align: left;
+        text-decoration: none;
+        @include font (30px, $white, 300, 1.2em);
+        padding: 20px 0;
+        &:hover, 
+        &:active {
+            font-weight: 600;
+       }
+    }
+}
