@@ -17,7 +17,6 @@
 </template>
 
 <script>
-    import store from '../store/index'
     import axios from 'axios'
 
     export default {
@@ -26,7 +25,7 @@
         },
         data() {
             return {
-                token: store.token,
+                token: this.$store.state.token,
                 houses : [],
                 newHouse: {
                     name: '',

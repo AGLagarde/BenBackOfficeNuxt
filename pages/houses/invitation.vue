@@ -2,19 +2,21 @@
     <div>
         <div class="">
             <div class="popin__editable">
-                <img src="../assets/cross-icon.png" alt="close popin" class="popin__editable-close">
                 <p>HELLOOOOO</p>
                 <form action="">
-                    <input type="email" placeholder="john.doe@gmail.com" value="email">
-                    <button v-on:click.prevent="sendInvitationHouse('anne.tiberghien@gmail.com')">Validation</button>
+                    <input type="email" placeholder="john.doe@gmail.com" v-model="newEmail">
+                    <!-- recup value input pour fx sendInvitationHouse-->
+                    <button v-on:click.prevent="sendInvitationHouse(newEmail)">Validation</button>
                 </form>
+                <button
+                    v-on:click="goback"
+                >Annuler</button>
             </div>
         </div><!-- end popin -->
     </div>
 </template>
 
 <script>
-import store from '../store/index'
 import axios from 'axios'
 
 export default {
@@ -23,7 +25,8 @@ export default {
     },
     data() {
         return {
-            token: store.token,
+            token: this.$store.state.token,
+            newEmail: '',
             houseInvited: {
                 // id: this.currentHouse.id,
                 // name: this.currentHouse.name,
@@ -41,10 +44,10 @@ export default {
             this.$router.push({ path: '/houses' })
         },
         sendInvitationHouse(mail) {
-            console.log(email);
+            console.log(mail);
             axios({
                 method: 'POST',
-                url: 'http://ulysse.idequanet.com/ben/web/api/house/send-invitation/',
+                url: 'http://ulysse.idequanet.com/ben/web/api/house/send-invitation',
                 data: {
                     email: mail
                 },
@@ -59,6 +62,7 @@ export default {
                 this.isActive = false
             }).catch(error => {
                 console.log(error)
+                console.log(mail)
             });
         }
     }

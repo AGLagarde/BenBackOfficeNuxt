@@ -17,7 +17,7 @@
                         v-on:keyup="isFiltered = true"
                     >
                     <img
-                        src="../assets/searchbar.png"
+                        src="../../assets/searchbar.png"
                         alt="search button"
                         class="searchbar__button"
                     >
@@ -56,12 +56,11 @@
 </template>
 
 <script>
-    import store from '../store/index'
     import axios from 'axios'
-    import Login from './Login'
-    import Navigation from '../components/Navigation'
+    import Login from '../Login'
+    import Navigation from '~/components/Navigation'
     // import SearchBar from './SearchBar'
-    import HouseOneRow from '../components/HouseOneRow'
+    import HouseOneRow from '~/components/HouseOneRow'
 
     export default {
         components: {
@@ -72,24 +71,20 @@
         },
         data() {
             return {
-                token: store.token,
-                houses: store.houses,
+                token: this.$store.state.token,
+                houses: this.$store.state.houses,
                 isCreating: false,
                 search: '',
                 isFiltered: true,
                 userDataVue: []
             }
         },
+        middleware: 'authenticated',
         mounted() {
-            if (!store.token) {
-                this.$router.push({ path: 'login' })
-            } else {
-                this.getAllHouses()
-            }
+            this.getAllHouses()
         },
         methods: {
             // API: GET request
-            // @todo
             getAllHouses() {
                 axios({
                     method: 'get',
@@ -99,8 +94,8 @@
                     }
                 })
                 .then(response => {
-                    store.houses = response.data.data.houses
-                    store.houses.forEach(house => {
+                    this.$store.commit('setHouses', response.data.data.houses)
+                    this.$store.state.houses.forEach(house => {
                         console.log(house.users)
                         // recup firstname + ID (update)
                     })
@@ -115,7 +110,7 @@
         },
         computed: {
             filteredHouses() {
-                return store.houses.filter(house => {
+                return this.$store.state.houses.filter(house => {
                     return house.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
                 })
             }
@@ -125,8 +120,8 @@
 
 
 <style lang="scss">
-@import '../assets/scss/common/mixins.scss';
-@import '../assets/scss/common/variables.scss';
-@import '../assets/scss/components/listItems.scss';
+@import '../../assets/scss/common/mixins.scss';
+@import '../../assets/scss/common/variables.scss';
+@import '../../assets/scss/components/listItems.scss';
 
 </style>

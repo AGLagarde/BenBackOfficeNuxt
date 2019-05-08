@@ -40,20 +40,16 @@
 </template>
 
 <script>
-import store from '../store/index'
 import axios from 'axios'
-import HouseManage from './HouseManage'
+import Invitation from '../pages/houses/invitation'
 
 export default {
-    components: {
-        HouseManage
-    },
     props: {
         house: Object
     },
     data() {
         return {
-            token: store.token,
+            token: this.$store.state.token,
             isActive: false,
             isEditable: false, 
             deletedItem: false,
@@ -76,7 +72,7 @@ export default {
         },
         manageHouse() {
             console.log('laisse moi manager')
-            this.$router.push({ path: 'houses/house-manage' })
+            this.$router.push({ path: 'houses/invitation' })
         },
         // API : DELETE REQUEST
         deleteHouse(id) {

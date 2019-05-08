@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import store from '../store/index'
 import axios from 'axios'
 
 export default {
@@ -50,7 +49,7 @@ export default {
     },
     data() {
         return {
-            token: store.token,
+            token: this.$store.state.token,
             isActive: false,
             isEditable: false, 
             deletedItem: false,
@@ -87,7 +86,8 @@ export default {
                     Authorization: `BEARER ${this.token}`
                 },
             }).then(response => {
-                this.$emit('delete-user', id)
+                this.$store.commit('removeUser', id)
+                // this.$emit('delete-user', id)
 
                 this.isActive = false
             }).catch(error => {
@@ -99,3 +99,10 @@ export default {
 
 </script>
 
+<style lang="scss">
+@import '../assets/scss/common/mixins.scss';
+@import '../assets/scss/common/variables.scss';
+@import '../assets/scss/components/popin.scss';
+
+
+</style>

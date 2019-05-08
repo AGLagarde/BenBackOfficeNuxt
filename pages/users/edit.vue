@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import store from '../store/index'
 import axios from 'axios'
 
 export default {
@@ -43,7 +42,7 @@ export default {
     },
     data() {
         return {
-            token: store.token,
+            token: this.$store.state.token,
             currentUser: {     
                 id: '135',
                 firstName: 'HEY',
@@ -83,3 +82,11 @@ export default {
 
 </script>
 
+<style lang="scss">
+@import '../../assets/scss/common/mixins.scss';
+@import '../../assets/scss/common/variables.scss';
+@import '../../assets/scss/components/listItems.scss';
+@import '../../assets/scss/components/formItem.scss';
+
+
+</style>

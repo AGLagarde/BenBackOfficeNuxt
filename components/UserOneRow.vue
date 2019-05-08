@@ -20,9 +20,8 @@
 
 
 <script>
-import store from '../store/index'
 import UserDelete from './UserDelete'
-import UserEdit from './UserEdit'
+import UserEdit from '../pages/users/edit'
 
 export default {
     components: {
@@ -34,8 +33,8 @@ export default {
     },
     data() {
         return {
-            token: store.token,
-            users: store.users
+            token: this.$store.state.token,
+            users: this.$store.state.users
         }
     },
     methods: {
@@ -59,3 +58,4 @@ export default {
 }
  
 </script>
+

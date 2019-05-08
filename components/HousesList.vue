@@ -56,7 +56,6 @@
 </template>
 
 <script>
-    import store from '../store/index'
     import axios from 'axios'
     import Login from './Login'
     import Navigation from './Navigation'
@@ -72,8 +71,8 @@
         },
         data() {
             return {
-                token: store.token,
-                houses: store.houses,
+                token: this.$store.state.token,
+                houses: this.$store.state.houses,
                 isCreating: false,
                 search: '',
                 isFiltered: true,
@@ -81,7 +80,7 @@
             }
         },
         mounted() {
-            if (!store.token) {
+            if (!this.$store.state.token) {
                 this.$router.push({ path: 'login' })
             } else {
                 this.getAllHouses()
@@ -99,8 +98,8 @@
                     }
                 })
                 .then(response => {
-                    store.houses = response.data.data.houses
-                    store.houses.forEach(house => {
+                    this.$store.state.houses = response.data.data.houses
+                    this.$store.state.houses.forEach(house => {
                         console.log(house.users)
                         // recup firstname + ID (update)
                     })
@@ -115,7 +114,7 @@
         },
         computed: {
             filteredHouses() {
-                return store.houses.filter(house => {
+                return this.$store.state.houses.filter(house => {
                     return house.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
                 })
             }

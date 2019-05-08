@@ -20,7 +20,6 @@
 
 
 <script>
-import store from '../store/index'
 import HouseButton from './HouseButton'
 
 export default {
@@ -32,7 +31,7 @@ export default {
     },
     data() {
         return {
-            token: store.token
+            token: this.$store.state.token
         }
     },
     methods: {

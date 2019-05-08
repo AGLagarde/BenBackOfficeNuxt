@@ -20,7 +20,7 @@
                         v-on:keyup="isFiltered = true"
                     >
                     <img
-                        src="../assets/searchbar.png"
+                        src="~assets/searchbar.png"
                         alt="search button"
                         class="searchbar__button"
                     >
@@ -51,13 +51,6 @@
                     :user="user"
                 ></UserOneRow>
 
-                <!-- une ligne -->
-                <!-- with composant : <UserOneRow
-                    v-for="user in filteredUsersResults" 
-                    v-bind:key="user.id"
-                    :user="user"
-                ></UserOneRow> -->
-                <!-- end une ligne -->
             </table>
             <!-- end liste -->
         </div>
@@ -65,37 +58,31 @@
 </template>
 
 <script>
-import store from '../store/index'
 import axios from 'axios'
-import login from './Login'
-import Navigation from '../components/Navigation'
-// import SearchBar from './SearchBar'
-import UserOneRow from '../components/UserOneRow'
-import UserAdd from '../components/UserAdd'
+import login from '../Login'
+import Navigation from '~/components/Navigation'
+// import SearchBar from '~/SearchBar'
+import UserOneRow from '~/components/UserOneRow'
 
 export default {
     components: {
         login,
         Navigation,
         // SearchBar,
-        UserAdd,
         UserOneRow
     },
     data() {
         return {
-            token: store.token,
-            users: store.token,
+            token: this.$store.state.token,
+            users: this.$store.state.users,
             isCreating: false,
             search: '',
             isFiltered: true
         }
     },
+    middleware: 'authenticated',
     mounted() {
-        if (!store.token) {
-            this.$router.push({ path: 'login' })
-        } else {
-            this.getAllUsers()
-        }
+        this.getAllUsers()
     },
     methods: {
         // API: GET request
@@ -108,10 +95,11 @@ export default {
                 }
             })
             .then(response => {
-                store.users = response.data.data.users
-                console.log('affiche ', store.users)
+                this.$store.commit('setUsers', response.data.data.users)
+                console.log('affiche ', this.$store.state.users)
 
-                store.users.forEach(user => {
+                this.$store.state.users.forEach(user => {
+                    console.log('mon user ', user);
                     if (user.house) {
                         user.house = user.house.name
                     } else {
@@ -135,8 +123,8 @@ export default {
     },
     computed: {
         filteredUsers() {
-            console.log(store.users)
-            return store.users.filter(user => {
+            console.log(this.$store.state.users)
+            return this.$store.state.users.filter(user => {
                 return user.firstname.toLowerCase().indexOf(this.search.toLowerCase()) > -1
             })
         }
@@ -145,10 +133,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../assets/scss/common/mixins.scss';
-@import '../assets/scss/common/variables.scss';
-@import '../assets/scss/components/listItems.scss';
-@import '../assets/scss/components/searchbar.scss';
+@import '../../assets/scss/common/mixins.scss';
+@import '../../assets/scss/common/variables.scss';
+@import '../../assets/scss/components/listItems.scss';
+@import '../../assets/scss/components/searchbar.scss';
 
 
 </style>

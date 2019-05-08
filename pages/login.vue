@@ -23,7 +23,6 @@
 
 <script>
 import axios from 'axios'
-import store from '../store/index'
 
 export default {
     props: {
@@ -57,8 +56,10 @@ export default {
                 },
             }).then(response => {
                 console.log('Authenticated')
-                store.token = response.data.data.token
-                console.log(store.token) // stocke store
+                // mutation - appel fonction du store
+                this.$store.commit('setToken', response.data.data.token)
+                //this.$store.state.token = response.data.data.token
+                console.log(this.$store.state.token) // stocke store
                 this.$router.push({ path: 'users' })
             }).catch(error => {
                 console.log(error)

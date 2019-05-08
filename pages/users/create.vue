@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import store from '../store/index'
+// import store from '../store/index'
 import axios from 'axios'
 
 export default {
@@ -41,7 +41,7 @@ export default {
     }, 
     data() {
         return {
-            token: store.token,
+            token: this.$store.state.token,
             users : [],
             newUser: {
                 firstname: '',
@@ -56,7 +56,6 @@ export default {
         // POST METHOD CREATE
         createUser(event) {
             event.preventDefault();
-            console.log('iiiicccciii ', this.newUser)
             axios({
                 method: 'post',
                 url: 'http://ulysse.idequanet.com/ben/web/api/user/create',
@@ -85,6 +84,7 @@ export default {
             this.updateForm();
             this.$router.push({ path: '/users' })
         },
+        // a priori plus besoin 
         updateForm(input) {
             document.querySelectorAll('.listUsers__add__form input').forEach(function(input) {
                 input.value = ''
@@ -95,9 +95,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../assets/scss/common/mixins.scss';
-@import '../assets/scss/common/variables.scss';
-@import '../assets/scss/components/formItem.scss';
+@import '../../assets/scss/common/mixins.scss';
+@import '../../assets/scss/common/variables.scss';
+@import '../../assets/scss/components/formItem.scss';
 
 
 </style>
