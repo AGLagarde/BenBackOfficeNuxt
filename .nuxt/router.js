@@ -2,14 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
-const _5b459367 = () => interopDefault(import('../pages/houses/index.vue' /* webpackChunkName: "pages/houses/index" */))
-const _675e98e8 = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
-const _bd46156c = () => interopDefault(import('../pages/users/index.vue' /* webpackChunkName: "pages/users/index" */))
-const _35212437 = () => interopDefault(import('../pages/houses/create.vue' /* webpackChunkName: "pages/houses/create" */))
-const _59934a58 = () => interopDefault(import('../pages/houses/invitation.vue' /* webpackChunkName: "pages/houses/invitation" */))
-const _9c140298 = () => interopDefault(import('../pages/users/create.vue' /* webpackChunkName: "pages/users/create" */))
-const _45265cc2 = () => interopDefault(import('../pages/users/edit.vue' /* webpackChunkName: "pages/users/edit" */))
-const _c492145e = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
+const _20a17e7c = () => interopDefault(import('../pages/houses/index.vue' /* webpackChunkName: "pages/houses/index" */))
+const _e9512826 = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
+const _92aa9ee2 = () => interopDefault(import('../pages/users/index.vue' /* webpackChunkName: "pages/users/index" */))
+const _2ded223c = () => interopDefault(import('../pages/houses/create.vue' /* webpackChunkName: "pages/houses/create" */))
+const _6a19ce59 = () => interopDefault(import('../pages/houses/invitation.vue' /* webpackChunkName: "pages/houses/invitation" */))
+const _465fac0f = () => interopDefault(import('../pages/users/create.vue' /* webpackChunkName: "pages/users/create" */))
+const _5ef98ab7 = () => interopDefault(import('../pages/users/_id.vue' /* webpackChunkName: "pages/users/_id" */))
+const _7ca06e54 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 Vue.use(Router)
 
@@ -87,35 +87,35 @@ export function createRouter() {
 
     routes: [{
       path: "/houses",
-      component: _5b459367,
+      component: _20a17e7c,
       name: "houses"
     }, {
       path: "/login",
-      component: _675e98e8,
+      component: _e9512826,
       name: "login"
     }, {
       path: "/users",
-      component: _bd46156c,
+      component: _92aa9ee2,
       name: "users"
     }, {
       path: "/houses/create",
-      component: _35212437,
+      component: _2ded223c,
       name: "houses-create"
     }, {
       path: "/houses/invitation",
-      component: _59934a58,
+      component: _6a19ce59,
       name: "houses-invitation"
     }, {
       path: "/users/create",
-      component: _9c140298,
+      component: _465fac0f,
       name: "users-create"
     }, {
-      path: "/users/edit",
-      component: _45265cc2,
-      name: "users-edit"
+      path: "/users/:id",
+      component: _5ef98ab7,
+      name: "users-id"
     }, {
       path: "/",
-      component: _c492145e,
+      component: _7ca06e54,
       name: "index"
     }],
 

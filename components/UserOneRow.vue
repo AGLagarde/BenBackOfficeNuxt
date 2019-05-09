@@ -9,6 +9,7 @@
             <UserDelete
                 :user="user" 
                 v-on:delete-user="transmitToParent"
+                class="buttonRow"
             />
             <button class="buttonRow"
                 v-on:click="goEdit"
@@ -21,12 +22,11 @@
 
 <script>
 import UserDelete from './UserDelete'
-import UserEdit from '../pages/users/edit'
+// import UserEdit from '../pages/users/edit'
 
 export default {
     components: {
-        UserDelete, 
-        UserEdit
+        UserDelete
     },
     props: {
         user: Object
@@ -41,7 +41,7 @@ export default {
         goEdit() {
             this.isActive = true
             this.isEditable = true
-            this.$router.push({ path: 'users/edit' })
+            this.$router.push({ path: 'users/:id' })
         },
         // API PUT request transmission --> parent ListUser
         receiveModifiedUser(userUpdated) { 
@@ -59,3 +59,20 @@ export default {
  
 </script>
 
+<style lang="scss">
+    @import '../assets/scss/common/mixins.scss';
+    @import '../assets/scss/common/variables.scss';
+    @import '../assets/scss/components/formItem.scss';
+
+    .buttonRow {
+        color: $grey;
+        border: none;
+        display: inline-block;
+        text-transform: uppercase;
+        cursor: pointer;
+        &:hover {
+            color: $redish;
+        }
+    }
+
+</style>

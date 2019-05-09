@@ -10,7 +10,7 @@
             v-on:keyup="isFiltered = true"
         >
         <img 
-            src="../assets/searchbar.png" 
+            src="../assets/img/searchbar.png"
             alt="search button" 
             class="searchbar__button"
         >

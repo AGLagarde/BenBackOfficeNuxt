@@ -27,7 +27,7 @@
                     >No</a>
                 </div>
                 
-                <div class="popin__removable__step2"
+                <div class="popin__reimovable__step2"
                     v-if="deletedItem">
                     <div class="popin__removable__step2-validation">
                         <p>La suppression est effective</p>

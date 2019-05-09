@@ -1,7 +1,7 @@
 <!--NAVIGATION-->
 <template>
    <div class="navigation">
-       <img src="../assets/ben.svg" alt="Ben logo">
+       <img src="../assets/img/ben.svg" alt="Ben logo">
         <ul>
             <li class="navigation__item">
                 <router-link :to="{ name: 'users'}">USERS</router-link>
