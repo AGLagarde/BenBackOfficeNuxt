@@ -1,11 +1,10 @@
 <template>
-    <div class="addItem">
-        <!-- <img src="../assets/cross-icon.png" alt="close popin" v-on:click="isCreating = false"> -->
-        <!--<img src="../assets/cross-icon.png" alt="close popin" v-on:click="isCreated = false">-->
-        <form action="" class="item__form">
+    <div class="wrapper">
+        <form action="" class="form item__form">
+            <h2 class="h2">Add a house</h2>
             <div>
-                <label for="housename" class="item__form-label" >Firstname</label>
-                <input type="text" class="item__form-input" placeholder="Nom de la colocation" 
+                <label for="housename" class="item__form-label" >Name</label>
+                <input type="text" class="item__form-input" placeholder="Nom de la colocation"
                 name="housename" v-model:value="newHouse.name">
             </div>
             <div>
@@ -26,7 +25,7 @@
         data() {
             return {
                 token: this.$store.state.token,
-                houses : [],
+                houses : this.$store.state.houses,
                 newHouse: {
                     name: '',
                     created: '',
@@ -64,7 +63,6 @@
             },
             goback() {
                 console.log('go back')
-                this.updateForm();
                 this.$router.push({ path: '/houses' })
             },
             updateForm(input) {
@@ -75,3 +73,20 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import '../../assets/scss/styles.scss';
+    .h2 {
+        margin-bottom: 100px;
+    }
+    .form {
+        padding-bottom: 50px;
+        > div:last-child {
+            width:70%;
+            margin: 70px 0 90px 5%;
+        }
+    }
+    .item__form-input {
+        width: 40%;
+    }
+</style>

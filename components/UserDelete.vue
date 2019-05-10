@@ -1,41 +1,28 @@
 <template>
     <div>
-        <button
-            class="buttonRow"
-            v-on:click="isActive=true">
-            Delete
-        </button>
-        <div 
-            class="popin"
-            v-if="isActive"
-        > <!-- popin DELETE -->
-            <div 
-                class="popin__removable"
-                v-if="isEditable === false"
-            >
-                <h2 class="h2">Delete user</h2>
-                <div class="popin__removable__step1"
-                    v-if="deletedItem === false">
-                    <span class="popin__removable__step1-question">Are you sure to delete the user <strong> n°{{user.id}}: {{user.firstname + ' ' + user.lastname}} </strong>for good ?</span>
-                    <a 
-                        href="#" class="popin__removable__step1-answer answer-validation" 
-                        v-on:click.prevent="deletedItem = true"
-                    >Yes</a>
-                    <a 
-                        href="#" class="popin__removable__step1-answer answer-cancelation"
-                        v-on:click="closePopin"
-                    >No</a>
+        <button class="buttonRow" v-on:click="isActive=true">Delete</button>
+
+        <div v-if="isActive" class="popin">
+            <h2 class="h2">Delete user</h2>
+
+            <!--step1: confirmation to delete-->
+            <div v-if="deletedItem === false" class="popin__step1">
+                <p>
+                    Are you sure to delete the user <br>
+                    <strong> n°{{user.id}}: {{user.firstname + ' ' + user.lastname}} </strong>?
+                </p>
+                <a v-on:click.prevent="deletedItem = true" href="#" class="popin__step1-answer validate">Yes</a>
+                <a v-on:click="closePopin" href="#" class="popin__step1-answer cancel">No</a>
+            </div>
+
+            <!-- step2: confirmation user is deleted-->
+            <div class="popin__step2"
+                v-if="deletedItem">
+                <div class="popin__step2-validation">
+                    <p>La suppression est effective</p>
+                    <a v-on:click.prevent="deleteUser(user.id)">OK</a>
                 </div>
-                
-                <div class="popin__reimovable__step2"
-                    v-if="deletedItem">
-                    <div class="popin__removable__step2-validation">
-                        <p>La suppression est effective</p>
-                        <a v-on:click.prevent="deleteUser(user.id)">OK</a>
-                    </div>
-                    
-                </div>
-            </div>  
+            </div>
         </div> <!-- end popin -->
     </div>
 </template>
@@ -51,7 +38,6 @@ export default {
         return {
             token: this.$store.state.token,
             isActive: false,
-            isEditable: false, 
             deletedItem: false,
             currentUser: {     
                 id: this.user.id,
@@ -63,16 +49,11 @@ export default {
         }
     },
     methods: {
-        // POPIN BEHAVIOR
         closePopin() {
             this.isActive = false
-            this.isEditable = false
         },
-
-        // API : DELETE REQUEST
         // @todo actualiser la liste au clic
         deleteUser(id) {
-            console.log('je delete')
             // -- fake delete -- 
             // this.$emit('delete-user', id); 
             // this.isActive = false
@@ -87,8 +68,6 @@ export default {
                 },
             }).then(response => {
                 this.$store.commit('removeUser', id)
-                // this.$emit('delete-user', id)
-
                 this.isActive = false
             }).catch(error => {
                 console.log(error)
@@ -96,13 +75,43 @@ export default {
         }
     }
 }
-
 </script>
 
 <style lang="scss">
-@import '../assets/scss/common/mixins.scss';
-@import '../assets/scss/common/variables.scss';
-@import '../assets/scss/components/popin.scss';
-
-
+@import '../assets/scss/styles.scss';
+    .popin__step1 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        p {
+            width: 90%;
+            margin: 0 5%;
+            flex: 0 0 1;
+            padding-bottom: 40px;
+            line-height: 40px;
+            @include font (20px, $grey, 300, 1.8em);
+        }
+        &-answer {
+            margin: 5%;
+            @include button_gradient();
+            text-decoration: none;
+        }
+    }
+    .popin__step2 {
+        &-validation {
+            padding: 10px 0 50px;
+            text-transform: none;
+            p {
+                margin-bottom: 30px;
+                color: $grey;
+            }
+        }
+        a {
+            cursor:pointer;
+            color: $grey;
+            &:hover {
+                color: $redish;
+            }
+        }
+    }
 </style>

@@ -1,3 +1,8 @@
+.form {
+    width: 60%;
+    margin: 90px auto 90px 10%;
+}
+
 .editForm {
     width: 60%;
     margin: 0 auto;
@@ -12,77 +17,66 @@
     }
 }
 
-.item {
-    &__form {
-        width: 85%;
-        margin: 0 auto;
-
-        .h2 {
-            width: 70%; 
-            margin: 0 auto;
-            padding: 5% 0; 
-            text-align: left;
-            text-transform: uppercase;
+.item__form {
+    > div {
+        width: 90%;
+        margin: 0 0 20px 10%;
+        &:last-child {
+            margin-top: 70px;
+            text-align: center;
         }
-        
-        > div {
-            //width: 70%;
-            margin: 0 auto 20px;
-            &:last-child {
-                margin-top: 70px;
-            }
-        }
+    }
 
-        &-label {
-            width: 30%;
-            display: inline-block;
-            text-align: left;
-            @include font (20px, $redish, 300, 1.2em);
-        }
+    &-label {
+        width: 15%;
+        display: inline-block;
+        text-align: left;
+        @include font (20px, $redish, 300, 1.2em);
+    }
 
-        &-input {
-            display: inline-block;
-            height: 30px; 
-            width: 60%;
-            background: transparent;
-            border: none;
-            border-bottom: solid 1px $grey;
+    &-input {
+        display: inline-block;
+        height: 30px;
+        width: 60%;
+        background: transparent;
+        border: none;
+        border-bottom: solid 1px $grey;
+        box-shadow: none;
+        @include font (20px, false, 300, 1.2em);
+        height: auto;
+        padding: 10px 10px 10px 0;
+        &:active,
+        &:focus {
+            outline: none;
+            border-bottom: $grey solid 1px;
             box-shadow: none;
-            @include font (20px, false, 300, 1.2em);
-            height: auto;
-            padding: 10px 10px 10px 0;
-            &:active,
-            &:focus {
-                outline: none;
-                border-bottom: $grey solid 1px;
-                box-shadow: none;
-            }
-            &::-webkit-input-placeholder, 
-            &:-ms-input-placeholder
-            &::placeholder { 
-                color: green;
-            }
-            &[readonly]{
-                color: $grey;
-            }
+        }
+        &::-webkit-input-placeholder,
+        &:-ms-input-placeholder
+        &::placeholder {
+            color: green;
+        }
+        &[readonly]{
+            color: $grey;
+        }
+    }
+
+    &-submit {
+        width: 15%;
+        border: none;
+        font-size: 24px;
+        @include font (24px, false, 300);
+        cursor: pointer;
+
+        &:hover {
+            color: $redish;
         }
 
-        &-submit {
-            width: 15%;
+        &.validate {
+            @include button_gradient();
+            font-size: 24px;
             border: none;
-            font-size: 24px; 
-            @include font (24px, false, 300);
-            cursor: pointer;
-
-            &:hover {
-                color: $redish;
-            }
-
-            &.validate {
-                @include button_gradient();
-                font-size: 24px;
-                border: none;
-            }
         }
     }
 }
+

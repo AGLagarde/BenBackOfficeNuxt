@@ -37,22 +37,19 @@
 import axios from 'axios'
 
 export default {
-    validate ({ params }) {
-        // Must be a number
-        return /^\d+$/.test(params.id)
-    },
     props: {
         user: Object
     },
     data() {
         return {
             token: this.$store.state.token,
+            id: this.$store.params.id,
             currentUser: {     
-                id: 'user.id',
-                firstName: 'HEY',
-                lastName: 'YOU', 
-                email: 'eee@ee.fr',
-                house: 'eeeee'
+                id: 'test',
+                firstName: this.user.firstName,
+                lastName: this.user.lastName,
+                email: this.user.email,
+                house: this.user.house
             } 
         }
     },

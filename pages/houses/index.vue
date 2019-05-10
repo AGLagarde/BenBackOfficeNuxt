@@ -2,11 +2,9 @@
 <template>
     <div class="container">
         <div class="listItems">
-           
-            <Navigation></Navigation>
-            
+            <Navigation/>
             <div class="listItems__actions">
-                <!-- <SearchBar></SearchBar> -->
+                <!-- searchbar-->
                 <div class="searchbar">
                     <input
                         type="text"
@@ -16,20 +14,15 @@
                         v-model="search"
                         v-on:keyup="isFiltered = true"
                     >
-                    <img
-                        src="../../assets/img/searchbar.png"
-                        alt="search button"
-                        class="searchbar__button"
-                    >
-                </div><!-- end search  -->
+                    <img src="../../assets/img/searchbar.png" alt="search button" class="searchbar__button">
+                </div><!-- end searchbar  -->
 
                 <!-- add house ------ not working -->
                 <span
                     class="listItems__actions-addButton"
                     v-if="isCreating === false"
                     v-on:click="goCreate"
-                >Add House</span>
-                <!-- end add house -->
+                >Add House</span><!-- end add house -->
             </div>
 
             <!-- liste -->
@@ -42,13 +35,12 @@
                     <th>Actions</th>
                 </tr>
 
-                <!-- une ligne -->
+                <!-- row -->
                 <HouseOneRow
                     v-for="house in filteredHouses"
                     v-bind:key="house.id"
                     :house="house"
-                ></HouseOneRow>
-                <!-- end une ligne -->
+                ></HouseOneRow><!-- end row -->
             </table>
             <!-- end liste -->
         </div>
@@ -59,14 +51,12 @@
     import axios from 'axios'
     import Login from '../Login'
     import Navigation from '~/components/Navigation'
-    // import SearchBar from './SearchBar'
     import HouseOneRow from '~/components/HouseOneRow'
 
     export default {
         components: {
             Login,
             Navigation,
-            // SearchBar,
             HouseOneRow
         },
         data() {
@@ -95,9 +85,9 @@
                 })
                 .then(response => {
                     this.$store.commit('setHouses', response.data.data.houses)
+                console.log('toutes mes houses ', this.$store.state.houses)
                     this.$store.state.houses.forEach(house => {
-                        console.log(house.users)
-                        // recup firstname + ID (update)
+                        console.log('une seule house à la fois ', user);
                     })
                 })
                 .catch(err => {
@@ -105,7 +95,7 @@
                 })
             },
             goCreate() {
-                console.log('ty go')
+                this.$router.push({ path: 'houses/create' })
             }
         },
         computed: {
@@ -120,8 +110,6 @@
 
 
 <style lang="scss">
-@import '../../assets/scss/common/mixins.scss';
-@import '../../assets/scss/common/variables.scss';
-@import '../../assets/scss/components/listItems.scss';
+    @import '../../assets/scss/styles.scss';
 
 </style>

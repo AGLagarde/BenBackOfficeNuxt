@@ -7,16 +7,14 @@
         <button v-on:click.prevent="login(connexion.email, connexion.password)">ME CONNECTER</button> -->
 
         <!-- EN DUR  -->
-        <div class="login__line">
+        <div class="login__line"> <!--login-->
             <label for="email" class="login__label" >Login</label>
             <input class="login__input" type="email" placeholder="email" name="email"  value="admin@hetic.net">
         </div>
-        
-        <div class="login__line">
+        <div class="login__line"> <!--password-->
             <label for="password" class="login__label" >Password</label>
             <input class="login__input" type="password" name="password" placeholder="mot de passe" value="admin">
         </div>
-        
         <button class="login__button" v-on:click.prevent="login('admin@hetic.net', 'admin')">CONNECT</button>
     </div>
 </template>
@@ -40,7 +38,6 @@ export default {
         }
     }, 
     methods: {
-        // API: IDENTIFICATION LOGIN
         login(email, pwd) {
             axios({
                 method: 'post',
@@ -56,10 +53,7 @@ export default {
                 },
             }).then(response => {
                 console.log('Authenticated')
-                // mutation - appel fonction du store
                 this.$store.commit('setToken', response.data.data.token)
-                //this.$store.state.token = response.data.data.token
-                console.log(this.$store.state.token) // stocke store
                 this.$router.push({ path: 'users' })
             }).catch(error => {
                 console.log(error)
@@ -69,49 +63,8 @@ export default {
 }
 </script>
 
-<style>
-
-.login {
-    position: absolute;
-    top: 50%; 
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40%;
-    margin: 0 auto;
-    display: flex; 
-    justify-content: center;
-    flex-wrap: wrap;
-}
-.login__line {
-    display: flex; 
-    justify-content: space-around;
-    align-items: center;
-    width: 80%; 
-    margin: 0 auto 30px;
-}
-
-.login__label {
-    font-size: 24px;
-    font-weight: 300;
-    display: inline-block;
-    width: 30%;
-}
-
-.login__input {
-    width: 60%;
-    border: none;
-    border-bottom: 1px solid grey;
-    height: 60px;
-    font-size: 18px;
-}
-
-.login__button {
-    width: 30%;
-    height: 50px;
-    margin-top: 50px;
-}
-
-
+<style lang="scss">
+    @import '../assets/scss/styles.scss';
 </style>
 
 

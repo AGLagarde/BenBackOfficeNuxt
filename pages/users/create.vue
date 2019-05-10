@@ -1,6 +1,6 @@
  <template>
-    <div class="addItemForm">
-        <form action="" class="item__form">
+     <div class="wrapper">
+        <form action="" class="form item__form">
             <h2 class="h2">Add a user</h2>
             <div> <!-- firstname -->
                 <label for="firstname" class="item__form-label" >Firstname</label>
@@ -27,11 +27,10 @@
                 <input v-on:click="createUser" type="submit" name="action" value="Créer" class="item__form-submit validate" />
             </div>
         </form>
-    </div>
+     </div>
 </template>
 
 <script>
-// import store from '../store/index'
 import axios from 'axios'
 
 export default {
@@ -72,32 +71,30 @@ export default {
                     "Access-Control-Allow-Origin": "*"
                 },
             }).then(response => {
+                // this.$store.commit('addUser', response.data.data.user)
                 this.users.push(response.data.data.user)
                 console.log(response.data)
                 this.goback()
             }).catch(error => {
                 console.log(error)
-            });
+            })
         },
         goback() {
             console.log('go back')
-            this.updateForm();
-            this.$router.push({ path: '/users' })
-        },
-        // a priori plus besoin 
-        updateForm(input) {
-            document.querySelectorAll('.listUsers__add__form input').forEach(function(input) {
-                input.value = ''
-            })
+            this.$router.push({ path: 'users' })
+            // @todo ne fonctionne pas
         }
     }
 }
 </script>
 
 <style lang="scss">
-@import '../../assets/scss/common/mixins.scss';
-@import '../../assets/scss/common/variables.scss';
-@import '../../assets/scss/components/formItem.scss';
-
+ @import '../../assets/scss/styles.scss';
+     /*.wrapper {*/
+         /*display: flex;*/
+         /*height: 100vh;*/
+         /*align-items: center;*/
+         /*border: 1px solid red;*/
+     /*}*/
 
 </style>
