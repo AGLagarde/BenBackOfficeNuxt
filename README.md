@@ -80,11 +80,9 @@ USERS
 
 HOUSES 
 - get all houses    - OK
-
-
-
-
-
+- delete house      - 
+- send invitation   - OK
+- join house        - 
 
 IMPROVEMENT 
 --> search en composant ?

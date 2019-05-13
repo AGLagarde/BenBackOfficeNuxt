@@ -7,34 +7,47 @@
             <span>{{ names.join() }}</span>
         </th>
         <th class="listItems__table__body-actions">
-            <HouseButton
+            <HouseDelete
+                :house="house" 
+                v-on:delete-house="transmitToParent"
+                class="buttonRow"
+            />
+            <button class="buttonRow"
+                v-on:click="goInvitation"
+            >Invitation</button>
+            <!-- <HouseButton
                 title="Editer"
                 :house="house"
                 v-on:modified-house="receiveModifiedHouse"
                 v-on:delete-house="transmitToParent"
             >
-            </HouseButton>
+            </HouseButton> -->
         </th>
     </tr>
 </template>
 
 
 <script>
-import HouseButton from './HouseButton'
+import HouseDelete from './HouseDelete'
 
 export default {
     components: {
-        HouseButton
+        HouseDelete
     },
     props: {
         house: Object
     },
     data() {
         return {
-            token: this.$store.state.token
+            token: this.$store.state.token,
+            houses: this.$store.state.houses
         }
     },
     methods: {
+        goInvitation() {
+            this.isActive = true
+            this.$router.push({ path: 'houses/invitation' })
+        },
         // API PUT request transmission --> parent ListUser
         receiveModifiedHouse(houseUpdated) {
             this.house.name = houseUpdated.name
