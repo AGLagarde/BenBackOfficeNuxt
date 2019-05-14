@@ -1,6 +1,7 @@
 <!--HOUSES-->
 <template>
     <div class="container">
+        <Authentified />
         <div class="listItems">
             <Navigation/>
             <div class="listItems__actions">
@@ -47,12 +48,14 @@
 <script>
     import axios from 'axios'
     import Login from '../Login'
+    import Authentified from '~/components/Authentified'
     import Navigation from '~/components/Navigation'
     import HouseOneRow from '~/components/HouseOneRow'
 
     export default {
         components: {
             Login,
+            Authentified,
             Navigation,
             HouseOneRow
         },

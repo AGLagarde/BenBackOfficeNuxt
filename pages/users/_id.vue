@@ -1,35 +1,37 @@
 <template>
      <div>
-        <h2 class="h2">Edit user</h2>
-        <form action="" class="">
-            <div>
-                <label for="firstname" class="item__form-label" >Firstname</label>
-                <input type="text" 
-                name="firstname"
-                class="item__form-input" v-model="currentUser.firstname">
-            </div>
-            <div>
-                <label for="lastname" class="item__form-label" >Lastname</label>
-                <input type="text" 
-                name="lastname"
-                class="item__form-input" placeholder="Lastname" v-model="currentUser.lastname">
-            </div>
-            <div>
-                <label for="email" class="item__form-label" >Email</label>
-                <input type="email" 
-                name="email" 
-                class="item__form-input" placeholder="Email" v-model="currentUser.email">
-            </div>
-            <div> <!-- house -->
-                <label for="housename" class="item__form-label" >House</label>
-                <input type="text" 
-                name="housename"
-                class="item__form-input" v-model="currentUser.house">
-            </div>
-            <div> <!-- buttons -->
-                <input v-on:click.prevent="updateUser()" type="submit" name="action" value="OK" class="item__form-submit validate" />
-            </div>
-        </form>
+        <div class="wrapper">
+            <form action="" class="form item__form">
+                <h2 class="h2">Edit a user</h2>
+                <div>
+                    <label for="firstname" class="item__form-label" >Firstname</label>
+                    <input type="text" 
+                    name="firstname"
+                    class="item__form-input" v-model="currentUser.firstname">
+                </div>
+                <div>
+                    <label for="lastname" class="item__form-label" >Lastname</label>
+                    <input type="text" 
+                    name="lastname"
+                    class="item__form-input" placeholder="Lastname" v-model="currentUser.lastname">
+                </div>
+                <div>
+                    <label for="email" class="item__form-label" >Email</label>
+                    <input type="email" 
+                    name="email" 
+                    class="item__form-input" placeholder="Email" v-model="currentUser.email">
+                </div>
+                <div> <!-- house -->
+                    <label for="housename" class="item__form-label" >House</label>
+                    <input type="text" 
+                    name="housename"
+                    class="item__form-input" v-model="currentUser.house">
+                </div>
+                <div> <!-- buttons -->
+                    <input v-on:click.prevent="updateUser()" type="submit" name="action" value="OK" class="item__form-submit validate" />
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -65,7 +67,6 @@ export default {
                 }
             })
             .then(response => {
-                console.log(response.data);
                 this.currentUser = response.data.data.user
             })
             .catch(err => {
@@ -101,10 +102,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../assets/scss/common/mixins.scss';
-@import '../../assets/scss/common/variables.scss';
-@import '../../assets/scss/components/listItems.scss';
-@import '../../assets/scss/components/formItem.scss';
-
+@import '../../assets/scss/styles.scss';
 
 </style>

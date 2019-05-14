@@ -8,7 +8,7 @@
                 name="housename" v-model:value="newHouse.name">
             </div>
             <div>
-                <input v-on:click="goback" type="submit" name="action" value="Annuler" class="item__form-submit" />
+                <nuxt-link class="item__form-submit" to="/houses">Annuler</nuxt-link>
                 <input v-on:click="createHouse" type="submit" name="action" value="Créer" class="item__form-submit" />
             </div>
         </form>
@@ -34,10 +34,8 @@
             }
         },
         methods: {
-            // POST METHOD CREATE
             createHouse(event) {
                 event.preventDefault();
-                console.log(this.token)
                 axios({
                     method: 'post',
                     url: 'http://ulysse.idequanet.com/ben/web/api/house/create',
@@ -53,22 +51,11 @@
                         Authorization: `BEARER ${this.token}`
                     },
                 }).then(response => {
-                    console.log(this.token)
                     this.houses.push(response.data.data.house)
-                    console.log(response.data)
-                    this.goback()
+                    this.$router.push({ path: '/houses' })
                 }).catch(error => {
                     console.log(error)
                 });
-            },
-            goback() {
-                console.log('go back')
-                this.$router.push({ path: '/houses' })
-            },
-            updateForm(input) {
-                document.querySelectorAll('.listUsers__add__form input').forEach(function(input) {
-                    input.value = ''
-                })
             }
         }
     }
