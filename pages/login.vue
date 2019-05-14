@@ -52,13 +52,20 @@ export default {
                     "Access-Control-Allow-Origin": "*"
                 },
             }).then(response => {
-                console.log('Authenticated')
                 this.$store.commit('setToken', response.data.data.token)
+                localStorage.setItem('token', response.data.data.token)
                 this.$router.push({ path: 'users' })
             }).catch(error => {
                 console.log(error)
             });
         }
+    }, 
+    mounted() {
+        this.$store.commit('setToken', localStorage.getItem('token'))
+        if (localStorage.getItem('token')){
+            this.$router.push({ path: 'users' })
+        }
+        
     }
 }
 </script>

@@ -17,12 +17,9 @@
                     <img src="../../assets/img/searchbar.png" alt="search button" class="searchbar__button">
                 </div><!-- end searchbar  -->
 
-                <!-- add house ------ not working -->
-                <span
-                    class="listItems__actions-addButton"
-                    v-if="isCreating === false"
-                    v-on:click="goCreate"
-                >Add House</span><!-- end add house -->
+                <!-- add house -->
+                <nuxt-link class="listItems__actions-addButton"
+                    v-if="isCreating === false" to="houses/create">Add house</nuxt-link><!-- end add house -->
             </div>
 
             <!-- liste -->
@@ -74,7 +71,6 @@
             this.getAllHouses()
         },
         methods: {
-            // API: GET request
             getAllHouses() {
                 axios({
                     method: 'get',
@@ -85,10 +81,6 @@
                 })
                 .then(response => {
                     this.$store.commit('setHouses', response.data.data.houses)
-                console.log('toutes mes houses ', this.$store.state.houses)
-                    this.$store.state.houses.forEach(house => {
-                        console.log('une seule house à la fois ', user);
-                    })
                 })
                 .catch(err => {
                     console.log(err)

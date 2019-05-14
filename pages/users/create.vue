@@ -23,7 +23,8 @@
                 <input type="text" name="housename" class="item__form-input" placeholder="The name of your house" v-model:value="newUser.house"/>
             </div>
             <div> <!-- buttons -->
-                <input v-on:click="goback" type="submit" name="action" value="Annuler" class="item__form-submit" />
+                <!-- <input v-on:click="goback" type="submit" name="action" value="Annuler" class="item__form-submit" /> -->
+                <nuxt-link class="item__form-submit" to="/users">Annuler</nuxt-link>
                 <input v-on:click="createUser" type="submit" name="action" value="Créer" class="item__form-submit validate" />
             </div>
         </form>
@@ -41,7 +42,7 @@ export default {
     data() {
         return {
             token: this.$store.state.token,
-            users : [],
+            users: this.$store.state.users,
             newUser: {
                 firstname: '',
                 lastname: '',
@@ -53,9 +54,9 @@ export default {
     }, 
     methods: {
         // POST METHOD CREATE
-        createUser(event) {
+        async createUser(event) {
             event.preventDefault();
-            axios({
+            const user = await axios({
                 method: 'post',
                 url: 'http://ulysse.idequanet.com/ben/web/api/user/create',
                 data: {
@@ -71,18 +72,21 @@ export default {
                     "Access-Control-Allow-Origin": "*"
                 },
             }).then(response => {
-                // this.$store.commit('addUser', response.data.data.user)
-                this.users.push(response.data.data.user)
+                this.$store.commit('addUser', response.data.data.user)
                 console.log(response.data)
                 this.goback()
+                return response.data.data.user
             }).catch(error => {
                 console.log(error)
             })
+
+            // dans createUser faire call API - liaison 
+            // recup de '$l'id avec user.id
+
         },
+        
         goback() {
-            console.log('go back')
-            this.$router.push({ path: 'users' })
-            // @todo ne fonctionne pas
+            this.$router.push({ path: '/users' })
         }
     }
 }

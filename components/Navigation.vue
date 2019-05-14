@@ -15,22 +15,12 @@
 
 <script>
 export default {
-    components: {
-
-    }, 
-    data() {
-        return {
-            
-        }
-    }
 
 }
 </script>
 
 <style lang="scss">
-@import '../assets/scss/common/mixins.scss';
-@import '../assets/scss/common/variables.scss';
-@import '../assets/scss/components/navigation.scss';
+@import '../assets/scss/styles.scss';
 
 
 </style>

@@ -7,21 +7,16 @@
             <span>{{ names.join() }}</span>
         </th>
         <th class="listItems__table__body-actions">
+            <nuxt-link class="buttonRow" to="houses/invitation">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                    <title>envelop</title>
+                    <path d="M29 4h-26c-1.65 0-3 1.35-3 3v20c0 1.65 1.35 3 3 3h26c1.65 0 3-1.35 3-3v-20c0-1.65-1.35-3-3-3zM12.461 17.199l-8.461 6.59v-15.676l8.461 9.086zM5.512 8h20.976l-10.488 7.875-10.488-7.875zM12.79 17.553l3.21 3.447 3.21-3.447 6.58 8.447h-19.579l6.58-8.447zM19.539 17.199l8.461-9.086v15.676l-8.461-6.59z"></path>
+                </svg>
+            </nuxt-link>
             <HouseDelete
                 :house="house" 
-                v-on:delete-house="transmitToParent"
                 class="buttonRow"
             />
-            <button class="buttonRow"
-                v-on:click="goInvitation"
-            >Invitation</button>
-            <!-- <HouseButton
-                title="Editer"
-                :house="house"
-                v-on:modified-house="receiveModifiedHouse"
-                v-on:delete-house="transmitToParent"
-            >
-            </HouseButton> -->
         </th>
     </tr>
 </template>
@@ -43,24 +38,8 @@ export default {
             houses: this.$store.state.houses
         }
     },
-    methods: {
-        goInvitation() {
-            this.isActive = true
-            this.$router.push({ path: 'houses/invitation' })
-        },
-        // API PUT request transmission --> parent ListUser
-        receiveModifiedHouse(houseUpdated) {
-            this.house.name = houseUpdated.name
-            this.house.created = houseUpdated.created
-            this.house.users = houseUpdated.users
-        }, 
-        // API DELETE request transmission --> parent ListHouse
-        transmitToParent(id) {
-            this.$emit('delete-house-suite', id)
-        }
-    },
     computed: {
-        // get names of users in the house
+        // get names of users living in the house
         names() {
             return this.house.users.map(user => {
                 return `${user.firstname} ${user.lastname}`
@@ -70,3 +49,4 @@ export default {
 }
  
 </script>
+

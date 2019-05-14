@@ -1,6 +1,7 @@
 <!--USERS-->
 <template>
     <div class="container">
+        <Authentified />
         <div class="listItems">
             <Navigation/>
 
@@ -21,14 +22,11 @@
                         class="searchbar__button"
                     >
                 </div><!-- end searchbar  -->
-                <!--<nuxt-child/>-->
+
                 <!-- add user -->
-                <span 
-                    class="listItems__actions-addButton"
-                    v-if="isCreating === false"
-                    v-on:click="goCreate"
-                >Add User</span>
-            </div><!-- end add user -->
+                <nuxt-link class="listItems__actions-addButton"
+                    v-if="isCreating === false" to="users/create">Add user</nuxt-link><!-- end add user -->
+            </div>
 
             <!-- liste -->
             <table class="listItems__table users">
@@ -56,12 +54,14 @@
 <script>
 import axios from 'axios'
 import login from '../Login'
+import Authentified from '~/components/Authentified'
 import Navigation from '~/components/Navigation'
 import UserOneRow from '~/components/UserOneRow'
 
 export default {
     components: {
         login,
+        Authentified,
         Navigation,
         UserOneRow
     },
@@ -90,7 +90,6 @@ export default {
             .then(response => {
                 this.$store.commit('setUsers', response.data.data.users)
                 this.$store.state.users.forEach(user => {
-                    console.log('un seul user à la fois ', user);
                     if (user.house) {
                         user.house = user.house.name
                     } else {
@@ -101,14 +100,10 @@ export default {
             .catch(err => {
                 console.log(err)
             })
-        },
-        goCreate() {
-            this.$router.push({ path: 'users/create' })
         }
     },
     computed: {
         filteredUsers() {
-            console.log(this.$store.state.users)
             return this.$store.state.users.filter(user => {
                 return user.firstname.toLowerCase().indexOf(this.search.toLowerCase()) > -1
             })
@@ -119,7 +114,6 @@ export default {
 
 <style lang="scss">
 @import '../../assets/scss/styles.scss';
-
 
 </style>
 

@@ -48,6 +48,7 @@
             background: $white;
             &-entries {
                 @include font (18px, $greyInk, 300);
+                text-transform: lowercase;
                 &:first-child {
                     width: auto; 
                 }

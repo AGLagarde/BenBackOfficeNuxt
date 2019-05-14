@@ -57,13 +57,11 @@ Houses : [
 
 -----  A FAIRE ------ 
 USERS
-- edit user     - NOT OK 
-- what house    - NOT OK
-- add user      - non maj House + pb boutons redirection (annuler + creer) 
+- edit house    - NOT OK - no call API existing
+- add user      - non maj House + pb boutons redirection (annuler + creer)  -  no call API existing
 
 HOUSES
-- delete house      - 
-- send invitation   - error 401 ou 404
+- delete house      - no call API existing
 - join house        - 
 - add house         - error 409
 
@@ -77,13 +75,17 @@ SEARCH          - OK
 USERS 
 - get all users - OK
 - delete user   - OK
+- edit user     - OK 
 
 HOUSES 
 - get all houses    - OK
 - delete house      - 
 - send invitation   - OK
 - join house        - 
+- send invitation   - OK
+
+- LOCALSTORAGE : token
 
 IMPROVEMENT 
 --> search en composant ?
---> localstorage pour mot de passe 
+--> route API alléger
