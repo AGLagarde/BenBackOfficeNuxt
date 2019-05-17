@@ -1,3 +1,4 @@
+<!-- create user -->
  <template>
      <div class="wrapper">
         <form action="" class="form item__form">
@@ -23,7 +24,6 @@
                 <input type="text" name="housename" class="item__form-input" placeholder="The name of your house" v-model:value="newUser.house"/>
             </div>
             <div> <!-- buttons -->
-                <!-- <input v-on:click="goback" type="submit" name="action" value="Annuler" class="item__form-submit" /> -->
                 <nuxt-link class="item__form-submit" to="/users">Annuler</nuxt-link>
                 <input v-on:click="createUser" type="submit" name="action" value="Créer" class="item__form-submit validate" />
             </div>
@@ -53,7 +53,7 @@ export default {
         }
     }, 
     methods: {
-        // POST METHOD CREATE
+        // asynchronous function : wait the response from call api to create new user with 
         async createUser(event) {
             event.preventDefault();
             const user = await axios({
@@ -94,11 +94,8 @@ export default {
 
 <style lang="scss">
  @import '../../assets/scss/styles.scss';
-     /*.wrapper {*/
-         /*display: flex;*/
-         /*height: 100vh;*/
-         /*align-items: center;*/
-         /*border: 1px solid red;*/
-     /*}*/
+    .validate {
+        margin-left: 20px;
+    }
 
 </style>

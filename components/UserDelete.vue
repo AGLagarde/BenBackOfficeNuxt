@@ -44,6 +44,7 @@ export default {
         }
     },
     methods: {
+        // call api to delete user with its ID
         deleteUser(id) {
             axios({
                 method: 'DELETE',

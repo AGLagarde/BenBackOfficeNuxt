@@ -62,8 +62,7 @@ USERS
 
 HOUSES
 - delete house      - no call API existing
-- join house        - 
-- add house         - error 409
+- add house         - not working !!
 
 
 ---- FONCTIONNEL ----- 
@@ -89,3 +88,5 @@ HOUSES
 IMPROVEMENT 
 --> search en composant ?
 --> route API alléger
+
+// indexed DB --> encroypted db localstorage 

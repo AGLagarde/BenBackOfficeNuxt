@@ -1,7 +1,7 @@
 <!--USERS-->
 <template>
     <div class="container">
-        <Authentified />
+        <Disconnect />
         <div class="listItems">
             <Navigation/>
 
@@ -28,7 +28,7 @@
                     v-if="isCreating === false" to="users/create">Add user</nuxt-link><!-- end add user -->
             </div>
 
-            <!-- liste -->
+            <!-- list -->
             <table class="listItems__table users">
                 <tr class="listItems__table__head">
                     <th>#</th>
@@ -46,22 +46,23 @@
                     :user="user"
                 ></UserOneRow> <!--end row-->
 
-            </table><!-- end liste -->
+            </table><!-- end list -->
         </div>
+        <Pagination/>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
 import login from '../Login'
-import Authentified from '~/components/Authentified'
+import Disconnect from '~/components/Disconnect'
 import Navigation from '~/components/Navigation'
 import UserOneRow from '~/components/UserOneRow'
 
 export default {
     components: {
         login,
-        Authentified,
+        Disconnect,
         Navigation,
         UserOneRow
     },
@@ -74,11 +75,14 @@ export default {
             isFiltered: true
         }
     },
+    // if no token redirect to login page
     middleware: 'authenticated',
+    // when component mounted, call api to get all the users from the DB 
     mounted() {
         this.getAllUsers()
     },
     methods: {
+        // call api to get all users from DB
         getAllUsers() {
             axios({
                 method: 'get',
@@ -103,6 +107,7 @@ export default {
         }
     },
     computed: {
+        // filter search locally
         filteredUsers() {
             return this.$store.state.users.filter(user => {
                 return user.firstname.toLowerCase().indexOf(this.search.toLowerCase()) > -1
@@ -112,9 +117,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '../../assets/scss/styles.scss';
 
-</style>
 
 

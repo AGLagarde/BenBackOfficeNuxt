@@ -1,7 +1,7 @@
 <!--HOUSES-->
 <template>
     <div class="container">
-        <Authentified />
+        <Disconnect />
         <div class="listItems">
             <Navigation/>
             <div class="listItems__actions">
@@ -48,14 +48,14 @@
 <script>
     import axios from 'axios'
     import Login from '../Login'
-    import Authentified from '~/components/Authentified'
+    import Disconnect from '~/components/Disconnect'
     import Navigation from '~/components/Navigation'
     import HouseOneRow from '~/components/HouseOneRow'
 
     export default {
         components: {
             Login,
-            Authentified,
+            Disconnect,
             Navigation,
             HouseOneRow
         },
@@ -69,11 +69,14 @@
                 userDataVue: []
             }
         },
+        // if no token redirect to login page
         middleware: 'authenticated',
+        // when component mounted, call api to get all the houses from the DB 
         mounted() {
             this.getAllHouses()
         },
         methods: {
+            // call api to get all houses from DB
             getAllHouses() {
                 axios({
                     method: 'get',
@@ -88,12 +91,10 @@
                 .catch(err => {
                     console.log(err)
                 })
-            },
-            goCreate() {
-                this.$router.push({ path: 'houses/create' })
             }
         },
         computed: {
+            // filter search locally
             filteredHouses() {
                 return this.$store.state.houses.filter(house => {
                     return house.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1

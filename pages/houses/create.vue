@@ -1,3 +1,4 @@
+<!-- create house -->
 <template>
     <div class="wrapper">
         <form action="" class="form item__form">
@@ -9,7 +10,7 @@
             </div>
             <div>
                 <nuxt-link class="item__form-submit" to="/houses">Annuler</nuxt-link>
-                <input v-on:click="createHouse" type="submit" name="action" value="Créer" class="item__form-submit" />
+                <input v-on:click="createHouse" type="submit" name="action" value="Créer" class="item__form-submit validate" />
             </div>
         </form>
     </div>
@@ -34,9 +35,10 @@
             }
         },
         methods: {
-            createHouse(event) {
+            // call api to create a new house in the DB 
+            async createHouse(event) {
                 event.preventDefault();
-                axios({
+                const house = await axios({
                     method: 'post',
                     url: 'http://ulysse.idequanet.com/ben/web/api/house/create',
                     data: {
@@ -51,11 +53,17 @@
                         Authorization: `BEARER ${this.token}`
                     },
                 }).then(response => {
-                    this.houses.push(response.data.data.house)
-                    this.$router.push({ path: '/houses' })
+                    this.$store.commit('addHouse', response.data.data.house)
+                    this.goBack()
+                    return response.data.data.house
+                    // this.houses.push(response.data.data.house)
+                    // this.$router.push({ path: '/houses' })
                 }).catch(error => {
                     console.log(error)
-                });
+                })
+            },
+            goback() {
+                this.$router.push({ path: '/houses' })
             }
         }
     }
@@ -75,5 +83,8 @@
     }
     .item__form-input {
         width: 40%;
+    }
+    .validate {
+        margin-left: 20px;
     }
 </style>

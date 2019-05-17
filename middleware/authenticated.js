@@ -1,6 +1,8 @@
 export default function ({ store, redirect }) {
-    // Si l'utilisateur n'est pas authentifié
+    // if user not authentified redirect to login page
     if (!store.state.token) {
       return redirect('/login')
+    } else {
+      console.log('no need')
     }
   }

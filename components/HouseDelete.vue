@@ -47,6 +47,7 @@ export default {
         }
     },
     methods: {
+        // call api to delete house with its ID - but not working because of no call api created for
         deleteHouse(id) {
             axios({
                 method: 'DELETE',
