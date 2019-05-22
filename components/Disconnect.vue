@@ -44,10 +44,12 @@ export default {
         },
         // NOT WORKING 
         disconnect() {
+            console.log('mon token initial ', this.$store.state.token)
+            console.log('mon localstorage token initial ', localStorage.token)
             this.$store.commit('setToken', null)
-            console.log('mon token ', this.$store.state.token)
+            console.log('mon token vidé ', this.$store.state.token)
             localStorage.clear()
-            console.log('mon localstorage token ', localStorage.token)
+            console.log('mon localstorage token vidé ', localStorage.token)
             if (this.token == null) { // condition inverse à mon raisonnement... 
                 // middleware: 'authenticated' -- not working
                 console.log(this.token)

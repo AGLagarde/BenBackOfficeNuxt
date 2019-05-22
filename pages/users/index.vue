@@ -6,21 +6,16 @@
             <Navigation/>
 
             <div class="listItems__actions">
+                <Pagination/>
                 <!--searchbar-->
                 <div class="searchbar">
                     <input
-                        type="text"
-                        placeholder="Search"
-                        maxlength= "12"
-                        class="searchbar__input"
+                        type="text" placeholder="Search"
+                        maxlength= "12" class="searchbar__input"
                         v-model="search"
                         v-on:keyup="isFiltered = true"
                     >
-                    <img
-                        src="~assets/img/searchbar.png"
-                        alt="search button"
-                        class="searchbar__button"
-                    >
+                    <img src="~assets/img/searchbar.png" alt="search button" class="searchbar__button">
                 </div><!-- end searchbar  -->
 
                 <!-- add user -->
@@ -48,7 +43,7 @@
 
             </table><!-- end list -->
         </div>
-        <Pagination/>
+
     </div>
 </template>
 
@@ -58,13 +53,15 @@ import login from '../Login'
 import Disconnect from '~/components/Disconnect'
 import Navigation from '~/components/Navigation'
 import UserOneRow from '~/components/UserOneRow'
+import Pagination from '~/components/Pagination'
 
 export default {
     components: {
         login,
         Disconnect,
         Navigation,
-        UserOneRow
+        UserOneRow,
+        Pagination
     },
     data() {
         return {

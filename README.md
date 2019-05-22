@@ -78,9 +78,8 @@ USERS
 
 HOUSES 
 - get all houses    - OK
-- delete house      - 
+- delete house      - NON
 - send invitation   - OK
-- join house        - 
 - send invitation   - OK
 
 - LOCALSTORAGE : token
