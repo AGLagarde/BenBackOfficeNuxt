@@ -1,12 +1,14 @@
 <!--USERS-->
 <template>
     <div class="container">
-        <Disconnect />
+        <!--<Disconnect />-->
         <div class="listItems">
             <Navigation/>
 
             <div class="listItems__actions">
-                <Pagination/>
+                <Pagination
+                        v-on:pageChange="portion"
+                />
                 <!--searchbar-->
                 <div class="searchbar">
                     <input
@@ -66,10 +68,12 @@ export default {
     data() {
         return {
             token: this.$store.state.token,
-            users: this.$store.state.users,
+            //users: this.$store.state.users,
             isCreating: false,
             search: '',
-            isFiltered: true
+            isFiltered: true,
+            begin: 0,
+            end: 0
         }
     },
     // if no token redirect to login page
@@ -101,14 +105,22 @@ export default {
             .catch(err => {
                 console.log(err)
             })
+        },
+        portion(payload) {
+            this.begin = payload.begin
+            this.end = payload.end
         }
     },
     computed: {
         // filter search locally
+        // 1. on filtre d'abord
+        // puis on fait les résultats des pages du filtrage
+        // d'où le filtre avant le slice
+        // tu filtres et ensuite tu me découpes
         filteredUsers() {
             return this.$store.state.users.filter(user => {
                 return user.firstname.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-            })
+            }).slice(this.begin, this.end)
         }
     }
 }

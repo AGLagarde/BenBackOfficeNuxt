@@ -1,6 +1,6 @@
 <!--PAGINATION-->
 <template>
-    <div id="pagination" v-on:click="getNumberOfPages">
+    <div id="pagination">
         <button id="first" v-on:click="firstPage">FIRST: {{1}}</button>
         <button id="previous" v-on:click="previousPage">PREVIOUS: {{current_page - 1}}</button>
         <span class="current">current: {{current_page}}</span>
@@ -15,67 +15,66 @@
 export default {
     data() {
         return {
-
-            // list = document.querySelector('.list');
-            users: this.$store.state.users,
-            // total_items: this.users,
             number_per_page: 5,
             current_page: 1,
-            total_pages: [],
             page_list: []
-            // current_number: document.querySelector('.current')
         }
     },
     computed: {
+        users() {
+            return this.$store.state.users
+        },
         total_items() {
             return this.users
-        }
+        },
+        total_pages () {
+            console.log('mes users ', this.users)
+
+            console.log('mes users ', this.users)
+            // console.log('mes items ', this.total_items)
+            // this.loadList()
+            return Math.ceil(this.users.length / this.number_per_page)
+        },
     },
-    mounted () {
-        //this.getNumberOfPages()
+    watch: {
+        total_pages (newValue, oldValue) {
+            // ebsoin juste appeler
+            this.loadList()
+        }
     },
     methods: {
        // https://gist.github.com/kottenator/9d936eb3e4e3c3e02598
-        getNumberOfPages () {
-            console.log('mes users ', this.users)
-            this.total_pages = Math.ceil(this.users.length / this.number_per_page)
-            console.log('mes users ', this.users)
-            // console.log('mes items ', this.total_items)
-            this.loadList()
-            return this.total_pages
-        },
         nextPage() {
             const current_number = document.querySelector('.current')
-            this.getNumberOfPages();
             this.current_page += 1;
             current_number.innerHTML = this.current_page;
             this.loadList()
         },
         previousPage() {
             const current_number = document.querySelector('.current')
-            this.getNumberOfPages();
             this.current_page -= 1;
             current_number.innerHTML = this.current_page;
             this.loadList()
         },
         firstPage() {
             const current_number = document.querySelector('.current')
-            this.getNumberOfPages();
             this.current_page = 1;
             current_number.innerHTML = this.current_page;
             this.loadList()
         },
         lastPage() {
             const current_number = document.querySelector('.current')
-            this.getNumberOfPages();
             this.current_page = this.total_pages;
             current_number.innerHTML = this.current_page;
             this.loadList()
         },
+        // select portion
         loadList() {
             let begin = ((this.current_page - 1) * this.number_per_page),
                 end = begin + this.number_per_page;
-            this.page_list = this.users.slice(begin, end)
+
+            this.$emit('pageChange', {begin, end});
+            // this.page_list = this.users.slice(begin, end)
             console.log(this.page_list)
             // this.drawList();
             this.check();

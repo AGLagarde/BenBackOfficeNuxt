@@ -5,7 +5,8 @@ const createStore = () => {
     state: {
         token: '',
         users: [],
-        houses: []
+        houses: [],
+        authUser: null
     },
     mutations: {
       // get token from login.vue
@@ -13,6 +14,11 @@ const createStore = () => {
         console.log('rentré token')
         state.token = token
       },
+
+        setAuthUser (state, user) {
+            console.log('rentré token')
+            state.authUser = user
+        },
       // get all users from users/index.vue
       setUsers (state, users) {
           state.users = users
