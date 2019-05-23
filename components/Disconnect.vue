@@ -1,7 +1,7 @@
 <!--AUTHENTIFIED-->
 <template>
     <div class="authentified">
-        <p>Hello {{login}}</p>
+        <p>Hello {{authUser.email}}</p>
         <button class="authentified__disconnect" v-on:click="disconnect">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                 <title>switch</title>
@@ -16,10 +16,17 @@
 export default {
     data() {
         return {
-            token: this.$store.state.token,
+            // endpoint quand on envoie notre token, renvoie utilisateur connecté (endpoint /me) ...
+            //token: this.$store.state.token,
+            authUser: this.$store.state.authUser,
             login: 'admin'
         }
-    }, 
+    },
+    computed: {
+        token() {
+            return this.$store.state.token
+        }
+    },
     // if no token redirect to login page -----> not working 
     middleware: 'authenticated',
     mounted() {
