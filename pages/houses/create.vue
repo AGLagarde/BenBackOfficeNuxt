@@ -56,9 +56,8 @@
                     this.$store.commit('addHouse', response.data.data.house)
                     this.goBack()
                     return response.data.data.house
-                    // this.houses.push(response.data.data.house)
-                    // this.$router.push({ path: '/houses' })
                 }).catch(error => {
+                    alert('You already belong to a house, you cannot create a new one')
                     console.log(error)
                 })
             },

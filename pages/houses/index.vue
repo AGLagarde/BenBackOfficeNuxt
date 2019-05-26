@@ -17,7 +17,9 @@
                     >
                     <img src="../../assets/img/searchbar.png" alt="search button" class="searchbar__button">
                 </div><!-- end searchbar  -->
-
+                <Pagination
+                    v-on:pageChange="portion"
+                />
                 <!-- add house -->
                 <nuxt-link class="listItems__actions-addButton"
                     v-if="isCreating === false" to="houses/create">Add house</nuxt-link><!-- end add house -->
@@ -49,6 +51,7 @@
     import axios from 'axios'
     import Login from '../Login'
     import Disconnect from '~/components/Disconnect'
+    import Pagination from '~/components/Pagination'
     import Navigation from '~/components/Navigation'
     import HouseOneRow from '~/components/HouseOneRow'
 
@@ -56,17 +59,18 @@
         components: {
             Login,
             Disconnect,
+            Pagination,
             Navigation,
             HouseOneRow
         },
         data() {
             return {
                 token: this.$store.state.token,
-                houses: this.$store.state.houses,
                 isCreating: false,
                 search: '',
                 isFiltered: true,
-                userDataVue: []
+                begin: 0,
+                end: 0
             }
         },
         // if no token redirect to login page
@@ -91,14 +95,19 @@
                 .catch(err => {
                     console.log(err)
                 })
+            },
+            // get the numbers to proceed to the slice
+            portion(payload) {
+                this.begin = payload.begin
+                this.end = payload.end
             }
         },
         computed: {
-            // filter search locally
+            // filter search locally - show users depending on slice obtain by pagination component
             filteredHouses() {
                 return this.$store.state.houses.filter(house => {
                     return house.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-                })
+                }).slice(this.begin, this.end)
             }
         }
     }

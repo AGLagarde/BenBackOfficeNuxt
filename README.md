@@ -56,8 +56,14 @@ Houses : [
 # avancée 
 
 -----  A FAIRE ------ 
+
+pb avec email/application vide localstorage
+entrée appli via login (actuellement .../login)
+pagination : not working for house 
+
+
 USERS
-- edit house    - NOT OK - no call API existing
+- edit house    - no call API existing
 - add user      - non maj House + pb boutons redirection (annuler + creer)  -  no call API existing
 
 HOUSES
@@ -66,10 +72,11 @@ HOUSES
 
 
 ---- FONCTIONNEL ----- 
-
 LOGIN           - OK
 
 SEARCH          - OK
+
+PAGINATION      - choice of quantity ? 
 
 USERS 
 - get all users - OK
@@ -78,14 +85,10 @@ USERS
 
 HOUSES 
 - get all houses    - OK
-- delete house      - NON
-- send invitation   - OK
+- delete house      - NO call api 
 - send invitation   - OK
 
-- LOCALSTORAGE : token
 
 IMPROVEMENT 
---> search en composant ?
 --> route API alléger
-
-// indexed DB --> encroypted db localstorage 
+ 

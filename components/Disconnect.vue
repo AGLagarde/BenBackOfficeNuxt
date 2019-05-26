@@ -16,8 +16,7 @@
 export default {
     data() {
         return {
-            // endpoint quand on envoie notre token, renvoie utilisateur connecté (endpoint /me) ...
-            //token: this.$store.state.token,
+            // endpoint (/me) missing in the api
             authUser: this.$store.state.authUser,
             login: 'admin'
         }
@@ -27,13 +26,11 @@ export default {
             return this.$store.state.token
         }
     },
-    // if no token redirect to login page -----> not working 
-    middleware: 'authenticated',
     mounted() {
         window.addEventListener('scroll', this.scrollAppear);
     },
     methods: {
-        // appearance of button to scroll to top
+        // so many users you have to scroll --> appearance of button to scroll to top
         scrollAppear() {
             if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
                 document.querySelector('.authentified__up').classList.add('appear');
@@ -41,7 +38,7 @@ export default {
                 document.querySelector('.authentified__up').classList.remove('appear');
             }
         },
-        // smooth scroll to top
+        // so many users you have to scroll --> smooth scroll to top
         scrollTop() {
             const totop = document.documentElement.scrollTop || document.body.scrollTop;
             if (totop > 0) {
@@ -49,21 +46,16 @@ export default {
                 window.scrollTo(0, totop - totop / 8);
             }
         },
-        // NOT WORKING 
+        // disconnect and redirect to login - empty the token of localstorage and store
         disconnect() {
             console.log('mon token initial ', this.$store.state.token)
             console.log('mon localstorage token initial ', localStorage.token)
             this.$store.commit('setToken', null)
-            console.log('mon token vidé ', this.$store.state.token)
             localStorage.clear()
+            console.log('mon token vidé ', this.$store.state.token)
             console.log('mon localstorage token vidé ', localStorage.token)
-            if (this.token == null) { // condition inverse à mon raisonnement... 
-                // middleware: 'authenticated' -- not working
-                console.log(this.token)
-                //return redirect('/login')
+            if (this.token == null) {
                 this.$router.push({ path: '/login' })
-            } else {
-                console.log('no need')
             }
         }
     }
@@ -77,9 +69,9 @@ export default {
         justify-content: flex-end;
         text-align: right;
         align-items: center;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
         p {
-            @include font (26px, $grey, 300, 1.2em);
+            @include font (16px, $grey, 300, 1.2em);
         }
         &__disconnect {
             margin: 10px 20px;

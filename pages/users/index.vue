@@ -1,15 +1,10 @@
 <!--USERS-->
 <template>
     <div class="container">
-        <!--<Disconnect />-->
+        <Disconnect />
         <div class="listItems">
             <Navigation/>
-
             <div class="listItems__actions">
-                <Pagination
-                        v-on:pageChange="portion"
-                />
-                <!--searchbar-->
                 <div class="searchbar">
                     <input
                         type="text" placeholder="Search"
@@ -18,8 +13,10 @@
                         v-on:keyup="isFiltered = true"
                     >
                     <img src="~assets/img/searchbar.png" alt="search button" class="searchbar__button">
-                </div><!-- end searchbar  -->
-
+                </div>
+                <Pagination
+                    v-on:pageChange="portion"
+                />
                 <!-- add user -->
                 <nuxt-link class="listItems__actions-addButton"
                     v-if="isCreating === false" to="users/create">Add user</nuxt-link><!-- end add user -->
@@ -51,7 +48,9 @@
 
 <script>
 import axios from 'axios'
+// ancien login
 import login from '../Login'
+// import login from '../index' --> nouveau ??
 import Disconnect from '~/components/Disconnect'
 import Navigation from '~/components/Navigation'
 import UserOneRow from '~/components/UserOneRow'
@@ -68,7 +67,6 @@ export default {
     data() {
         return {
             token: this.$store.state.token,
-            //users: this.$store.state.users,
             isCreating: false,
             search: '',
             isFiltered: true,
@@ -106,18 +104,16 @@ export default {
                 console.log(err)
             })
         },
+        // get the numbers to proceed to the slice
         portion(payload) {
             this.begin = payload.begin
             this.end = payload.end
         }
     },
     computed: {
-        // filter search locally
-        // 1. on filtre d'abord
-        // puis on fait les résultats des pages du filtrage
-        // d'où le filtre avant le slice
-        // tu filtres et ensuite tu me découpes
+        // filter search locally - show users depending on slice obtain by pagination component
         filteredUsers() {
+            // simuler un clic sur le first avant de filtrer et decouper ????
             return this.$store.state.users.filter(user => {
                 return user.firstname.toLowerCase().indexOf(this.search.toLowerCase()) > -1
             }).slice(this.begin, this.end)
