@@ -1,70 +1,108 @@
 <template>
-  <section class="container">
-    <div>
-      <logo />
-      <users />
-      <h1 class="title">
-        backofficeBenNuxt
-      </h1>
-      <h2 class="subtitle">
-        My breathtaking Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >GitHub</a>
-      </div>
+  <div class="login">
+    <!-- admin@hetic.net / admin -->
+    <!-- eric.priou@hetic.net / unebonnenote -->
+    <!-- DYNAMIQUE -->
+    <picture>
+      <img src="../assets/img/ben.png" alt="logo ben">
+    </picture>
+
+    <div class="login__line">
+      <label for="email" class="login__label" >Login</label>
+      <input class="login__input"
+             type="email" name="email"
+             placeholder="email"
+             v-model:value="connexion.email"
+      >
     </div>
-  </section>
+    <div class="login__line">
+      <label for="password" class="login__label" >Password</label>
+      <input class="login__input"
+             type="password" name="password"
+             placeholder="password"
+             v-model:value="connexion.password"
+      >
+    </div>
+    <button class="login__button"
+            v-on:click.prevent="login(connexion.email, connexion.password)"
+    >CONNECT</button>
+
+    <!-- EN DUR  -->
+    <!-- <div class="login__line">
+        <label for="email" class="login__label" >Login</label>
+        <input class="login__input" type="email" placeholder="email" name="email"  value="admin@hetic.net">
+    </div>
+    <div class="login__line">
+        <label for="password" class="login__label" >Password</label>
+        <input class="login__input" type="password" name="password" placeholder="mot de passe" value="admin">
+    </div>
+    <button class="login__button" v-on:click.prevent="login('admin@hetic.net', 'admin')">CONNECT</button> -->
+  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+    import axios from 'axios'
 
+    export default {
+        props: {
+            token: String
+        },
+        data() {
+            return {
+                getUsers: [],
+                generatedToken: '',
+                connexion: {
+                    email: '',
+                    password: ''
+                },
+                isConnected: false
+            }
+        },
+        methods: {
+            // call api to login and obtain token to access DB
+            login(email, pwd) {
+                axios({
+                    method: 'post',
+                    url: 'http://ulysse.idequanet.com/ben/web/api/user/login',
+                    data: {
+                        user: {
+                            email: email,
+                            password: pwd
+                        }
+                    },
+                    headers: {
+                        "Access-Control-Allow-Origin": "*"
+                    },
+                }).then(response => {
+                    this.$store.commit('setToken', response.data.data.token)
+                localStorage.setItem('token', response.data.data.token)
+                this.$router.push({ path: 'users' })
+            }).catch(error => {
+                    console.log(error)
+            });
+            }
+        },
+        mounted() {
+            // put token in the localstorage and redirect to users page
+            this.$store.commit('setToken', localStorage.getItem('token'))
+            if (localStorage.getItem('token')){
+                this.$router.push({ path: 'users' })
+            }
 
-export default {
-  components: {
-    Logo
-  }
-}
+        }
+    }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+<style lang="scss">
+  @import '../assets/scss/styles.scss';
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+  input:-internal-autofill-selected,
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    background-color: $white !important;
+  }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
+
+
