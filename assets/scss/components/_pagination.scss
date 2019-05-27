@@ -1,0 +1,35 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    opacity: 0.8;
+    .tooltip {
+        visibility: hidden;
+        width: 100px;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-image: linear-gradient(to right, $pink , $redish);
+        color: $white;
+    }
+    button {
+        position: relative;
+        border: none;
+        &:hover .tooltip {
+            visibility: visible;
+        }
+        &:disabled {
+            opacity: 0.3;
+        }
+    }
+    .current {
+        padding: 0 5px;
+        font-size: 16px;
+        font-weight: 600;
+        color: $greyInk;
+    }
+}

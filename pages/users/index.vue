@@ -91,6 +91,7 @@ export default {
                 }
             })
             .then(response => {
+                // update users in store after call api
                 this.$store.commit('setUsers', response.data.data.users)
                 this.$store.state.users.forEach(user => {
                     if (user.house) {
@@ -104,7 +105,7 @@ export default {
                 console.log(err)
             })
         },
-        // get the numbers to proceed to the slice
+        // get the numbers from pagination to proceed to the slice
         portion(payload) {
             this.begin = payload.begin
             this.end = payload.end
@@ -112,6 +113,7 @@ export default {
     },
     computed: {
         // filter search locally - show users depending on slice obtain by pagination component
+        // return --> the portion of users corresponding to the search
         filteredUsers() {
             // simuler un clic sur le first avant de filtrer et decouper ????
             return this.$store.state.users.filter(user => {

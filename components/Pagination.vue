@@ -5,11 +5,11 @@
             <img src="../assets/img/first.png" alt="first page"><span class="tooltip">Page 1</span>
         </button>
         <button class="previous" v-on:click="previousPage">
-            <img src="../assets/img/previous.png" alt="previous page"><span class="tooltip">Previous {{current_page - 1}}</span>
+            <img src="../assets/img/previous.png" alt="previous page"><span class="tooltip">Previous</span>
         </button>
-        <span class="current">{{current_page}}</span>
+        <span class="current">{{currentPage}}/{{total_pages}}</span>
         <button class="next" v-on:click="nextPage">
-            <img src="../assets/img/next.png" alt="next page"><span class="tooltip">Next {{current_page + 1}}</span>
+            <img src="../assets/img/next.png" alt="next page"><span class="tooltip">Next</span>
         </button>
         <button class="last" v-on:click="lastPage">
             <img src="../assets/img/last.png" alt="last page"><span class="tooltip">Last {{total_pages}}</span>
@@ -21,10 +21,16 @@
 export default {
     data() {
         return {
+            path: '',
+            currentPage: this.$store.state.currentPage,
             number_per_page: 20,
-            current_page: 1,
+            //current_page: 1,
             page_list: []
         }
+    },
+    // verifier avec Steven si propre
+    mounted() {
+        this.path = window.location.pathname
     },
     computed: {
         // users from the store
@@ -37,6 +43,11 @@ export default {
         },
         // total items are linked to data from the DB
         total_items() {
+            if (this.path === '/users') {
+                return this.users
+            } else {
+                return this.houses
+            }
             return this.users
         },
         // total pages are obtained depending on total items and number per page
@@ -52,42 +63,44 @@ export default {
     },
     methods: {
         nextPage() {
-            const current_number = document.querySelector('.current')
-            this.current_page += 1;
-            current_number.innerHTML = this.current_page;
+            this.currentPage += 1;
+            this.updatePage()
             this.loadList()
         },
         previousPage() {
-            const current_number = document.querySelector('.current')
-            this.current_page -= 1;
-            current_number.innerHTML = this.current_page;
+            this.currentPage -= 1;
+            this.updatePage()
             this.loadList()
         },
         firstPage() {
-            const current_number = document.querySelector('.current')
-            this.current_page = 1;
-            current_number.innerHTML = this.current_page;
+            this.currentPage = 1;
+            this.updatePage()
             this.loadList()
         },
         lastPage() {
-            const current_number = document.querySelector('.current')
-            this.current_page = this.total_pages;
-            current_number.innerHTML = this.current_page;
+            this.currentPage = this.total_pages;
+            this.updatePage()
             this.loadList()
         },
-        // select portion
+        // update page in DOM and transfer data to the store
+        updatePage() {
+            const current_number = document.querySelector('.current')
+            current_number.innerHTML = `${this.currentPage}/${this.total_pages}`;;
+            this.$store.commit('setCurrentPage', this.currentPage)
+        },
+        // select portion to show
         loadList() {
-            let begin = ((this.current_page - 1) * this.number_per_page),
+            let begin = ((this.currentPage - 1) * this.number_per_page),
                 end = begin + this.number_per_page;
             this.$emit('pageChange', {begin, end});
             this.check();
         },
         // disable buttons depending on page number
         check() {
-            document.querySelector('.next').disabled = this.current_page === this.total_pages ? true : false;
-            document.querySelector('.previous').disabled = this.current_page === 1 ? true : false;
-            document.querySelector('.first').disabled = this.current_page === 1 ? true : false;
-            document.querySelector('.last').disabled = this.current_page === this.total_pages ? true : false;
+            document.querySelector('.next').disabled = this.currentPage === this.total_pages ? true : false;
+            document.querySelector('.previous').disabled = this.currentPage === 1 ? true : false;
+            document.querySelector('.first').disabled = this.currentPage === 1 ? true : false;
+            document.querySelector('.last').disabled = this.currentPage === this.total_pages ? true : false;
         }
     }
 }
@@ -95,35 +108,4 @@ export default {
 
 <style lang="scss">
     @import '../assets/scss/styles.scss';
-    .pagination {
-        display: flex;
-        align-items: center;
-        opacity: 0.8;
-        .tooltip {
-            visibility: hidden;
-            width: 100px;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 10px;
-            position: absolute;
-            z-index: 1;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-image: linear-gradient(to right, $pink , $redish);
-            color: $white;
-        }
-        button {
-            position: relative;
-            border: none;
-            &:hover .tooltip {
-                visibility: visible;
-            }
-        }
-        .current {
-            font-size: 16px;
-            font-weight: 600;
-            color: $greyInk;
-        }
-    }
 </style>

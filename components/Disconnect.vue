@@ -17,8 +17,7 @@ export default {
     data() {
         return {
             // endpoint (/me) missing in the api
-            authUser: this.$store.state.authUser,
-            login: 'admin'
+            authUser: this.$store.state.authUser
         }
     },
     computed: {
@@ -48,12 +47,8 @@ export default {
         },
         // disconnect and redirect to login - empty the token of localstorage and store
         disconnect() {
-            console.log('mon token initial ', this.$store.state.token)
-            console.log('mon localstorage token initial ', localStorage.token)
             this.$store.commit('setToken', null)
             localStorage.clear()
-            console.log('mon token vidé ', this.$store.state.token)
-            console.log('mon localstorage token vidé ', localStorage.token)
             if (this.token == null) {
                 this.$router.push({ path: '/login' })
             }

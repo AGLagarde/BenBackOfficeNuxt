@@ -7,25 +7,25 @@
             <img src="../assets/img/ben.png" alt="logo ben">
         </picture>
 
-        <!--<div class="login__line"> -->
+        <!--<div class="login__line">-->
             <!--<label for="email" class="login__label" >Login</label>-->
-            <!--<input class="login__input" -->
-                <!--type="email" name="email" -->
-                <!--placeholder="email"  -->
+            <!--<input class="login__input"-->
+                <!--type="email" name="email"-->
+                <!--placeholder="email"-->
                 <!--v-model:value="connexion.email"-->
             <!--&gt;-->
         <!--</div>-->
-        <!--<div class="login__line"> -->
+        <!--<div class="login__line">-->
             <!--<label for="password" class="login__label" >Password</label>-->
-            <!--<input class="login__input" -->
-                <!--type="password" name="password" -->
-                <!--placeholder="password" -->
+            <!--<input class="login__input"-->
+                <!--type="password" name="password"-->
+                <!--placeholder="password"-->
                 <!--v-model:value="connexion.password"-->
             <!--&gt;-->
         <!--</div>-->
-        <!--<button class="login__button"  -->
+        <!--<button class="login__button"-->
             <!--v-on:click.prevent="login(connexion.email, connexion.password)"-->
-        <!--&gt;CONNECT</button> -->
+        <!--&gt;CONNECT</button>-->
 
         <!-- EN DUR  -->
         <div class="login__line">
@@ -75,7 +75,7 @@ export default {
                 },
             }).then(response => {
                 this.$store.commit('setToken', response.data.data.token)
-            // commit user infos
+                // user infos transmitted to the store
                 this.$store.commit('setAuthUser', {email: email, password: pwd})
                 localStorage.setItem('token', response.data.data.token)
                 this.$router.push({ path: 'users' })
