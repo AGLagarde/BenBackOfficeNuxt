@@ -1,13 +1,17 @@
+<!--EMPTY NAVIGATION-->
 <template>
-    
+    <div class="empty">
+        <div class="navigation"></div>
+        <div class="content"></div>
+        <nuxt />
+    </div>
 </template>
 
-<script>
-    export default {
-        name: "empty-nav.vue"
+
+<style>
+    .empty {
+        .content {
+            width: calc(100% - $widthNav);
+        }
     }
-</script>
-
-<style scoped>
-
 </style>

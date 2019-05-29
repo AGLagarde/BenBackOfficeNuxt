@@ -44,7 +44,7 @@
     import axios from 'axios'
 
     export default {
-        // name: login,
+        layout: 'partials/emptyNav',
         props: {
             token: String
         },

@@ -21,7 +21,7 @@
 
 
 <script>
-import HouseDelete from './HouseDelete'
+// import HouseDelete from './HouseDelete'
 
 export default {
     components: {

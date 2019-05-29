@@ -1,5 +1,5 @@
 @mixin font ($size: false, $color: false, $weight: false,  $lh: false) {
-    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-family: 'Montserrat', Arial, sans-serif;
     @if $size { font-size: $size; }
     @if $color { color: $color; }
     @if $weight { font-weight: $weight; }
