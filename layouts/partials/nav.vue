@@ -1,7 +1,7 @@
 <!--NAVIGATION-->
 <template>
-   <div class="navigation">
-       <img src="../assets/img/ben.svg" alt="Ben logo">
+    <div class="navigation">
+        <img src="~/assets/img/ben.svg" alt="Ben logo">
         <ul>
             <li class="navigation__item"
                 v-bind:class="{highlight:selectedTab === 1}"
@@ -16,30 +16,30 @@
                 <router-link :to="{ name: 'houses'}">HOUSES</router-link>
             </li>
         </ul>
-    </div> 
+    </div>
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            selectedTab: this.$store.state.selectedTab,
-        }
-    },
-    methods: {
-        toggleTab(){
-            if (this.selectedTab === 1) {
-                this.selectedTab = 2
-            } else {
-                this.selectedTab = 1
+    export default {
+        data() {
+            return {
+                selectedTab: this.$store.state.selectedTab
             }
-            this.$store.commit('setTab', this.selectedTab)
+        },
+        methods: {
+            toggleTab(){
+                if (this.selectedTab === 1) {
+                    this.selectedTab = 2
+                } else {
+                    this.selectedTab = 1
+                }
+                this.$store.commit('setTab', this.selectedTab)
+            }
         }
     }
-}
 </script>
 
 <style lang="scss">
-    @import '../assets/scss/styles.scss';
+    @import '~/assets/scss/styles.scss';
 
 </style>

@@ -3,7 +3,7 @@
     <div class="container">
         <Disconnect />
         <div class="listItems">
-            <Navigation/>
+            <!--<Navigation/>-->
             <div class="listItems__actions">
                 <div class="searchbar">
                     <input
@@ -14,12 +14,16 @@
                     >
                     <img src="~assets/img/searchbar.png" alt="search button" class="searchbar__button">
                 </div>
+
                 <Pagination
                     v-on:pageChange="portion"
+                    v-bind:items="$store.state.users"
                 />
-                <!-- add user -->
+
                 <nuxt-link class="listItems__actions-addButton"
-                    v-if="isCreating === false" to="users/create">Add user</nuxt-link><!-- end add user -->
+                    v-if="isCreating === false"
+                    to="users/create"
+                >Add user</nuxt-link>
             </div>
 
             <!-- list -->
@@ -33,34 +37,26 @@
                     <th>Actions</th>
                 </tr>
 
-                <!--row-->
                 <UserOneRow
                     v-for="user in filteredUsers"
                     v-bind:key="user.id"
                     :user="user"
-                ></UserOneRow> <!--end row-->
+                ></UserOneRow>
 
             </table><!-- end list -->
         </div>
-
     </div>
 </template>
 
 <script>
 import axios from 'axios'
-// ancien login
-import login from '../Login'
-// import login from '../index' --> nouveau ??
 import Disconnect from '~/components/Disconnect'
-import Navigation from '~/components/Navigation'
 import UserOneRow from '~/components/UserOneRow'
 import Pagination from '~/components/Pagination'
 
 export default {
     components: {
-        login,
         Disconnect,
-        Navigation,
         UserOneRow,
         Pagination
     },
@@ -111,6 +107,12 @@ export default {
             this.end = payload.end
         }
     },
+    // fx ici qui calcule begin et end dans computed
+    // page 2 => 2 X10
+    // enlever begin et end de pagination
+    // responsabilité = donne juste page courante
+    // l'affichage d'index qui dit, je sais que j'affiche 10 elements par page
+    // loadlist ici
     computed: {
         // filter search locally - show users depending on slice obtain by pagination component
         // return --> the portion of users corresponding to the search

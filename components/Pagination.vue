@@ -19,6 +19,7 @@
 
 <script>
 export default {
+    props: ['items'],
     data() {
         return {
             path: '',
@@ -31,24 +32,20 @@ export default {
     // verifier avec Steven si propre
     mounted() {
         this.path = window.location.pathname
+        this.loadList()
     },
     computed: {
         // users from the store
-        users() {
-            return this.$store.state.users
-        },
-        // houses from the store
-        houses() {
-            return this.$store.state.houses
-        },
+        // users() {
+        //     return this.$store.state.users
+        // },
+        // // houses from the store
+        // houses() {
+        //     return this.$store.state.houses
+        // },
         // total items are linked to data from the DB
         total_items() {
-            if (this.path === '/users') {
-                return this.users
-            } else {
-                return this.houses
-            }
-            return this.users
+            return this.items;
         },
         // total pages are obtained depending on total items and number per page
         total_pages () {
@@ -57,7 +54,7 @@ export default {
     },
     // loadList is called as soon as total_pages changes
     watch: {
-        total_pages (newValue, oldValue) {
+        total_pages(newValue, oldValue) {
             this.loadList()
         }
     },
@@ -105,7 +102,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-    @import '../assets/scss/styles.scss';
-</style>

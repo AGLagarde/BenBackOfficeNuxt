@@ -21,12 +21,6 @@
                     name="email" 
                     class="item__form-input" placeholder="Email" v-model="currentUser.email">
                 </div>
-                <div> <!-- house -->
-                    <label for="housename" class="item__form-label" >House</label>
-                    <input type="text" 
-                    name="housename"
-                    class="item__form-input" v-model="currentUser.house">
-                </div>
                 <div> <!-- buttons -->
                     <input v-on:click.prevent="updateUser()" type="submit" name="action" value="OK" class="item__form-submit validate" />
                 </div>
@@ -95,13 +89,7 @@ export default {
             });
         }
     }
-
-
 }
 
 </script>
 
-<style lang="scss">
-@import '../../assets/scss/styles.scss';
-
-</style>

@@ -94,16 +94,6 @@
     }
 </script>
 
-<style lang="scss">
-  @import '../assets/scss/styles.scss';
 
-  input:-internal-autofill-selected,
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus {
-    background-color: $white !important;
-  }
-
-</style>
 
 

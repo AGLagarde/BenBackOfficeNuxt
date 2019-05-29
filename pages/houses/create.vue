@@ -35,7 +35,8 @@
             }
         },
         methods: {
-            // call api to create a new house in the DB 
+            // call api to create a new house in the DB
+            // erreur api
             async createHouse(event) {
                 event.preventDefault();
                 const house = await axios({

@@ -3,9 +3,8 @@
     <div class="container">
         <Disconnect />
         <div class="listItems">
-            <Navigation/>
+
             <div class="listItems__actions">
-                <!-- searchbar-->
                 <div class="searchbar">
                     <input
                         type="text"
@@ -16,13 +15,16 @@
                         v-on:keyup="isFiltered = true"
                     >
                     <img src="../../assets/img/searchbar.png" alt="search button" class="searchbar__button">
-                </div><!-- end searchbar  -->
+                </div>
+
                 <Pagination
                     v-on:pageChange="portion"
+                    v-bind:items="$store.state.houses"
                 />
-                <!-- add house -->
+
                 <nuxt-link class="listItems__actions-addButton"
-                    v-if="isCreating === false" to="houses/create">Add house</nuxt-link><!-- end add house -->
+                    v-if="isCreating === false" to="houses/create"
+                >Add house</nuxt-link>
             </div>
 
             <!-- liste -->
@@ -35,32 +37,26 @@
                     <th>Actions</th>
                 </tr>
 
-                <!-- row -->
                 <HouseOneRow
                     v-for="house in filteredHouses"
                     v-bind:key="house.id"
                     :house="house"
-                ></HouseOneRow><!-- end row -->
-            </table>
-            <!-- end liste -->
+                ></HouseOneRow>
+            </table><!-- end liste -->
         </div>
     </div>
 </template>
 
 <script>
     import axios from 'axios'
-    import Login from '../Login'
     import Disconnect from '~/components/Disconnect'
     import Pagination from '~/components/Pagination'
-    import Navigation from '~/components/Navigation'
     import HouseOneRow from '~/components/HouseOneRow'
 
     export default {
         components: {
-            Login,
             Disconnect,
             Pagination,
-            Navigation,
             HouseOneRow
         },
         data() {
@@ -114,7 +110,4 @@
 </script>
 
 
-<style lang="scss">
-    @import '../../assets/scss/styles.scss';
 
-</style>

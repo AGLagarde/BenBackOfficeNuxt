@@ -15,7 +15,8 @@ export default {
             { hid: 'description', name: 'description', content: pkg.description }
         ],
         link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+            { rel: 'preload', as: 'font', href: 'https://fonts.googleapis.com/css?family=Montserrat:300,500,700' },
         ]
     },
 
@@ -28,6 +29,10 @@ export default {
     // hooks: hooks(this),
 
     /*
+  ** 
+  */
+    plugins: [{ src: '~/plugins/localStorage.js', ssr: false }],
+    /*
     ** Customize the progress-bar color
     */
     loading: { color: '#fff' },
@@ -36,6 +41,8 @@ export default {
     ** Global CSS
     */
     css: [
+        // SCSS file in the project
+        '@/assets/scss/styles.scss'
     ],
 
     /*
@@ -57,6 +64,7 @@ export default {
         /*
         ** You can extend webpack config here
         */
+        vendor: ['axios'],
         extend(config, ctx) {
         }
     }

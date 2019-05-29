@@ -13,12 +13,10 @@ const createStore = () => {
         mutations: {
             // get token from login.vue
             setToken (state, token) {
-                console.log('rentré token')
                 state.token = token
             },
             // get current page
             setCurrentPage (state, page) {
-                console.log('ma page actuelle')
                 state.currentPage = page
             },
             // get user authentification (login)
@@ -27,7 +25,6 @@ const createStore = () => {
             },
             // update Tab of navigation
             setTab (state, tab) {
-                console.log('change de tab')
                 state.selectedTab = tab
             },
             // get all users from users/index.vue
