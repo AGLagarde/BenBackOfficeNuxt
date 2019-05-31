@@ -1,17 +1,17 @@
 <!--PAGINATION-->
 <template>
     <div class="pagination">
-        <button class="first" v-on:click="firstPage">
+        <button class="first" @click="firstPage">
             <img src="../assets/img/first.png" alt="first page"><span class="tooltip">Page 1</span>
         </button>
-        <button class="previous" v-on:click="previousPage">
+        <button class="previous" @click="previousPage">
             <img src="../assets/img/previous.png" alt="previous page"><span class="tooltip">Previous</span>
         </button>
-        <span class="current">{{currentPage}}/{{total_pages}}</span>
-        <button class="next" v-on:click="nextPage">
+        <span class="current">{{currentPage}} / {{total_pages}}</span>
+        <button class="next" @click="nextPage">
             <img src="../assets/img/next.png" alt="next page"><span class="tooltip">Next</span>
         </button>
-        <button class="last" v-on:click="lastPage">
+        <button class="last" @click="lastPage">
             <img src="../assets/img/last.png" alt="last page"><span class="tooltip">Last {{total_pages}}</span>
         </button>
     </div>
@@ -29,20 +29,11 @@ export default {
             page_list: []
         }
     },
-    // verifier avec Steven si propre
     mounted() {
         this.path = window.location.pathname
         this.loadList()
     },
     computed: {
-        // users from the store
-        // users() {
-        //     return this.$store.state.users
-        // },
-        // // houses from the store
-        // houses() {
-        //     return this.$store.state.houses
-        // },
         // total items are linked to data from the DB
         total_items() {
             return this.items;

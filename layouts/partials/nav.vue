@@ -23,7 +23,8 @@
     export default {
         data() {
             return {
-                selectedTab: this.$store.state.selectedTab
+                selectedTab: this.$store.state.selectedTab,
+                currentPage: this.$store.state.currentPage
             }
         },
         methods: {
@@ -34,6 +35,8 @@
                     this.selectedTab = 1
                 }
                 this.$store.commit('setTab', this.selectedTab)
+                this.currentPage = 1
+                this.$store.commit('setCurrentPage', this.currentPage)
             }
         }
     }

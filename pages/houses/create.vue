@@ -1,16 +1,18 @@
 <!-- create house -->
 <template>
     <div class="wrapper">
-        <form action="" class="form item__form">
+        <form action="#" class="form item__form">
             <h2 class="h2">Add a house</h2>
             <div>
                 <label for="housename" class="item__form-label" >Name</label>
-                <input type="text" class="item__form-input" placeholder="Nom de la colocation"
-                name="housename" v-model:value="newHouse.name">
+                <input type="text" class="item__form-input"
+                    placeholder="Nom de la colocation" name="housename"
+                    v-model:value="newHouse.name"
+                />
             </div>
             <div>
                 <nuxt-link class="item__form-submit" to="/houses">Annuler</nuxt-link>
-                <input v-on:click="createHouse" type="submit" name="action" value="Créer" class="item__form-submit validate" />
+                <input @click="createHouse" type="submit" name="action" value="Créer" class="item__form-submit validate" />
             </div>
         </form>
     </div>
@@ -36,7 +38,6 @@
         },
         methods: {
             // call api to create a new house in the DB
-            // erreur api
             async createHouse(event) {
                 event.preventDefault();
                 const house = await axios({
@@ -54,8 +55,9 @@
                         Authorization: `BEARER ${this.token}`
                     },
                 }).then(response => {
+                    console.log(response.data)
                     this.$store.commit('addHouse', response.data.data.house)
-                    this.goBack()
+                    this.goback()
                     return response.data.data.house
                 }).catch(error => {
                     alert('You already belong to a house, you cannot create a new one')

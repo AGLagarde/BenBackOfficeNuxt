@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 
 const _20a17e7c = () => interopDefault(import('../pages/houses/index.vue' /* webpackChunkName: "pages/houses/index" */))
-const _40a489d6 = () => interopDefault(import('../pages/login2.vue' /* webpackChunkName: "pages/login2" */))
 const _92aa9ee2 = () => interopDefault(import('../pages/users/index.vue' /* webpackChunkName: "pages/users/index" */))
 const _2ded223c = () => interopDefault(import('../pages/houses/create.vue' /* webpackChunkName: "pages/houses/create" */))
 const _6a19ce59 = () => interopDefault(import('../pages/houses/invitation.vue' /* webpackChunkName: "pages/houses/invitation" */))
@@ -89,10 +88,6 @@ export function createRouter() {
       path: "/houses",
       component: _20a17e7c,
       name: "houses"
-    }, {
-      path: "/login2",
-      component: _40a489d6,
-      name: "login2"
     }, {
       path: "/users",
       component: _92aa9ee2,

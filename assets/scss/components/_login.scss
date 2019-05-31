@@ -24,23 +24,23 @@
     }
 
     &__label {
-        @include font (24px, $redish, 300, 1);
+        @include font (24px, $redish, 200, 1);
         display: inline-block;
         width: 30%;
     }
 
     &__input {
+        @include font (18px, $grey, 200, 1);
         width: 60%;
         border: none;
         border-bottom: 1px solid $grey;
         height: 60px;
-        @include font (18px, $grey, 300, 1);
     }
 
     &__button {
+        @include button_gradient;
         width: 30%;
         height: 50px;
         margin-top: 50px;
-        @include button_gradient(); 
     }
 }

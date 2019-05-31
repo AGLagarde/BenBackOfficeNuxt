@@ -46,7 +46,6 @@ const createStore = () => {
                 state.houses = houses
             },
             // update DB with new house added from houses/create.vue
-            // @todo
             addHouse (state, house) {
                 state.houses.push(house)
             },

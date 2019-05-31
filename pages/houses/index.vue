@@ -3,7 +3,7 @@
     <div class="container">
         <Disconnect />
         <div class="listItems">
-
+            <!--actions-->
             <div class="listItems__actions">
                 <div class="searchbar">
                     <input
@@ -12,20 +12,18 @@
                         maxlength= "12"
                         class="searchbar__input"
                         v-model="search"
-                        v-on:keyup="isFiltered = true"
+                        @keyup="isFiltered = true"
                     >
                     <img src="../../assets/img/searchbar.png" alt="search button" class="searchbar__button">
                 </div>
-
                 <Pagination
                     v-on:pageChange="portion"
-                    v-bind:items="$store.state.houses"
+                    :items="$store.state.houses"
                 />
-
                 <nuxt-link class="listItems__actions-addButton"
                     v-if="isCreating === false" to="houses/create"
                 >Add house</nuxt-link>
-            </div>
+            </div> <!--end actions-->
 
             <!-- liste -->
             <table class="listItems__table houses">
@@ -36,10 +34,9 @@
                     <th>Room-Mates</th>
                     <th>Actions</th>
                 </tr>
-
                 <HouseOneRow
                     v-for="house in filteredHouses"
-                    v-bind:key="house.id"
+                    :key="house.id"
                     :house="house"
                 ></HouseOneRow>
             </table><!-- end liste -->

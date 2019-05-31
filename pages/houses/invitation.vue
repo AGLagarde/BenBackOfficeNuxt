@@ -2,14 +2,14 @@
     <div class="invitationForm">
         <h2 class="h2">Send an invitation</h2>
         <p>Enter your new roomate's email so that he can access your organization.<br>He will receive an invitation to connect.</p>
-        <form action="" class="form item__form">
+        <form action="#" class="form item__form">
             <label for="email" class="item__form-label" >Email</label>
             <input type="email" name="email" class="item__form-input" placeholder="john.doe@gmail.com" v-model="newEmail">
             <button 
-                v-bind:disabled="valideEmail" v-on:click.prevent="sendInvitationHouse(newEmail)" 
+                :disabled="valideEmail" @click.prevent="sendInvitationHouse(newEmail)"
                 type="submit" name="action" value="Validate" 
-                class="item__form-submit validate">SEND
-            </button>
+                class="item__form-submit validate"
+            >SEND</button>
         </form>
     </div>
 </template>

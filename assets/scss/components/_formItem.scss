@@ -6,21 +6,26 @@
 .editForm {
     width: 60%;
     margin: 0 auto;
+
     > div {
         margin-bottom: 15px;
     }
+
     .item__form-submit {
         margin-top: 40px;
     }
+
     input[read-only] {
         color: red;
     }
 }
 
 .item__form {
+
     > div {
         width: 90%;
         margin: 0 0 20px 10%;
+
         &:last-child {
             margin-top: 70px;
             text-align: center;
@@ -28,13 +33,14 @@
     }
 
     &-label {
+        @include font (20px, $redish, 200, 1.2em);
         width: 15%;
         display: inline-block;
         text-align: left;
-        @include font (20px, $redish, 300, 1.2em);
     }
 
     &-input {
+        @include font (20px, false, 200, 1.2em);
         display: inline-block;
         height: 30px;
         width: 60%;
@@ -42,30 +48,32 @@
         border: none;
         border-bottom: solid 1px $grey;
         box-shadow: none;
-        @include font (20px, false, 300, 1.2em);
         height: auto;
         padding: 10px 10px 10px 0;
+
         &:active,
         &:focus {
             outline: none;
             border-bottom: $grey solid 1px;
             box-shadow: none;
         }
+
         &::-webkit-input-placeholder,
-        &:-ms-input-placeholder
+        &:-ms-input-placeholder,
         &::placeholder {
             color: green;
         }
+
         &[readonly]{
             color: $grey;
         }
     }
 
     &-submit {
+        @include font (24px, false, 200);
         width: 15%;
         border: none;
         font-size: 24px;
-        @include font (24px, false, 300);
         cursor: pointer;
 
         &:hover {

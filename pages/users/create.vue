@@ -1,7 +1,7 @@
 <!-- create user -->
  <template>
      <div class="wrapper">
-        <form action="" class="form item__form">
+        <form action="#" class="form item__form">
             <h2 class="h2">Add a user</h2>
             <div> <!-- firstname -->
                 <label for="firstname" class="item__form-label" >Firstname</label>
@@ -19,13 +19,9 @@
                 <label for="password" class="item__form-label">Password</label>
                 <input type="password" name="password" class="item__form-input" placeholder="Password" v-model:value="newUser.password"/>
             </div>
-            <div> <!-- house -->
-                <label for="housename" class="item__form-label">House</label>
-                <input type="text" name="housename" class="item__form-input" placeholder="The name of your house" v-model:value="newUser.house"/>
-            </div>
             <div> <!-- buttons -->
                 <nuxt-link class="item__form-submit" to="/users">Annuler</nuxt-link>
-                <input v-on:click="createUser" type="submit" name="action" value="Créer" class="item__form-submit validate" />
+                <input @click="createUser" type="submit" name="action" value="Créer" class="item__form-submit validate"/>
             </div>
         </form>
      </div>
@@ -35,7 +31,6 @@
 import axios from 'axios'
 
 export default {
-    name: 'user-add',
     props: {
         user: Object
     }, 
@@ -73,18 +68,12 @@ export default {
                 },
             }).then(response => {
                 this.$store.commit('addUser', response.data.data.user)
-                console.log(response.data)
                 this.goback()
                 return response.data.data.user
             }).catch(error => {
                 console.log(error)
             })
-
-            // dans createUser faire call API - liaison 
-            // recup de '$l'id avec user.id
-
         },
-        
         goback() {
             this.$router.push({ path: '/users' })
         }

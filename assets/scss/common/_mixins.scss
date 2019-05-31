@@ -7,10 +7,11 @@
 }
 
 @mixin button_gradient () {
+    @include font (18px, $greyInk, 300, 1);
     border-radius: 10px;
     border: 1px solid $redish;
     padding: 10px 20px;
-    @include font (18px, $greyInk, 500, 1);
+
     &:hover {
         background-image: linear-gradient(to right, $pink , $redish);
         color: $white;

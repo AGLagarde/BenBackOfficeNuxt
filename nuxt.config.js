@@ -1,5 +1,4 @@
 import pkg from './package'
-import hooks from './hooks'
 
 export default {
     mode: 'universal',
@@ -16,7 +15,7 @@ export default {
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-            { rel: 'preload', as: 'font', href: 'https://fonts.googleapis.com/css?family=Montserrat:300,500,700' },
+            { rel: 'preload', as: 'font', href: 'https://fonts.googleapis.com/css?family=Montserrat:200, 300,500' },
         ]
     },
 

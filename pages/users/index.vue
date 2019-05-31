@@ -3,28 +3,26 @@
     <div class="container">
         <Disconnect />
         <div class="listItems">
-            <!--<Navigation/>-->
+            <!--actions-->
             <div class="listItems__actions">
                 <div class="searchbar">
                     <input
                         type="text" placeholder="Search"
                         maxlength= "12" class="searchbar__input"
                         v-model="search"
-                        v-on:keyup="isFiltered = true"
+                        @keyup="isFiltered = true"
                     >
                     <img src="~assets/img/searchbar.png" alt="search button" class="searchbar__button">
                 </div>
-
                 <Pagination
-                    v-on:pageChange="portion"
-                    v-bind:items="$store.state.users"
+                    @pageChange="portion"
+                    :items="$store.state.users"
                 />
-
                 <nuxt-link class="listItems__actions-addButton"
                     v-if="isCreating === false"
                     to="users/create"
                 >Add user</nuxt-link>
-            </div>
+            </div> <!--end actions-->
 
             <!-- list -->
             <table class="listItems__table users">
@@ -36,10 +34,9 @@
                     <th>House</th>
                     <th>Actions</th>
                 </tr>
-
                 <UserOneRow
                     v-for="user in filteredUsers"
-                    v-bind:key="user.id"
+                    :key="user.id"
                     :user="user"
                 ></UserOneRow>
 

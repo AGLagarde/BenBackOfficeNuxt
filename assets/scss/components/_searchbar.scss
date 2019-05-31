@@ -3,6 +3,7 @@
     height: 100%;
     display: inline-block;
     position: relative;
+
     &__input {
         font-size: 18px;
         width: 250px;
@@ -12,15 +13,16 @@
         box-shadow: 0 5px 3px rgba(black, .1);
         padding: 10px 20px;
     }
+
     &__button {
         height: 20px;
         position: absolute;
         top: 50%;
         right: 15px;
         transform: translateY(-50%);
+
         &:hover {
             cursor: pointer;
           }
       }
-    
   }

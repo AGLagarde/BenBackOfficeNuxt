@@ -1,42 +1,41 @@
 <template>
   <div class="login">
     <!-- admin@hetic.net / admin -->
-    <!-- eric.priou@hetic.net / unebonnenote -->
     <!-- DYNAMIQUE -->
     <picture>
-      <img src="../assets/img/ben.png" alt="logo ben">
+      <img src="../assets/img/red_ben.png" alt="logo ben">
     </picture>
 
-    <!--<div class="login__line">-->
-      <!--<label for="email" class="login__label" >Login</label>-->
-      <!--<input class="login__input"-->
-             <!--type="email" name="email"-->
-             <!--placeholder="email"-->
-             <!--v-model:value="connexion.email"-->
-      <!--&gt;-->
-    <!--</div>-->
-    <!--<div class="login__line">-->
-      <!--<label for="password" class="login__label" >Password</label>-->
-      <!--<input class="login__input"-->
-             <!--type="password" name="password"-->
-             <!--placeholder="password"-->
-             <!--v-model:value="connexion.password"-->
-      <!--&gt;-->
-    <!--</div>-->
-    <!--<button class="login__button"-->
-            <!--v-on:click.prevent="login(connexion.email, connexion.password)"-->
-    <!--&gt;CONNECT</button>-->
+    <div class="login__line">
+      <label for="email" class="login__label" >Login</label>
+      <input class="login__input"
+             type="email" name="email"
+             placeholder="email"
+             v-model:value="connexion.email"
+      >
+    </div>
+    <div class="login__line">
+      <label for="password" class="login__label" >Password</label>
+      <input class="login__input"
+             type="password" name="password"
+             placeholder="password"
+             v-model:value="connexion.password"
+      >
+    </div>
+    <button class="login__button"
+            v-on:click.prevent="login(connexion.email, connexion.password)"
+    >CONNECT</button>
 
     <!-- EN DUR  -->
-    <div class="login__line">
-        <label for="email" class="login__label" >Login</label>
-        <input class="login__input" type="email" placeholder="email" name="email"  value="admin@hetic.net">
-    </div>
-    <div class="login__line">
-        <label for="password" class="login__label" >Password</label>
-        <input class="login__input" type="password" name="password" placeholder="mot de passe" value="admin">
-    </div>
-    <button class="login__button" v-on:click.prevent="login('admin@hetic.net', 'admin')">CONNECT</button>
+    <!--<div class="login__line">-->
+        <!--<label for="email" class="login__label" >Login</label>-->
+        <!--<input class="login__input" type="email" placeholder="email" name="email"  value="admin@hetic.net">-->
+    <!--</div>-->
+    <!--<div class="login__line">-->
+        <!--<label for="password" class="login__label" >Password</label>-->
+        <!--<input class="login__input" type="password" name="password" placeholder="mot de passe" value="admin">-->
+    <!--</div>-->
+    <!--<button class="login__button" v-on:click.prevent="login('admin@hetic.net', 'admin')">CONNECT</button>-->
   </div>
 </template>
 
@@ -80,7 +79,7 @@
                 this.$router.push({ path: 'users' })
             }).catch(error => {
                     console.log(error)
-            });
+            })
             }
         },
         mounted() {
@@ -89,7 +88,6 @@
             if (localStorage.getItem('token')){
                 this.$router.push({ path: 'users' })
             }
-
         }
     }
 </script>
