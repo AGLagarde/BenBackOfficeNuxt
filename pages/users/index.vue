@@ -15,8 +15,8 @@
                     <img src="~assets/img/searchbar.png" alt="search button" class="searchbar__button">
                 </div>
                 <Pagination
-                    @pageChange="portion"
-                    :items="$store.state.users"
+                    :items="$store.state.filteredUsers"
+                    :totalPages="totalPages"
                 />
                 <nuxt-link class="listItems__actions-addButton"
                     v-if="isCreating === false"
@@ -57,22 +57,29 @@ export default {
         UserOneRow,
         Pagination
     },
+
     data() {
         return {
             token: this.$store.state.token,
+            items: [],
+            currentPage: this.$store.state.currentPage,
+            numberPerPage: this.$store.state.numberPerPage,
+            begin: this.$store.state.beginPortion,
+            end: this.$store.state.endPortion,
             isCreating: false,
             search: '',
-            isFiltered: true,
-            begin: 0,
-            end: 0
+            isFiltered: true
         }
     },
+
     // if no token redirect to login page
     middleware: 'authenticated',
+
     // when component mounted, call api to get all the users from the DB 
     mounted() {
         this.getAllUsers()
     },
+
     methods: {
         // call api to get all users from DB
         getAllUsers() {
@@ -86,6 +93,7 @@ export default {
             .then(response => {
                 // update users in store after call api
                 this.$store.commit('setUsers', response.data.data.users)
+                this.items = response.data.data.users
                 this.$store.state.users.forEach(user => {
                     if (user.house) {
                         user.house = user.house.name
@@ -97,27 +105,46 @@ export default {
             .catch(err => {
                 console.log(err)
             })
-        },
-        // get the numbers from pagination to proceed to the slice
-        portion(payload) {
-            this.begin = payload.begin
-            this.end = payload.end
         }
     },
-    // fx ici qui calcule begin et end dans computed
-    // page 2 => 2 X10
-    // enlever begin et end de pagination
-    // responsabilité = donne juste page courante
-    // l'affichage d'index qui dit, je sais que j'affiche 10 elements par page
-    // loadlist ici
+
     computed: {
+        
+        portion() {
+            this.begin = ((this.currentPage - 1) * this.numberPerPage)
+            this.end = this.begin + this.numberPerPage
+            this.$store.commit('setPortion', this.begin, this.end)
+            return  this.begin, this.end
+        },
         // filter search locally - show users depending on slice obtain by pagination component
         // return --> the portion of users corresponding to the search
         filteredUsers() {
-            // simuler un clic sur le first avant de filtrer et decouper ????
             return this.$store.state.users.filter(user => {
                 return user.firstname.toLowerCase().indexOf(this.search.toLowerCase()) > -1
             }).slice(this.begin, this.end)
+        },
+        // total items are linked to data from the DB
+        totalItems() {
+            return this.items;
+        },
+        // total pages are obtained depending on total items and number per page
+        totalPages () {
+            return Math.ceil(this.totalItems.length / this.numberPerPage)
+        },
+        // update the page based on pagination transmitted data
+        currentPageUpdated() {
+            return this.currentPage
+        }
+    },
+
+    watch: {
+        totalPages(newValue, oldValue) {
+            this.portion
+        },
+        currentPageUpdated(newValue, oldValue) {
+            console.log('old ', oldValue)
+            console.log('new ', newValue)
+            this.portion
         }
     }
 }

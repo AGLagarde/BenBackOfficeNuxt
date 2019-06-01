@@ -6,26 +6,29 @@ const createStore = () => {
             token: '',
             users: [],
             houses: [],
-            authUser: null,
+            selectedTab: 1,
             currentPage: 1,
-            selectedTab: 1
+            numberPerPage: 10,
+            beginPortion: 0,
+            endPortion: 0
         },
         mutations: {
             // get token from login.vue
             setToken (state, token) {
                 state.token = token
             },
+            // update Tab of navigation (users/houses)
+            setTab (state, tab) {
+                state.selectedTab = tab
+            },
             // get current page
             setCurrentPage (state, page) {
                 state.currentPage = page
-            },
-            // get user authentification (login)
-            setAuthUser (state, user) {
-                state.authUser = user
-            },
-            // update Tab of navigation
-            setTab (state, tab) {
-                state.selectedTab = tab
+            }, 
+            // set portion of items linked to pagination 
+            setPortion (state, begin, end) {
+                state.beginPortion = begin
+                state.endPortion = end
             },
             // get all users from users/index.vue
             setUsers (state, users) {
