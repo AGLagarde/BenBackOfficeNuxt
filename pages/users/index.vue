@@ -111,7 +111,7 @@ export default {
     computed: {
         
         portion() {
-            this.begin = ((this.currentPage - 1) * this.numberPerPage)
+            this.begin = ((this.currentPageUpdated - 1) * this.numberPerPage)
             this.end = this.begin + this.numberPerPage
             this.$store.commit('setPortion', this.begin, this.end)
             return  this.begin, this.end
