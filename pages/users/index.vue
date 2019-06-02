@@ -62,7 +62,6 @@ export default {
         return {
             token: this.$store.state.token,
             items: [],
-            currentPage: this.$store.state.currentPage,
             numberPerPage: this.$store.state.numberPerPage,
             begin: this.$store.state.beginPortion,
             end: this.$store.state.endPortion,
@@ -133,7 +132,7 @@ export default {
         },
         // update the page based on pagination transmitted data
         currentPageUpdated() {
-            return this.currentPage
+            return this.$store.state.currentPage
         }
     },
 
@@ -142,8 +141,6 @@ export default {
             this.portion
         },
         currentPageUpdated(newValue, oldValue) {
-            console.log('old ', oldValue)
-            console.log('new ', newValue)
             this.portion
         }
     }

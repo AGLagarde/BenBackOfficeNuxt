@@ -17,8 +17,8 @@
                     <img src="../../assets/img/searchbar.png" alt="search button" class="searchbar__button">
                 </div>
                 <Pagination
-                    v-on:pageChange="portion"
-                    :items="$store.state.houses"
+                    :items="$store.state.filteredHouses"
+                    :totalPages="totalPages"
                 />
                 <nuxt-link class="listItems__actions-addButton"
                     v-if="isCreating === false" to="houses/create"
@@ -59,19 +59,24 @@
         data() {
             return {
                 token: this.$store.state.token,
+                items: [],
+                numberPerPage: this.$store.state.numberPerPage,
+                begin: this.$store.state.beginPortion,
+                end: this.$store.state.endPortion,
                 isCreating: false,
                 search: '',
-                isFiltered: true,
-                begin: 0,
-                end: 0
+                isFiltered: true
             }
         },
+
         // if no token redirect to login page
         middleware: 'authenticated',
+
         // when component mounted, call api to get all the houses from the DB 
         mounted() {
             this.getAllHouses()
         },
+
         methods: {
             // call api to get all houses from DB
             getAllHouses() {
@@ -84,23 +89,46 @@
                 })
                 .then(response => {
                     this.$store.commit('setHouses', response.data.data.houses)
+                    this.items = response.data.data.houses
                 })
                 .catch(err => {
                     console.log(err)
                 })
-            },
-            // get the numbers to proceed to the slice
-            portion(payload) {
-                this.begin = payload.begin
-                this.end = payload.end
             }
         },
         computed: {
+            portion() {
+                this.begin = ((this.currentPageUpdated - 1) * this.numberPerPage)
+                this.end = this.begin + this.numberPerPage
+                this.$store.commit('setPortion', this.begin, this.end)
+                return  this.begin, this.end
+            },
             // filter search locally - show users depending on slice obtain by pagination component
             filteredHouses() {
                 return this.$store.state.houses.filter(house => {
                     return house.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
                 }).slice(this.begin, this.end)
+            }, 
+            // total items are linked to data from the DB
+            totalItems() {
+                return this.items;
+            },
+            // total pages are obtained depending on total items and number per page
+            totalPages () {
+                return Math.ceil(this.totalItems.length / this.numberPerPage)
+            },
+            // update the page based on pagination transmitted data
+            currentPageUpdated() {
+                return this.$store.state.currentPage
+            }
+        },
+
+        watch: {
+            totalPages(newValue, oldValue) {
+                this.portion
+            },
+            currentPageUpdated(newValue, oldValue) {
+                this.portion
             }
         }
     }
