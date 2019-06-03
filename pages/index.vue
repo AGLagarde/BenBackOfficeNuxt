@@ -59,7 +59,11 @@
             }
         },
         methods: {
-            // call api to login and obtain token to access DB
+            /**
+             * Call api to login and access DB that transmits token data to the store
+             * @param {string} email - Email of user
+             * @param {string} password - Password of user
+             */
             login(email, pwd) {
                 axios({
                     method: 'post',
@@ -75,15 +79,17 @@
                     },
                 }).then(response => {
                     this.$store.commit('setToken', response.data.data.token)
-                localStorage.setItem('token', response.data.data.token)
-                this.$router.push({ path: 'users' })
-            }).catch(error => {
-                    console.log(error)
-            })
+                    localStorage.setItem('token', response.data.data.token)
+                    this.$router.push({ path: 'users' })
+                }).catch(error => {
+                        console.log(error)
+                })
             }
         },
+        /**
+         * Token is stocked in Store and LocalStorage 
+         */
         mounted() {
-            // put token in the localstorage and redirect to users page
             this.$store.commit('setToken', localStorage.getItem('token'))
             if (localStorage.getItem('token')){
                 this.$router.push({ path: 'users' })

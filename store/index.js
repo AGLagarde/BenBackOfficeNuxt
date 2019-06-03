@@ -8,7 +8,7 @@ const createStore = () => {
             houses: [],
             selectedTab: 1,
             currentPage: 1,
-            numberPerPage: 10,
+            numberPerPage: 15,
             beginPortion: 0,
             endPortion: 0
         },
@@ -52,7 +52,7 @@ const createStore = () => {
             addHouse (state, house) {
                 state.houses.push(house)
             },
-            // not working because of no call api existing with specific ID
+            // not working because of no existing call api with specific ID
             removeHouse (state, id) {
                 state.houses = state.houses.filter((house)=> {
                     return house.id !== id

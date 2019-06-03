@@ -15,20 +15,25 @@
 export default {
     data() {
         return {
-            // endpoint (/me) missing in the api
+            /** endpoint (/me) missing in the api */
             authUser: this.$store.state.authUser
         }
     },
+
     computed: {
         token() {
             return this.$store.state.token
         }
     },
+
     mounted() {
         window.addEventListener('scroll', this.scrollAppear);
     },
+
     methods: {
-        // so many users you have to scroll --> appearance of button to scroll to top
+        /**
+        * Appearance of button in order to scroll to top
+        */
         scrollAppear() {
             if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
                 document.querySelector('.authentified__up').classList.add('appear');
@@ -36,7 +41,9 @@ export default {
                 document.querySelector('.authentified__up').classList.remove('appear');
             }
         },
-        // so many users you have to scroll --> smooth scroll to top
+        /**
+        * Smooth scroll to top
+        */
         scrollTop() {
             const totop = document.documentElement.scrollTop || document.body.scrollTop;
             if (totop > 0) {
@@ -44,7 +51,9 @@ export default {
                 window.scrollTo(0, totop - totop / 8);
             }
         },
-        // disconnect and redirect to login - empty the token of localstorage and store
+        /**
+        * Empty token both in store and localstorage
+        */
         disconnect() {
             this.$store.commit('setToken', null)
             localStorage.clear()

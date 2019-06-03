@@ -23,21 +23,28 @@ export default {
     props: {
         house: Object
     },
+
     data() {
         return {
             token: this.$store.state.token,
-            houses: this.$store.state.houses
+            houses: this.$store.state.houses, 
+            date: null
         }
     },
+
+    mounted() {
+        return this.date = this.house.created.slice(0, 10)
+    }, 
+
     computed: {
-        // get names of users living in the house
+        /**
+        * Display the names of the users belonging to the house
+        * @returns {string} names
+        */
         names() {
             return this.house.users.map(user => {
                 return `${user.firstname} ${user.lastname}`
             })
-        },
-        date() {
-            return this.house.created.slice(0, 10)
         }
     }
 }

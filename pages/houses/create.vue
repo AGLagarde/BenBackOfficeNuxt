@@ -37,7 +37,10 @@
             }
         },
         methods: {
-            // call api to create a new house in the DB
+            /**
+            * Asynchronous call api to add a new house 
+            * provided that the key name is filled
+            */
             async createHouse(event) {
                 event.preventDefault();
                 const house = await axios({
@@ -55,10 +58,9 @@
                         Authorization: `BEARER ${this.token}`
                     },
                 }).then(response => {
-                    console.log(response.data)
                     this.$store.commit('addHouse', response.data.data.house)
                     this.goback()
-                    return response.data.data.house
+                    //return response.data.data.house
                 }).catch(error => {
                     alert('You already belong to a house, you cannot create a new one')
                     console.log(error)
@@ -70,6 +72,7 @@
         }
     }
 </script>
+
 
 <style lang="scss">
     @import '../../assets/scss/styles.scss';

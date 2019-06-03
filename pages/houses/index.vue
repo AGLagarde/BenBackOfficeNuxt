@@ -69,16 +69,20 @@
             }
         },
 
-        // if no token redirect to login page
+        /**
+        * Before page mounted, verification of token otherwise redirect to login page
+        */
         middleware: 'authenticated',
 
-        // when component mounted, call api to get all the houses from the DB 
         mounted() {
             this.getAllHouses()
         },
 
         methods: {
-            // call api to get all houses from DB
+            /**
+            * Call api to get all the houses in DB --token required--
+            * @returns {array, array} houses, items
+            */
             getAllHouses() {
                 axios({
                     method: 'get',
@@ -96,37 +100,62 @@
                 })
             }
         },
+
         computed: {
+            /**
+            * Set the portion of each slice for a page and returns it to the store
+            * @returns {number, number} begin, end 
+            */
             portion() {
                 this.begin = ((this.currentPageUpdated - 1) * this.numberPerPage)
                 this.end = this.begin + this.numberPerPage
                 this.$store.commit('setPortion', this.begin, this.end)
                 return  this.begin, this.end
             },
-            // filter search locally - show users depending on slice obtain by pagination component
+            /**
+            * Search filters results of houses depending on their name 
+            * @returns {array} filteredHouses
+            */
             filteredHouses() {
                 return this.$store.state.houses.filter(house => {
                     return house.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
                 }).slice(this.begin, this.end)
             }, 
-            // total items are linked to data from the DB
+            /**
+            * Linked to items all got by the getAllHouses method
+            * @returns {array} totalItems
+            */
             totalItems() {
                 return this.items;
             },
-            // total pages are obtained depending on total items and number per page
+            /**
+            * Set the number of pages depending on how many items and number items per page
+            * @returns {number} totalPages
+            */
             totalPages () {
                 return Math.ceil(this.totalItems.length / this.numberPerPage)
             },
-            // update the page based on pagination transmitted data
+            /**
+            * Dynamically linked to the current page of the store
+            * @returns {number} currentPageUpdated
+            */
             currentPageUpdated() {
                 return this.$store.state.currentPage
             }
         },
 
         watch: {
+            /**
+            * Portion is activated as soon as totalPages changes 
+            * @params {number, number} newValue, oldValue
+            */
             totalPages(newValue, oldValue) {
                 this.portion
             },
+            /**
+            * Portion is activated as soon as currentPageUpdated changes 
+            * @params {number, number} newValue, oldValue
+            */
             currentPageUpdated(newValue, oldValue) {
                 this.portion
             }

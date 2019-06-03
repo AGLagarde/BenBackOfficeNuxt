@@ -42,13 +42,15 @@ export default {
                 firstname: '',
                 lastname: '',
                 email: '',
-                password: '',
-                house: ''
+                password: ''
             }
         }
     }, 
     methods: {
-        // asynchronous function : wait the response from call api to create new user with 
+        /**
+        * Asynchronous call api to add a new user 
+        * provided that the keys firstname/lastname/email/password are filled
+        */
         async createUser(event) {
             event.preventDefault();
             const user = await axios({
@@ -59,8 +61,7 @@ export default {
                         firstname : this.newUser.firstname,
                         lastname : this.newUser.lastname,
                         email : this.newUser.email,
-                        password : this.newUser.password,
-                        house : this.newUser.house
+                        password : this.newUser.password
                     }
                 },
                 headers: {
@@ -68,8 +69,9 @@ export default {
                 },
             }).then(response => {
                 this.$store.commit('addUser', response.data.data.user)
+                alert('Your user has been well added')
                 this.goback()
-                return response.data.data.user
+                //return response.data.data.user
             }).catch(error => {
                 console.log(error)
             })

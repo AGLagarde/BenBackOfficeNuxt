@@ -42,7 +42,10 @@ export default {
         }
     },
     methods: {
-        // call api to delete user with its ID
+        /**
+        * Call api to delete a user -- required token --
+        * @params {number} id
+        */
         deleteUser(id) {
             axios({
                 method: 'DELETE',

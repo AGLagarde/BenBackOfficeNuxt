@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js run buildgit st
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js generate
 
 PATH: 
   /usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -24,7 +24,7 @@ npm manifest:
       "dev": "nuxt",
       "build": "nuxt build",
       "start": "nuxt start",
-      "generate": "nuxt generate"
+      "np": "nuxt generate"
     },
     "dependencies": {
       "axios": "^0.18.0",
@@ -8051,7 +8051,7 @@ Lockfile:
       yargs-parser "^5.0.0"
 
 Trace: 
-  Error: Command "buildgit" not found.
+  Error: Command "generate" not found.
       at new MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
       at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:87307:17
       at Generator.next (<anonymous>)
