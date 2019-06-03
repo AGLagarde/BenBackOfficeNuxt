@@ -23,33 +23,23 @@ export default {
         items: Array, 
         totalPages: Number
     },
+
     data() {
         return {
-            path: '',
             currentPage: this.$store.state.currentPage
         }
     },
-    mounted() {
-        this.path = window.location.pathname
-        // this.loadList()
-    },
-    // computed: {
-    //     // total items are linked to data from the DB
-    //     total_items() {
-    //         return this.items;
-    //     },
-    //     // total pages are obtained depending on total items and number per page
-    //     total_pages () {
-    //         return Math.ceil(this.total_items.length / this.number_per_page)
-    //     },
-    // },
-    // loadList is called as soon as total_pages changes
-    // watch: {
-    //     total_pages(newValue, oldValue) {
-    //         this.loadList()
-    //     }
-    // },
+
     methods: {
+        updatePage() {
+            const current_number = document.querySelector('.current')
+            current_number.innerHTML = `${this.currentPage} / ${this.totalPages}`
+            this.$store.commit('setCurrentPage', this.currentPage)
+            this.check()
+        },
+        /**
+        * Behaviors of arrows depending on the current page
+        */
         nextPage() {
             this.currentPage += 1;
             this.updatePage()
@@ -69,14 +59,6 @@ export default {
             this.currentPage = this.totalPages;
             this.updatePage()
         },
-        // update page in DOM and transfer data to the store
-        updatePage() {
-            const current_number = document.querySelector('.current')
-            current_number.innerHTML = `${this.currentPage} / ${this.totalPages}`
-            this.$store.commit('setCurrentPage', this.currentPage)
-            this.check()
-        },
-        // disable buttons depending on page number
         check() {
             document.querySelector('.next').disabled = this.currentPage === this.totalPages ? true : false;
             document.querySelector('.previous').disabled = this.currentPage === 1 ? true : false;

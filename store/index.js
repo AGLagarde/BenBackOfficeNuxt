@@ -8,7 +8,7 @@ const createStore = () => {
             houses: [],
             selectedTab: 1,
             currentPage: 1,
-            numberPerPage: 10,
+            numberPerPage: 15,
             beginPortion: 0,
             endPortion: 0
         },

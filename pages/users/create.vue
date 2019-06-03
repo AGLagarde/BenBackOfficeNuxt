@@ -48,7 +48,11 @@ export default {
         }
     }, 
     methods: {
-        // asynchronous function : wait the response from call api to create new user with 
+        /**
+        * Asynchronous call api to create new user 
+        * @params {object} user
+        * @returns {array, array} users
+        */
         async createUser(event) {
             event.preventDefault();
             const user = await axios({
@@ -68,12 +72,17 @@ export default {
                 },
             }).then(response => {
                 this.$store.commit('addUser', response.data.data.user)
+                alert('Your user has been well added')
                 this.goback()
-                return response.data.data.user
+
+                //return response.data.data.user
             }).catch(error => {
                 console.log(error)
             })
         },
+        /**
+        * Redirection after validation create user form
+        */
         goback() {
             this.$router.push({ path: '/users' })
         }

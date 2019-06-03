@@ -23,12 +23,14 @@ export default {
     props: {
         house: Object
     },
+    
     data() {
         return {
             token: this.$store.state.token,
             houses: this.$store.state.houses
         }
     },
+
     computed: {
         // get names of users living in the house
         names() {

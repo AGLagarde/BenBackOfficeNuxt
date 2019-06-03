@@ -44,7 +44,11 @@ export default {
         }
     },
     methods: {
-        // call api to delete house with its ID - but not working because of no call api created for
+        /**
+        * Call api to delete a house -- required token --
+        * Not working because of missing call api to delete a house with its ID
+        * @params {number} id
+        */
         deleteHouse(id) {
             axios({
                 method: 'DELETE',

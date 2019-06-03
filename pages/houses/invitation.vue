@@ -28,6 +28,10 @@ export default {
         }
     },
     methods: {
+        /**
+         * Call api to send an invitation mail via DB --token required--
+         * @param {string} email - Email of invited user
+         */
         sendInvitationHouse(mail) {
             axios({
                 method: 'POST',
@@ -48,7 +52,12 @@ export default {
             });
         }
     },
+
     computed: {
+        /**
+         * Verification of a match of valid email format to be able to send 
+         * @param {boolean} -- required true to function
+         */
         valideEmail: function() {
             var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return !re.test(this.newEmail);

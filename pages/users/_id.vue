@@ -36,25 +36,30 @@
 import axios from 'axios'
 
 export default {
-    asyncData(context) {
-        console.log(context.params.id)
-        return {
-            // merge data dans mon data
-            id: context.params.id
-        }
-    },
+    // asyncData(context) {
+    //     console.log(context.params.id)
+    //     return {
+    //         // merge data dans mon data
+    //         id: context.params.id
+    //     }
+    // },
     data() {
         return {
-            // va merger avec nouvelle valeur
             id: null,
             token: this.$store.state.token,
             currentUser: {}
         }
     }, 
+
     mounted() {
         this.getUser(this.id)
     },
+
     methods: {
+        /**
+        * Call api to get data from a specific user in DB --token required--
+        * @returns {object} currentUser
+        */
         getUser(id) {
             axios({
                 method: 'get',
@@ -70,6 +75,10 @@ export default {
                 console.log(err)
             })
         },
+        /**
+        * Call api to update a specific user in DB --token required--
+        * @params {object} user
+        */
         updateUser() {
             axios({
                 method: 'PUT',
