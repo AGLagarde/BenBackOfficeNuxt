@@ -1,15 +1,18 @@
+<!-- create house -->
 <template>
     <div class="wrapper">
-        <form action="" class="form item__form">
+        <form action="#" class="form item__form">
             <h2 class="h2">Add a house</h2>
             <div>
                 <label for="housename" class="item__form-label" >Name</label>
-                <input type="text" class="item__form-input" placeholder="Nom de la colocation"
-                name="housename" v-model:value="newHouse.name">
+                <input type="text" class="item__form-input"
+                    placeholder="Nom de la colocation" name="housename"
+                    v-model:value="newHouse.name"
+                />
             </div>
             <div>
-                <input v-on:click="goback" type="submit" name="action" value="Annuler" class="item__form-submit" />
-                <input v-on:click="createHouse" type="submit" name="action" value="Créer" class="item__form-submit" />
+                <nuxt-link class="item__form-submit" to="/houses">Annuler</nuxt-link>
+                <input @click="createHouse" type="submit" name="action" value="Créer" class="item__form-submit validate" />
             </div>
         </form>
     </div>
@@ -34,11 +37,10 @@
             }
         },
         methods: {
-            // POST METHOD CREATE
-            createHouse(event) {
+            // call api to create a new house in the DB
+            async createHouse(event) {
                 event.preventDefault();
-                console.log(this.token)
-                axios({
+                const house = await axios({
                     method: 'post',
                     url: 'http://ulysse.idequanet.com/ben/web/api/house/create',
                     data: {
@@ -53,22 +55,17 @@
                         Authorization: `BEARER ${this.token}`
                     },
                 }).then(response => {
-                    console.log(this.token)
-                    this.houses.push(response.data.data.house)
                     console.log(response.data)
+                    this.$store.commit('addHouse', response.data.data.house)
                     this.goback()
+                    return response.data.data.house
                 }).catch(error => {
+                    alert('You already belong to a house, you cannot create a new one')
                     console.log(error)
-                });
+                })
             },
             goback() {
-                console.log('go back')
                 this.$router.push({ path: '/houses' })
-            },
-            updateForm(input) {
-                document.querySelectorAll('.listUsers__add__form input').forEach(function(input) {
-                    input.value = ''
-                })
             }
         }
     }
@@ -88,5 +85,8 @@
     }
     .item__form-input {
         width: 40%;
+    }
+    .validate {
+        margin-left: 20px;
     }
 </style>

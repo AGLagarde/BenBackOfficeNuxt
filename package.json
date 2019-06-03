@@ -1,8 +1,8 @@
 {
-  "name": "backofficeBenNuxt",
+  "name": "BackofficeBen",
   "version": "1.0.0",
   "description": "My breathtaking Nuxt.js project",
-  "author": "Anne",
+  "author": "Anne Lagarde",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -16,6 +16,7 @@
     "node-sass": "^4.12.0",
     "nuxt": "^2.4.0",
     "sass-loader": "^7.1.0",
+    "vuex-persistedstate": "^2.5.4",
     "webpack": "^4.30.0"
   },
   "devDependencies": {

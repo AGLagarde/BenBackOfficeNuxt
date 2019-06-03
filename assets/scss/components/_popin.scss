@@ -1,5 +1,6 @@
 .popin {
     position: fixed;
+    z-index: 5;
     width: 60%;
     left: 20%;
     top: 50%;
@@ -9,6 +10,41 @@
     box-shadow:  0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
     font-size: 24px;
     background: $white;
-    z-index: 5;
+
+    &__step1 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        p {
+            width: 90%;
+            margin: 0 5%;
+            flex: 0 0 1;
+            padding-bottom: 40px;
+            line-height: 40px;
+            @include font (20px, $grey, 300, 1.8em);
+        }
+        &-answer {
+            margin: 5%;
+            @include button_gradient();
+            text-decoration: none;
+        }
+    }
+    &__step2 {
+        &-validation {
+            padding: 10px 0 50px;
+            text-transform: none;
+            p {
+                margin-bottom: 30px;
+                color: $grey;
+            }
+        }
+        a {
+            cursor:pointer;
+            color: $grey;
+            &:hover {
+                color: $redish;
+            }
+        }
+    }
 }
   

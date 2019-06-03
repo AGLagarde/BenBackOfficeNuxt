@@ -9,8 +9,10 @@
 @import './components/listItems.scss';
 @import './components/login.scss';
 @import './components/navigation.scss';
+@import './components/pagination.scss';
 @import './components/popin.scss';
 @import './components/searchbar.scss';
+@import './components/disconnect.scss';
 
 
 #app {
@@ -27,6 +29,10 @@
 
 p {
     margin: 0; 
+}
+
+a {
+    text-decoration: none;
 }
 
 button, 

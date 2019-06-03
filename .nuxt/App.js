@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import NuxtLoading from './components/nuxt-loading.vue'
+import NuxtBuildIndicator from './components/nuxt-build-indicator'
+
+import '../assets/scss/styles.scss'
 
 import _6f6c098b from '../layouts/default.vue'
+import _498979bd from '../layouts/partials/emptyNav.vue'
+import _230840c8 from '../layouts/partials/nav.vue'
 
-const layouts = { "_default": _6f6c098b }
+const layouts = { "_default": _6f6c098b,"_partials/emptyNav": _498979bd,"_partials/nav": _230840c8 }
 
 export default {
-  head: {"title":"backofficeBenNuxt","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"My breathtaking Nuxt.js project"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"}],"style":[],"script":[]},
+  head: {"title":"BackofficeBen","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"My breathtaking Nuxt.js project"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"preload","as":"font","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Montserrat:200, 300,500"}],"style":[],"script":[]},
 
   render(h, props) {
     const loadingEl = h('NuxtLoading', { ref: 'loading' })
@@ -37,10 +42,7 @@ export default {
       domProps: {
         id: '__nuxt'
       }
-    }, [
-      loadingEl,
-      transitionEl
-    ])
+    }, [loadingEl, h(NuxtBuildIndicator), transitionEl])
   },
   data: () => ({
     isOnline: true,

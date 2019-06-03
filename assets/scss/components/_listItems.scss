@@ -8,10 +8,9 @@
         justify-content: space-between;
         align-items: center;
         margin: 15px 0 50px;
-        padding: 0 15px 0 10px;
+        padding: 0 20px;
 
         &-addButton {
-            // width: 100px;
             @include button_gradient();
         }
     }
@@ -21,7 +20,8 @@
         color: $bluedark;
         border-spacing: 0;
         border-spacing: 0px 10px;
-        background-color: rgba(150, 150, 150, 0.2); 
+        background-color: rgba(150, 150, 150, 0.2);
+
         &.users {
             &__body {
                 &-entries {
@@ -29,6 +29,7 @@
                 }
             }
         }
+
         &.houses {
             &__body {
                 &-entries {
@@ -36,57 +37,31 @@
                 }
             }
         }
+
         &__head, 
         &__body {
             height: 50px;
         }
+
         &__head {
-            text-transform: uppercase;
             @include font (20px, $grey);
+            text-transform: uppercase;
         }
+
         &__body {
             background: $white;
+
             &-entries {
-                @include font (18px, $greyInk, 300);
+                @include font (18px, $greyInk, 200);
+                text-transform: lowercase;
+
                 &:first-child {
                     width: auto; 
                 }
             }
+
             &-actions {
                 width: 20%;
-                ul {
-                    list-style-type: none;
-                    display: flex;
-                    justify-content: center;
-                }
-
-                li {
-                    padding: 2px 6px;
-                    margin: 0 10px;
-                    border: 1px solid $bluedark; 
-                    border-radius: 10px;
-
-                    &:hover {
-                        background-color: orange;
-                        color: $white;
-                    }
-
-                    &:last-child {
-                        border-color: green; 
-                        color: green; 
-
-                        &:hover {
-                            background-color: green; 
-                            color: $white;
-                        }
-                    }
-
-                    &.input-editable {
-                        background-color: $green;
-                        border-color: $green; 
-                        color: $white;
-                    }
-                }
             }
         }
     }

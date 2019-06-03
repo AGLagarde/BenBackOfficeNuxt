@@ -1,6 +1,7 @@
+<!-- create user -->
  <template>
      <div class="wrapper">
-        <form action="" class="form item__form">
+        <form action="#" class="form item__form">
             <h2 class="h2">Add a user</h2>
             <div> <!-- firstname -->
                 <label for="firstname" class="item__form-label" >Firstname</label>
@@ -18,13 +19,9 @@
                 <label for="password" class="item__form-label">Password</label>
                 <input type="password" name="password" class="item__form-input" placeholder="Password" v-model:value="newUser.password"/>
             </div>
-            <div> <!-- house -->
-                <label for="housename" class="item__form-label">House</label>
-                <input type="text" name="housename" class="item__form-input" placeholder="The name of your house" v-model:value="newUser.house"/>
-            </div>
             <div> <!-- buttons -->
-                <input v-on:click="goback" type="submit" name="action" value="Annuler" class="item__form-submit" />
-                <input v-on:click="createUser" type="submit" name="action" value="Créer" class="item__form-submit validate" />
+                <nuxt-link class="item__form-submit" to="/users">Annuler</nuxt-link>
+                <input @click="createUser" type="submit" name="action" value="Créer" class="item__form-submit validate"/>
             </div>
         </form>
      </div>
@@ -34,14 +31,13 @@
 import axios from 'axios'
 
 export default {
-    name: 'user-add',
     props: {
         user: Object
     }, 
     data() {
         return {
             token: this.$store.state.token,
-            users : [],
+            users: this.$store.state.users,
             newUser: {
                 firstname: '',
                 lastname: '',
@@ -52,10 +48,10 @@ export default {
         }
     }, 
     methods: {
-        // POST METHOD CREATE
-        createUser(event) {
+        // asynchronous function : wait the response from call api to create new user with 
+        async createUser(event) {
             event.preventDefault();
-            axios({
+            const user = await axios({
                 method: 'post',
                 url: 'http://ulysse.idequanet.com/ben/web/api/user/create',
                 data: {
@@ -71,18 +67,15 @@ export default {
                     "Access-Control-Allow-Origin": "*"
                 },
             }).then(response => {
-                // this.$store.commit('addUser', response.data.data.user)
-                this.users.push(response.data.data.user)
-                console.log(response.data)
+                this.$store.commit('addUser', response.data.data.user)
                 this.goback()
+                return response.data.data.user
             }).catch(error => {
                 console.log(error)
             })
         },
         goback() {
-            console.log('go back')
-            this.$router.push({ path: 'users' })
-            // @todo ne fonctionne pas
+            this.$router.push({ path: '/users' })
         }
     }
 }
@@ -90,11 +83,7 @@ export default {
 
 <style lang="scss">
  @import '../../assets/scss/styles.scss';
-     /*.wrapper {*/
-         /*display: flex;*/
-         /*height: 100vh;*/
-         /*align-items: center;*/
-         /*border: 1px solid red;*/
-     /*}*/
-
+    .validate {
+        margin-left: 20px;
+    }
 </style>

@@ -6,15 +6,13 @@
         <th class="listItems__table__body-entries">{{ user.email }}</th>
         <th class="listItems__table__body-entries">{{ user.house }}</th>
         <th class="listItems__table__body-actions">
-            <UserDelete
-                :user="user" 
-                v-on:delete-user="transmitToParent"
-                class="buttonRow"
-            />
-            <button class="buttonRow"
-                v-on:click="goEdit"
-            >Edit</button>
-            <!-- v-on:modified-user="receiveModifiedUser" -->
+             <nuxt-link class="buttonRow" :to="`users/${user.id}`">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+                    <title>pencil</title>
+                    <path d="M12 20l4-2 14-14-2-2-14 14-2 4zM9.041 27.097c-0.989-2.085-2.052-3.149-4.137-4.137l3.097-8.525 4-2.435 12-12h-6l-12 12-6 20 20-6 12-12v-6l-12 12-2.435 4z"></path>
+                </svg>
+             </nuxt-link>
+             <UserDelete :user="user" class="buttonRow"/>
         </th>
     </tr>
 </template>
@@ -22,7 +20,6 @@
 
 <script>
 import UserDelete from './UserDelete'
-// import UserEdit from '../pages/users/edit'
 
 export default {
     components: {
@@ -36,43 +33,22 @@ export default {
             token: this.$store.state.token,
             users: this.$store.state.users
         }
-    },
-    methods: {
-        goEdit() {
-            this.isActive = true
-            this.isEditable = true
-            this.$router.push({ path: 'users/:id' })
-        },
-        // API PUT request transmission --> parent ListUser
-        receiveModifiedUser(userUpdated) { 
-            this.user.firstname = userUpdated.firstname 
-            this.user.lastname = userUpdated.lastname 
-            this.user.email = userUpdated.email
-            this.user.house = userUpdated.house
-        }, 
-        // API DELETE request transmission --> parent ListUser
-        transmitToParent(id) {
-            this.$emit('delete-user-suite', id)
-        }
     }
 }
- 
 </script>
 
 <style lang="scss">
-    @import '../assets/scss/common/mixins.scss';
-    @import '../assets/scss/common/variables.scss';
-    @import '../assets/scss/components/formItem.scss';
-
+    @import '../assets/scss/styles.scss';
     .buttonRow {
         color: $grey;
         border: none;
         display: inline-block;
         text-transform: uppercase;
+        margin: 0 10px;
         cursor: pointer;
+        fill: $grey;
         &:hover {
-            color: $redish;
+            fill: $redish;
         }
     }
-
 </style>

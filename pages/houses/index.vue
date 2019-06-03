@@ -1,10 +1,10 @@
 <!--HOUSES-->
 <template>
     <div class="container">
+        <Disconnect />
         <div class="listItems">
-            <Navigation/>
+            <!--actions-->
             <div class="listItems__actions">
-                <!-- searchbar-->
                 <div class="searchbar">
                     <input
                         type="text"
@@ -12,18 +12,18 @@
                         maxlength= "12"
                         class="searchbar__input"
                         v-model="search"
-                        v-on:keyup="isFiltered = true"
+                        @keyup="isFiltered = true"
                     >
                     <img src="../../assets/img/searchbar.png" alt="search button" class="searchbar__button">
-                </div><!-- end searchbar  -->
-
-                <!-- add house ------ not working -->
-                <span
-                    class="listItems__actions-addButton"
-                    v-if="isCreating === false"
-                    v-on:click="goCreate"
-                >Add House</span><!-- end add house -->
-            </div>
+                </div>
+                <Pagination
+                    :items="$store.state.filteredHouses"
+                    :totalPages="totalPages"
+                />
+                <nuxt-link class="listItems__actions-addButton"
+                    v-if="isCreating === false" to="houses/create"
+                >Add house</nuxt-link>
+            </div> <!--end actions-->
 
             <!-- liste -->
             <table class="listItems__table houses">
@@ -34,47 +34,51 @@
                     <th>Room-Mates</th>
                     <th>Actions</th>
                 </tr>
-
-                <!-- row -->
                 <HouseOneRow
                     v-for="house in filteredHouses"
-                    v-bind:key="house.id"
+                    :key="house.id"
                     :house="house"
-                ></HouseOneRow><!-- end row -->
-            </table>
-            <!-- end liste -->
+                ></HouseOneRow>
+            </table><!-- end liste -->
         </div>
     </div>
 </template>
 
 <script>
     import axios from 'axios'
-    import Login from '../Login'
-    import Navigation from '~/components/Navigation'
+    import Disconnect from '~/components/Disconnect'
+    import Pagination from '~/components/Pagination'
     import HouseOneRow from '~/components/HouseOneRow'
 
     export default {
         components: {
-            Login,
-            Navigation,
+            Disconnect,
+            Pagination,
             HouseOneRow
         },
         data() {
             return {
                 token: this.$store.state.token,
-                houses: this.$store.state.houses,
+                items: [],
+                numberPerPage: this.$store.state.numberPerPage,
+                begin: this.$store.state.beginPortion,
+                end: this.$store.state.endPortion,
                 isCreating: false,
                 search: '',
-                isFiltered: true,
-                userDataVue: []
+                isFiltered: true
             }
         },
+
+        // if no token redirect to login page
         middleware: 'authenticated',
+
+        // when component mounted, call api to get all the houses from the DB 
         mounted() {
             this.getAllHouses()
         },
+
         methods: {
-            // API: GET request
+            // call api to get all houses from DB
             getAllHouses() {
                 axios({
                     method: 'get',
@@ -85,31 +89,50 @@
                 })
                 .then(response => {
                     this.$store.commit('setHouses', response.data.data.houses)
-                console.log('toutes mes houses ', this.$store.state.houses)
-                    this.$store.state.houses.forEach(house => {
-                        console.log('une seule house à la fois ', user);
-                    })
+                    this.items = response.data.data.houses
                 })
                 .catch(err => {
                     console.log(err)
                 })
-            },
-            goCreate() {
-                this.$router.push({ path: 'houses/create' })
             }
         },
         computed: {
+            portion() {
+                this.begin = ((this.currentPageUpdated - 1) * this.numberPerPage)
+                this.end = this.begin + this.numberPerPage
+                this.$store.commit('setPortion', this.begin, this.end)
+                return  this.begin, this.end
+            },
+            // filter search locally - show users depending on slice obtain by pagination component
             filteredHouses() {
                 return this.$store.state.houses.filter(house => {
                     return house.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-                })
+                }).slice(this.begin, this.end)
+            }, 
+            // total items are linked to data from the DB
+            totalItems() {
+                return this.items;
+            },
+            // total pages are obtained depending on total items and number per page
+            totalPages () {
+                return Math.ceil(this.totalItems.length / this.numberPerPage)
+            },
+            // update the page based on pagination transmitted data
+            currentPageUpdated() {
+                return this.$store.state.currentPage
+            }
+        },
+
+        watch: {
+            totalPages(newValue, oldValue) {
+                this.portion
+            },
+            currentPageUpdated(newValue, oldValue) {
+                this.portion
             }
         }
     }
 </script>
 
 
-<style lang="scss">
-    @import '../../assets/scss/styles.scss';
 
-</style>

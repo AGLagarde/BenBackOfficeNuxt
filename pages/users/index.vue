@@ -1,36 +1,30 @@
 <!--USERS-->
 <template>
     <div class="container">
+        <Disconnect />
         <div class="listItems">
-            <Navigation/>
-
+            <!--actions-->
             <div class="listItems__actions">
-                <!--searchbar-->
                 <div class="searchbar">
                     <input
-                        type="text"
-                        placeholder="Search"
-                        maxlength= "12"
-                        class="searchbar__input"
+                        type="text" placeholder="Search"
+                        maxlength= "12" class="searchbar__input"
                         v-model="search"
-                        v-on:keyup="isFiltered = true"
+                        @keyup="isFiltered = true"
                     >
-                    <img
-                        src="~assets/img/searchbar.png"
-                        alt="search button"
-                        class="searchbar__button"
-                    >
-                </div><!-- end searchbar  -->
-                <!--<nuxt-child/>-->
-                <!-- add user -->
-                <span 
-                    class="listItems__actions-addButton"
+                    <img src="~assets/img/searchbar.png" alt="search button" class="searchbar__button">
+                </div>
+                <Pagination
+                    :items="$store.state.filteredUsers"
+                    :totalPages="totalPages"
+                />
+                <nuxt-link class="listItems__actions-addButton"
                     v-if="isCreating === false"
-                    v-on:click="goCreate"
-                >Add User</span>
-            </div><!-- end add user -->
+                    to="users/create"
+                >Add user</nuxt-link>
+            </div> <!--end actions-->
 
-            <!-- liste -->
+            <!-- list -->
             <table class="listItems__table users">
                 <tr class="listItems__table__head">
                     <th>#</th>
@@ -40,45 +34,53 @@
                     <th>House</th>
                     <th>Actions</th>
                 </tr>
-
-                <!--row-->
                 <UserOneRow
                     v-for="user in filteredUsers"
-                    v-bind:key="user.id"
+                    :key="user.id"
                     :user="user"
-                ></UserOneRow> <!--end row-->
+                ></UserOneRow>
 
-            </table><!-- end liste -->
+            </table><!-- end list -->
         </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
-import login from '../Login'
-import Navigation from '~/components/Navigation'
+import Disconnect from '~/components/Disconnect'
 import UserOneRow from '~/components/UserOneRow'
+import Pagination from '~/components/Pagination'
 
 export default {
     components: {
-        login,
-        Navigation,
-        UserOneRow
+        Disconnect,
+        UserOneRow,
+        Pagination
     },
+
     data() {
         return {
             token: this.$store.state.token,
-            users: this.$store.state.users,
+            items: [],
+            numberPerPage: this.$store.state.numberPerPage,
+            begin: this.$store.state.beginPortion,
+            end: this.$store.state.endPortion,
             isCreating: false,
             search: '',
             isFiltered: true
         }
     },
+
+    // if no token redirect to login page
     middleware: 'authenticated',
+
+    // when component mounted, call api to get all the users from the DB 
     mounted() {
         this.getAllUsers()
     },
+
     methods: {
+        // call api to get all users from DB
         getAllUsers() {
             axios({
                 method: 'get',
@@ -88,9 +90,10 @@ export default {
                 }
             })
             .then(response => {
+                // update users in store after call api
                 this.$store.commit('setUsers', response.data.data.users)
+                this.items = response.data.data.users
                 this.$store.state.users.forEach(user => {
-                    console.log('un seul user à la fois ', user);
                     if (user.house) {
                         user.house = user.house.name
                     } else {
@@ -101,26 +104,49 @@ export default {
             .catch(err => {
                 console.log(err)
             })
-        },
-        goCreate() {
-            this.$router.push({ path: 'users/create' })
         }
     },
+
     computed: {
+        
+        portion() {
+            this.begin = ((this.currentPageUpdated - 1) * this.numberPerPage)
+            this.end = this.begin + this.numberPerPage
+            this.$store.commit('setPortion', this.begin, this.end)
+            return  this.begin, this.end
+        },
+        // filter search locally - show users depending on slice obtain by pagination component
+        // return --> the portion of users corresponding to the search
         filteredUsers() {
-            console.log(this.$store.state.users)
             return this.$store.state.users.filter(user => {
                 return user.firstname.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-            })
+            }).slice(this.begin, this.end)
+        },
+        // total items are linked to data from the DB
+        totalItems() {
+            return this.items;
+        },
+        // total pages are obtained depending on total items and number per page
+        totalPages () {
+            return Math.ceil(this.totalItems.length / this.numberPerPage)
+        },
+        // update the page based on pagination transmitted data
+        currentPageUpdated() {
+            return this.$store.state.currentPage
+        }
+    },
+
+    watch: {
+        totalPages(newValue, oldValue) {
+            this.portion
+        },
+        currentPageUpdated(newValue, oldValue) {
+            this.portion
         }
     }
 }
 </script>
 
-<style lang="scss">
-@import '../../assets/scss/styles.scss';
 
-
-</style>
 
 

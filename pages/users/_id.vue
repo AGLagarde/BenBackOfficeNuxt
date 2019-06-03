@@ -1,35 +1,34 @@
 <template>
-    <div>
-        <h2 class="h2">Edit user</h2>
-        <form action="" class="">
-            <div>
-                <label for="firstname" class="item__form-label" >Firstname</label>
-                <input type="text" 
-                name="firstname"
-                class="item__form-input" v-model="currentUser.firstName" value="">
-            </div>
-            <div>
-                <label for="lastname" class="item__form-label" >Lastname</label>
-                <input type="text" 
-                name="lastname"
-                class="item__form-input" placeholder="Lastname" v-model="currentUser.lastName">
-            </div>
-            <div>
-                <label for="email" class="item__form-label" >Email</label>
-                <input type="email" 
-                name="email" 
-                class="item__form-input" placeholder="Email" v-model="currentUser.email">
-            </div>
-            <div> <!-- house -->
-                <label for="housename" class="item__form-label" >House</label>
-                <input type="text" 
-                name="housename" readonly
-                class="item__form-input" value="user.house" v-model="currentUser.house">
-            </div>
-            <div> <!-- buttons -->
-                <input v-on:click.prevent="updateUser(user.id)" type="submit" name="action" value="OK" class="item__form-submit validate" />
-            </div>
-        </form>
+     <div>
+        <div class="wrapper">
+            <form action="#" class="form item__form">
+                <h2 class="h2">Edit a user</h2>
+                <div> <!-- firstname -->
+                    <label for="firstname" class="item__form-label" >Firstname</label>
+                    <input type="text" name="firstname"
+                        class="item__form-input"
+                        v-model="currentUser.firstname"
+                    />
+                </div>
+                <div> <!-- lastname -->
+                    <label for="lastname" class="item__form-label" >Lastname</label>
+                    <input type="text" name="lastname"
+                        class="item__form-input" placeholder="Lastname"
+                        v-model="currentUser.lastname"
+                    />
+                </div>
+                <div> <!-- email -->
+                    <label for="email" class="item__form-label" >Email</label>
+                    <input type="email" name="email"
+                        class="item__form-input" placeholder="Email"
+                        v-model="currentUser.email"
+                    />
+                </div>
+                <div> <!-- buttons -->
+                    <input @click.prevent="updateUser()" type="submit" name="action" value="OK" class="item__form-submit validate" />
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -37,34 +36,48 @@
 import axios from 'axios'
 
 export default {
-    props: {
-        user: Object
+    asyncData(context) {
+        console.log(context.params.id)
+        return {
+            // merge data dans mon data
+            id: context.params.id
+        }
     },
     data() {
         return {
+            // va merger avec nouvelle valeur
+            id: null,
             token: this.$store.state.token,
-            id: this.$store.params.id,
-            currentUser: {     
-                id: 'test',
-                firstName: this.user.firstName,
-                lastName: this.user.lastName,
-                email: this.user.email,
-                house: this.user.house
-            } 
+            currentUser: {}
         }
+    }, 
+    mounted() {
+        this.getUser(this.id)
     },
     methods: {
-        // API : PUT MODIFICATION REQUEST
-        updateUser(id) {
-            this.currentUser.id = id
-            console.log('laaaaaa: ', this.currentUser)
+        getUser(id) {
+            axios({
+                method: 'get',
+                url: 'http://ulysse.idequanet.com/ben/web/api/user/' + this.id,
+                headers: {
+                    Authorization: `BEARER ${this.token}`
+                }
+            })
+            .then(response => {
+                this.currentUser = response.data.data.user
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+        updateUser() {
             axios({
                 method: 'PUT',
                 url: 'http://ulysse.idequanet.com/ben/web/api/user/edit/' + this.currentUser.id,
                 data: { 
                     user : {
-                        firstname : this.currentUser.firstName,
-                        lastname : this.currentUser.lastName,
+                        firstname : this.currentUser.firstname,
+                        lastname : this.currentUser.lastname,
                         email : this.currentUser.email
                     }
                 },
@@ -73,21 +86,13 @@ export default {
                     Authorization: `BEARER ${this.token}`
                 },
             }).then(response => {
-                this.$emit('modified-user', response.data.data.user) 
+                this.$router.push({ path: '/users' })
             }).catch(error => {
                 console.log(error)
-            });
+            })
         }
     }
 }
 
 </script>
 
-<style lang="scss">
-@import '../../assets/scss/common/mixins.scss';
-@import '../../assets/scss/common/variables.scss';
-@import '../../assets/scss/components/listItems.scss';
-@import '../../assets/scss/components/formItem.scss';
-
-
-</style>
