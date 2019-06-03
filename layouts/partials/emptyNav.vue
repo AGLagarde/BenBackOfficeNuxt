@@ -8,10 +8,11 @@
 </template>
 
 
-<style>
+<style lang="scss">
+    @import '~/assets/scss/styles.scss';
     .empty {
         .content {
-            width: calc(100% - $widthNav);
+            width: calc(100% - 170px);
         }
     }
 </style>

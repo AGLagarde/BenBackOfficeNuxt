@@ -34,56 +34,12 @@ let store
 // Try to rehydrate SSR data from window
 const NUXT = window.__NUXT__ || {}
 
-Object.assign(Vue.config, {"silent":false,"performance":true})
-
-// Setup global Vue error handler
-if (!Vue.config.$nuxt) {
-  const defaultErrorHandler = Vue.config.errorHandler
-  Vue.config.errorHandler = (err, vm, info, ...rest) => {
-    // Call other handler if exist
-    let handled = null
-    if (typeof defaultErrorHandler === 'function') {
-      handled = defaultErrorHandler(err, vm, info, ...rest)
-    }
-    if (handled === true) {
-      return handled
-    }
-
-    if (vm && vm.$root) {
-      const nuxtApp = Object.keys(Vue.config.$nuxt)
-        .find(nuxtInstance => vm.$root[nuxtInstance])
-
-      // Show Nuxt Error Page
-      if (nuxtApp && vm.$root[nuxtApp].error && info !== 'render function') {
-        vm.$root[nuxtApp].error(err)
-      }
-    }
-
-    if (typeof defaultErrorHandler === 'function') {
-      return handled
-    }
-
-    // Log to console
-    if (process.env.NODE_ENV !== 'production') {
-      console.error(err)
-    } else {
-      console.error(err.message || err)
-    }
-  }
-  Vue.config.$nuxt = {}
-}
-Vue.config.$nuxt.$nuxt = true
+Object.assign(Vue.config, {"silent":true,"performance":false})
 
 const errorHandler = Vue.config.errorHandler || console.error
 
 // Create and mount App
-createApp()
-  .then(mountApp)
-  .catch((err) => {
-    const wrapperError = new Error(err)
-    wrapperError.message = '[nuxt] Error while mounting app: ' + wrapperError.message
-    errorHandler(wrapperError)
-  })
+createApp().then(mountApp).catch(errorHandler)
 
 function componentOption(component, key, ...args) {
   if (!component || !component.options || !component.options[key]) {
@@ -120,7 +76,7 @@ function mapTransitions(Components, to, from) {
 
 async function loadAsyncComponents(to, from, next) {
   // Check if route path changed (this._pathChanged), only if the page is not an error (for validate())
-  this._pathChanged = !!app.nuxt.err || from.path !== to.path
+  this._pathChanged = Boolean(app.nuxt.err) || from.path !== to.path
   this._queryChanged = JSON.stringify(to.query) !== JSON.stringify(from.query)
   this._diffQuery = (this._queryChanged ? getQueryDiff(to.query, from.query) : [])
 
@@ -255,7 +211,7 @@ async function render(to, from, next) {
     next: _next.bind(this)
   })
   this._dateLastError = app.nuxt.dateErr
-  this._hadError = !!app.nuxt.err
+  this._hadError = Boolean(app.nuxt.err)
 
   // Get route's matched components
   const matches = []
@@ -364,7 +320,7 @@ async function render(to, from, next) {
         Component.options.asyncData &&
         typeof Component.options.asyncData === 'function'
       )
-      const hasFetch = !!Component.options.fetch
+      const hasFetch = Boolean(Component.options.fetch)
 
       const loadingIncrease = (hasAsyncData && hasFetch) ? 30 : 45
 
@@ -466,13 +422,13 @@ function showNextPage(to) {
 function fixPrepatch(to, ___) {
   if (this._pathChanged === false && this._queryChanged === false) return
 
-  Vue.nextTick(() => {
-    const matches = []
-    const instances = getMatchedComponentsInstances(to, matches)
-    const Components = getMatchedComponents(to, matches)
+  const matches = []
+  const instances = getMatchedComponentsInstances(to, matches)
+  const Components = getMatchedComponents(to, matches)
 
+  Vue.nextTick(() => {
     instances.forEach((instance, i) => {
-      if (!instance) return
+      if (!instance || instance._isDestroyed) return
       // if (
       //   !this._queryChanged &&
       //   to.matched[matches[i]].path.indexOf(':') === -1 &&
@@ -488,12 +444,14 @@ function fixPrepatch(to, ___) {
         for (const key in newData) {
           Vue.set(instance.$data, key, newData[key])
         }
+
+        // Ensure to trigger scroll event after calling scrollBehavior
+        window.$nuxt.$nextTick(() => {
+          window.$nuxt.$emit('triggerScroll')
+        })
       }
     })
     showNextPage.call(this, to)
-
-    // Hot reloading
-    setTimeout(() => hotReloadAPI(this), 100)
   })
 }
 
@@ -512,104 +470,6 @@ function nuxtReady(_app) {
     // Wait for fixPrepatch + $data updates
     Vue.nextTick(() => _app.$nuxt.$emit('routeChanged', to, from))
   })
-}
-
-const noopData = () => { return {} }
-const noopFetch = () => {}
-
-// Special hot reload with asyncData(context)
-function getNuxtChildComponents($parent, $components = []) {
-  $parent.$children.forEach(($child) => {
-    if ($child.$vnode && $child.$vnode.data.nuxtChild && !$components.find(c =>(c.$options.__file === $child.$options.__file))) {
-      $components.push($child)
-    }
-    if ($child.$children && $child.$children.length) {
-      getNuxtChildComponents($child, $components)
-    }
-  })
-
-  return $components
-}
-
-function hotReloadAPI(_app) {
-  if (!module.hot) return
-
-  let $components = getNuxtChildComponents(_app.$nuxt, [])
-
-  $components.forEach(addHotReload.bind(_app))
-}
-
-function addHotReload($component, depth) {
-  if ($component.$vnode.data._hasHotReload) return
-  $component.$vnode.data._hasHotReload = true
-
-  var _forceUpdate = $component.$forceUpdate.bind($component.$parent)
-
-  $component.$vnode.context.$forceUpdate = async () => {
-    let Components = getMatchedComponents(router.currentRoute)
-    let Component = Components[depth]
-    if (!Component) return _forceUpdate()
-    if (typeof Component === 'object' && !Component.options) {
-      // Updated via vue-router resolveAsyncComponents()
-      Component = Vue.extend(Component)
-      Component._Ctor = Component
-    }
-    this.error()
-    let promises = []
-    const next = function (path) {
-      this.$loading.finish && this.$loading.finish()
-      router.push(path)
-    }
-    await setContext(app, {
-      route: router.currentRoute,
-      isHMR: true,
-      next: next.bind(this)
-    })
-    const context = app.context
-
-    if (this.$loading.start && !this.$loading.manual) this.$loading.start()
-
-    callMiddleware.call(this, Components, context)
-    .then(() => {
-      // If layout changed
-      if (depth !== 0) return Promise.resolve()
-      let layout = Component.options.layout || 'default'
-      if (typeof layout === 'function') {
-        layout = layout(context)
-      }
-      if (this.layoutName === layout) return Promise.resolve()
-      let promise = this.loadLayout(layout)
-      promise.then(() => {
-        this.setLayout(layout)
-        Vue.nextTick(() => hotReloadAPI(this))
-      })
-      return promise
-    })
-    .then(() => {
-      return callMiddleware.call(this, Components, context, this.layout)
-    })
-    .then(() => {
-      // Call asyncData(context)
-      let pAsyncData = promisify(Component.options.asyncData || noopData, context)
-      pAsyncData.then((asyncDataResult) => {
-        applyAsyncData(Component, asyncDataResult)
-        this.$loading.increase && this.$loading.increase(30)
-      })
-      promises.push(pAsyncData)
-      // Call fetch()
-      Component.options.fetch = Component.options.fetch || noopFetch
-      let pFetch = Component.options.fetch(context)
-      if (!pFetch || (!(pFetch instanceof Promise) && (typeof pFetch.then !== 'function'))) { pFetch = Promise.resolve(pFetch) }
-      pFetch.then(() => this.$loading.increase && this.$loading.increase(30))
-      promises.push(pFetch)
-      return Promise.all(promises)
-    })
-    .then(() => {
-      this.$loading.finish && this.$loading.finish()
-      _forceUpdate()
-      setTimeout(() => hotReloadAPI(this), 100)
-    })
-  }
 }
 
 async function mountApp(__app) {
@@ -641,9 +501,6 @@ async function mountApp(__app) {
     Vue.nextTick(() => {
       // Call window.{{globals.readyCallback}} callbacks
       nuxtReady(_app)
-
-      // Enable hot reloading
-      hotReloadAPI(_app)
     })
   }
 
