@@ -35,4 +35,3 @@ For detailed explanation on how things work, checkout [Nuxt.js docs](https://nux
 - no call API existing to delete a house with its ID
 
 - no call API to identify the user connected thanks to its token (/me)
-
