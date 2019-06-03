@@ -17,9 +17,12 @@
     "nuxt": "^2.4.0",
     "sass-loader": "^7.1.0",
     "vuex-persistedstate": "^2.5.4",
+    "tar": "^=4.4.2",
     "webpack": "^4.30.0"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^4.19.1",
     "nodemon": "^1.18.9"
   }
 }
