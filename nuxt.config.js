@@ -20,14 +20,6 @@ export default {
     },
 
     /*
-   ** Redirect to router.base when not on root
-   */
-    // router: {
-    //     base: '/login'
-    // },
-    // hooks: hooks(this),
-
-    /*
   ** 
   */
     plugins: [{ src: '~/plugins/localStorage.js', ssr: false }],

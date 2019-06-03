@@ -22,78 +22,16 @@ $ npm run generate
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
 
 
-Structure BDD 
-Users : [
-    {
-        id: 2
-        created: "30-11--0001 00:00:00"
-        email: "ulysse.hallll@gmail.com"
-        firstname: "ulysse"
-        lastname: "hall"
-        house: "oooo"
-    }
-]
-
-Houses : [
-    {
-        id: 2
-        created: "30-11--0001 00:00:00"
-        name: "chezmoi"
-        users: [
-            {
-                id: 2
-                created: "30-11--0001 00:00:00"
-                email: "ulysse.hallll@gmail.com"
-                firstname: "ulysse"
-                lastname: "hall"
-                house: "oooo"
-            }
-        ]
-    }
-]
-
 // link to api : http://ulysse.idequanet.com/ben/web/
 
 # avancée 
 
------  A FAIRE ------ 
-
-pb avec email/application vide localstorage
-entrée appli via login (actuellement .../login)
-pagination : not working for house 
 
 
-USERS
-- edit house    - no call API existing
-- add user      - non maj House + pb boutons redirection (annuler + creer)  -  no call API existing
+-----  MISSING API REQUESTS ------ 
 
-HOUSES
-- delete house      - no call API existing
-- add house         - not working !!
+- no call which links the user-ID to the house-ID: that is why the house of the user is not visible if not created by him.
 
+- no call API existing to delete a house with its ID
 
----- FONCTIONNEL ----- 
-LOGIN           - OK
-
-SEARCH          - OK
-
-PAGINATION      - choice of quantity ? 
-
-USERS 
-
-
-
-
-- get all users - OK
-- delete user   - OK
-- edit user     - OK 
-
-HOUSES 
-- get all houses    - OK
-- delete house      - NO call api 
-- send invitation   - OK
-
-
-IMPROVEMENT 
---> route API alléger
- 
+- no call API to identify the user connected thanks to its token (/me)
