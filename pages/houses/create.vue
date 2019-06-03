@@ -38,9 +38,8 @@
         },
         methods: {
             /**
-            * Asynchronous call api to create new house -- required token --
-            * @params {object} house
-            * @returns {array} houses
+            * Asynchronous call api to add a new house 
+            * provided that the key name is filled
             */
             async createHouse(event) {
                 event.preventDefault();
@@ -67,9 +66,6 @@
                     console.log(error)
                 })
             },
-            /**
-            * Redirection after validation create user form
-            */
             goback() {
                 this.$router.push({ path: '/houses' })
             }

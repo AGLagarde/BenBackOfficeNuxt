@@ -36,13 +36,12 @@
 import axios from 'axios'
 
 export default {
-    // asyncData(context) {
-    //     console.log(context.params.id)
-    //     return {
-    //         // merge data dans mon data
-    //         id: context.params.id
-    //     }
-    // },
+    asyncData(context) {
+        console.log(context.params.id)
+        return {
+            id: context.params.id
+        }
+    },
     data() {
         return {
             id: null,

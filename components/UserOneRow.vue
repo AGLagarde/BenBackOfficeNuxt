@@ -27,12 +27,6 @@ export default {
     },
     props: {
         user: Object
-    },
-    data() {
-        return {
-            token: this.$store.state.token,
-            users: this.$store.state.users
-        }
     }
 }
 </script>

@@ -42,10 +42,8 @@ export default {
         }
     },
     methods: {
-        // call api to delete user with its ID
         /**
         * Call api to delete a user -- required token --
-        * Not working because of missing call api to delete a house with its ID
         * @params {number} id
         */
         deleteUser(id) {

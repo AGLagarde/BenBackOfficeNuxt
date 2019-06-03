@@ -42,16 +42,14 @@ export default {
                 firstname: '',
                 lastname: '',
                 email: '',
-                password: '',
-                house: ''
+                password: ''
             }
         }
     }, 
     methods: {
         /**
-        * Asynchronous call api to create new user 
-        * @params {object} user
-        * @returns {array, array} users
+        * Asynchronous call api to add a new user 
+        * provided that the keys firstname/lastname/email/password are filled
         */
         async createUser(event) {
             event.preventDefault();
@@ -63,8 +61,7 @@ export default {
                         firstname : this.newUser.firstname,
                         lastname : this.newUser.lastname,
                         email : this.newUser.email,
-                        password : this.newUser.password,
-                        house : this.newUser.house
+                        password : this.newUser.password
                     }
                 },
                 headers: {
@@ -74,15 +71,11 @@ export default {
                 this.$store.commit('addUser', response.data.data.user)
                 alert('Your user has been well added')
                 this.goback()
-
                 //return response.data.data.user
             }).catch(error => {
                 console.log(error)
             })
         },
-        /**
-        * Redirection after validation create user form
-        */
         goback() {
             this.$router.push({ path: '/users' })
         }

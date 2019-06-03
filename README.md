@@ -21,8 +21,7 @@ $ npm run generate
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
 
-
-// link to api : http://ulysse.idequanet.com/ben/web/
+Link to api : http://ulysse.idequanet.com/ben/web/
 
 # avancée 
 

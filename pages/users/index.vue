@@ -83,7 +83,7 @@ export default {
     methods: {
         /**
         * Call api to get all the users in DB --token required--
-        * @returns {array, array} users, items
+        * and update it in the store
         */
         getAllUsers() {
             axios({
@@ -112,7 +112,7 @@ export default {
 
     computed: {
         /**
-        * Set the portion of each slice for a page and returns it to the store
+        * Set the portion of each slice for a page and transmits it to the store
         * @returns {number, number} begin and end 
         */
         portion() {
@@ -122,7 +122,7 @@ export default {
             return  this.begin, this.end
         },
         /**
-        * Search filters results of users depending on their firstname 
+        * Searchbar filters results of users depending on their firstname 
         * @returns {array} filteredUsers
         */
         filteredUsers() {
@@ -131,7 +131,7 @@ export default {
             }).slice(this.begin, this.end)
         },
         /**
-        * Linked to items all got by the getAllUsers method
+        * TotalItems is equal to all users from the DB obtained by the getAllUsers method
         * @returns {array} totalItems
         */
         totalItems() {

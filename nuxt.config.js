@@ -18,10 +18,9 @@ export default {
             { rel: 'preload', as: 'font', href: 'https://fonts.googleapis.com/css?family=Montserrat:200, 300,500' },
         ]
     },
-
     /*
-  ** 
-  */
+    ** 
+    */
     plugins: [{ src: '~/plugins/localStorage.js', ssr: false }],
     /*
     ** Customize the progress-bar color
@@ -32,7 +31,6 @@ export default {
     ** Global CSS
     */
     css: [
-        // SCSS file in the project
         '@/assets/scss/styles.scss'
     ],
 

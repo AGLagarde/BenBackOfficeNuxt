@@ -60,10 +60,9 @@
         },
         methods: {
             /**
-             * Call api to login and access DB 
+             * Call api to login and access DB that transmits token data to the store
              * @param {string} email - Email of user
              * @param {string} password - Password of user
-             * @returns {string} Token obtained to access DB 
              */
             login(email, pwd) {
                 axios({
@@ -88,12 +87,9 @@
             }
         },
         /**
-         * Token is stocked in Store and LocalStorage & redirection
-         * @constructor
-         * @param {string} token - Token received after login
+         * Token is stocked in Store and LocalStorage 
          */
         mounted() {
-            // put token in the localstorage and redirect to users page
             this.$store.commit('setToken', localStorage.getItem('token'))
             if (localStorage.getItem('token')){
                 this.$router.push({ path: 'users' })
