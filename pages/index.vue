@@ -70,7 +70,7 @@
             login(email, pwd) {
                 axios({
                     method: 'post',
-                    url: 'http://ulysse.idequanet.com/ben/web/api/user/login',
+                    url: 'https://ulysse.idequanet.com/ben/web/api/user/login',
                     data: {
                         user: {
                             email: email,
