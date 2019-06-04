@@ -45,7 +45,7 @@
                 event.preventDefault();
                 const house = await axios({
                     method: 'post',
-                    url: 'http://ulysse.idequanet.com/ben/web/api/house/create',
+                    url: 'https://ulysse.idequanet.com/ben/web/api/house/create',
                     data: {
                         house : {
                             name : this.newHouse.name,

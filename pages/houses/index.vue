@@ -86,7 +86,7 @@
             getAllHouses() {
                 axios({
                     method: 'get',
-                    url: 'http://ulysse.idequanet.com/ben/web/api/houses',
+                    url: 'https://ulysse.idequanet.com/ben/web/api/houses',
                     headers: {
                         Authorization: `BEARER ${this.token}`
                     }

@@ -35,7 +35,7 @@ export default {
         sendInvitationHouse(mail) {
             axios({
                 method: 'POST',
-                url: 'http://ulysse.idequanet.com/ben/web/api/house/send-invitation',
+                url: 'https://ulysse.idequanet.com/ben/web/api/house/send-invitation',
                 data: {
                     email: mail
                 },

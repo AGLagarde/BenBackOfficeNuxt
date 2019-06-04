@@ -88,7 +88,7 @@ export default {
         getAllUsers() {
             axios({
                 method: 'get',
-                url: 'http://ulysse.idequanet.com/ben/web/api/users',
+                url: 'https://ulysse.idequanet.com/ben/web/api/users',
                 headers: {
                     Authorization: `BEARER ${this.token}`
                 }
