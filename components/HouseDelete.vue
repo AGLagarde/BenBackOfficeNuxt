@@ -9,21 +9,12 @@
 
         <div v-if="isActive" class="popin">
             <h2 class="h2">Delete House</h2>
-            <!--step1: confirmation of the choice to delete-->
             <div v-if="deletedItem === false" class="popin__step1">
                 <p>Are you sure to delete the House <br>
                     <strong> n°{{house.id}}: {{house.name}} </strong>?
                 </p>
-                <a @click.prevent="deletedItem = true" href="#" class="popin__step1-answer validate">Yes</a>
+                <a @click.prevent="deleteHouse(house.id)" href="#" class="popin__step1-answer validate">Yes</a>
                 <a @click="isActive = false" href="#" class="popin__step1-answer cancel">No</a>
-            </div>
-
-            <!-- step2: confirmation user is deleted-->
-            <div class="popin__step2" v-if="deletedItem">
-                <div class="popin__step2-validation">
-                    <p>La suppression est effective</p>
-                    <a @click.prevent="deleteHouse(house.id)">OK</a>
-                </div>
             </div>
         </div>
     </div>
@@ -52,16 +43,19 @@ export default {
         deleteHouse(id) {
             axios({
                 method: 'DELETE',
-                url: 'http://ulysse.idequanet.com/ben/web/api/house/delete/' + id,
+                url: 'http://ulysse.idequanet.com/ben/web/api/house/' + id,
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     Authorization: `BEARER ${this.token}`
                 },
             }).then(response => {
+                alert('The house has been deleted')
                 this.$store.commit('removeHouse', id)
                 this.isActive = false
             }).catch(error => {
+                alert('Sorry, no route found in API')
                 console.log(error)
+                this.isActive = false
             })
         }
     }
