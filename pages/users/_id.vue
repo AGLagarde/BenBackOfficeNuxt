@@ -62,7 +62,7 @@ export default {
         getUser(id) {
             axios({
                 method: 'get',
-                url: 'http://ulysse.idequanet.com/ben/web/api/user/' + this.id,
+                url: 'https://ulysse.idequanet.com/ben/web/api/user/' + this.id,
                 headers: {
                     Authorization: `BEARER ${this.token}`
                 }
@@ -81,7 +81,7 @@ export default {
         updateUser() {
             axios({
                 method: 'PUT',
-                url: 'http://ulysse.idequanet.com/ben/web/api/user/edit/' + this.currentUser.id,
+                url: 'https://ulysse.idequanet.com/ben/web/api/user/edit/' + this.currentUser.id,
                 data: { 
                     user : {
                         firstname : this.currentUser.firstname,

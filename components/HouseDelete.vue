@@ -43,17 +43,17 @@ export default {
         deleteHouse(id) {
             axios({
                 method: 'DELETE',
-                url: 'http://ulysse.idequanet.com/ben/web/api/house/' + id,
+                url: 'https://ulysse.idequanet.com/ben/web/api/house/delete/' + id,
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     Authorization: `BEARER ${this.token}`
                 },
             }).then(response => {
-                alert('The house has been deleted')
+                alert('Your house has been well deleted')
                 this.$store.commit('removeHouse', id)
                 this.isActive = false
             }).catch(error => {
-                alert('Sorry, no route found in API')
+                alert('Sorry route not found in api')
                 console.log(error)
                 this.isActive = false
             })

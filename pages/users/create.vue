@@ -55,7 +55,7 @@ export default {
             event.preventDefault();
             const user = await axios({
                 method: 'post',
-                url: 'http://ulysse.idequanet.com/ben/web/api/user/create',
+                url: 'https://ulysse.idequanet.com/ben/web/api/user/create',
                 data: {
                     user : {
                         firstname : this.newUser.firstname,

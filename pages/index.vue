@@ -44,11 +44,14 @@
 
     export default {
         layout: 'partials/emptyNav',
+
         props: {
             token: String
         },
+
         data() {
             return {
+                baseUrl: this.$store.state.baseUrl,
                 getUsers: [],
                 generatedToken: '',
                 connexion: {
@@ -58,6 +61,7 @@
                 isConnected: false
             }
         },
+
         methods: {
             /**
              * Call api to login and access DB that transmits token data to the store
@@ -67,7 +71,7 @@
             login(email, pwd) {
                 axios({
                     method: 'post',
-                    url: 'http://ulysse.idequanet.com/ben/web/api/user/login',
+                    url: `${baseUrl}user/login`,
                     data: {
                         user: {
                             email: email,
@@ -86,6 +90,7 @@
                 })
             }
         },
+
         /**
          * Token is stocked in Store and LocalStorage 
          */
