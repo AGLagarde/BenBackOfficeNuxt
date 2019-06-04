@@ -49,7 +49,7 @@ export default {
         deleteUser(id) {
             axios({
                 method: 'DELETE',
-                url: 'https://ulysse.idequanet.com/ben/web/api/user/delete/' + id,
+                url: '//ulysse.idequanet.com/ben/web/api/user/delete/' + id,
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     Authorization: `BEARER ${this.token}`

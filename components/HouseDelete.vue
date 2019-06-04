@@ -43,7 +43,7 @@ export default {
         deleteHouse(id) {
             axios({
                 method: 'DELETE',
-                url: 'https://ulysse.idequanet.com/ben/web/api/house/delete/' + id,
+                url: '//ulysse.idequanet.com/ben/web/api/house/delete/' + id,
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     Authorization: `BEARER ${this.token}`

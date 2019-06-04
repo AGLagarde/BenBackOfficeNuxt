@@ -87,7 +87,7 @@ export default {
         updateUser() {
             axios({
                 method: 'PUT',
-                url: 'https://ulysse.idequanet.com/ben/web/api/user/edit/' + this.currentUser.id,
+                url: '//ulysse.idequanet.com/ben/web/api/user/edit/' + this.currentUser.id,
                 data: { 
                     user : {
                         firstname : this.currentUser.firstname,
