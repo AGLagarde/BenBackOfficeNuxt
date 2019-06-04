@@ -103,23 +103,13 @@
 
         computed: {
             /**
-            * Set the portion of each slice for a page and returns it to the store
-            * @returns {number, number} begin, end 
-            */
-            portion() {
-                this.begin = ((this.currentPageUpdated - 1) * this.numberPerPage)
-                this.end = this.begin + this.numberPerPage
-                this.$store.commit('setPortion', this.begin, this.end)
-                return  this.begin, this.end
-            },
-            /**
             * Search filters results of houses depending on their name 
             * @returns {array} filteredHouses
             */
             filteredHouses() {
                 return this.$store.state.houses.filter(house => {
                     return house.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-                }).slice(this.begin, this.end)
+                }).slice(this.$store.getters.beginPortion, this.$store.getters.endPortion)
             }, 
             /**
             * Linked to items all got by the getAllHouses method
@@ -146,18 +136,13 @@
 
         watch: {
             /**
-            * Portion is activated as soon as totalPages changes 
+            *  Reactive to any change on search 
+            * update current page to 1
+            * filter re-initialized
             * @params {number, number} newValue, oldValue
             */
-            totalPages(newValue, oldValue) {
-                this.portion
-            },
-            /**
-            * Portion is activated as soon as currentPageUpdated changes 
-            * @params {number, number} newValue, oldValue
-            */
-            currentPageUpdated(newValue, oldValue) {
-                this.portion
+            search(newValue, oldValue) {
+                this.$store.commit('setCurrentPage', 1)
             }
         }
     }

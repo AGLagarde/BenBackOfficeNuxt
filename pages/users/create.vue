@@ -34,6 +34,7 @@ export default {
     props: {
         user: Object
     }, 
+
     data() {
         return {
             token: this.$store.state.token,
@@ -46,6 +47,7 @@ export default {
             }
         }
     }, 
+
     methods: {
         /**
         * Asynchronous call api to add a new user 
@@ -71,7 +73,6 @@ export default {
                 this.$store.commit('addUser', response.data.data.user)
                 alert('Your user has been well added')
                 this.goback()
-                //return response.data.data.user
             }).catch(error => {
                 console.log(error)
             })

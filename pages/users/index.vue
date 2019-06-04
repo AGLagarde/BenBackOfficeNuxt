@@ -128,7 +128,7 @@ export default {
         filteredUsers() {
             return this.$store.state.users.filter(user => {
                 return user.lastname.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-            }).slice(this.begin, this.end)
+             }).slice(this.$store.getters.beginPortion, this.$store.getters.endPortion)
         },
         /**
         * TotalItems is equal to all users from the DB obtained by the getAllUsers method
@@ -155,18 +155,14 @@ export default {
 
     watch: {
         /**
-        * Portion is activated as soon as totalPages changes 
-        * @params {number, number} newValue, oldValue
-        */
-        totalPages(newValue, oldValue) {
-            this.portion
-        },
-        /**
         * Portion is activated as soon as currentPageUpdated changes 
+        * Reactive to any change on search 
+        * update current page to 1
+        * filter re-initialized
         * @params {number, number} newValue, oldValue
         */
-        currentPageUpdated(newValue, oldValue) {
-            this.portion
+        search(newValue, oldValue) {
+            this.$store.commit('setCurrentPage', 1)
         }
     }
 }

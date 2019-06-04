@@ -8,10 +8,22 @@ const createStore = () => {
             houses: [],
             selectedTab: 1,
             currentPage: 1,
-            numberPerPage: 15,
-            beginPortion: 0,
-            endPortion: 0
+            numberPerPage: 15
         },
+
+        getters: {
+            /**
+            * Set the right portion (begin and end)depending on current page and number of item per page
+            * @returns {number}
+            */
+            beginPortion(state) {
+                return ((state.currentPage - 1) * state.numberPerPage)
+            },
+            endPortion(state) {
+                return (state.currentPage * state.numberPerPage) -1
+            }
+        },
+
         mutations: {
             // get token from login.vue
             setToken (state, token) {
@@ -25,11 +37,6 @@ const createStore = () => {
             setCurrentPage (state, page) {
                 state.currentPage = page
             }, 
-            // set portion of items linked to pagination 
-            setPortion (state, begin, end) {
-                state.beginPortion = begin
-                state.endPortion = end
-            },
             // get all users from users/index.vue
             setUsers (state, users) {
                 state.users = users
