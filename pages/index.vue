@@ -51,7 +51,6 @@
 
         data() {
             return {
-                baseUrl: this.$store.state.baseUrl,
                 getUsers: [],
                 generatedToken: '',
                 connexion: {
@@ -71,7 +70,7 @@
             login(email, pwd) {
                 axios({
                     method: 'post',
-                    url: `${baseUrl}user/login`,
+                    url: 'https://ulysse.idequanet.com/ben/web/api/user/login',
                     data: {
                         user: {
                             email: email,
