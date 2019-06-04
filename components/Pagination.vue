@@ -7,7 +7,7 @@
         <button class="previous" @click="previousPage">
             <img src="../assets/img/previous.png" alt="previous page"><span class="tooltip">Previous</span>
         </button>
-        <span class="current">{{currentPage}} / {{totalPages}}</span>
+        <span class="current">{{$store.state.currentPage}} / {{totalPages}}</span>
         <button class="next" @click="nextPage">
             <img src="../assets/img/next.png" alt="next page"><span class="tooltip">Next</span>
         </button>
@@ -26,44 +26,56 @@ export default {
 
     data() {
         return {
-            currentPage: this.$store.state.currentPage
+            //currentPage: this.$store.state.currentPage
         }
     },
 
     methods: {
         updatePage() {
             const current_number = document.querySelector('.current')
-            current_number.innerHTML = `${this.currentPage} / ${this.totalPages}`
-            this.$store.commit('setCurrentPage', this.currentPage)
+            current_number.innerHTML = `${this.$store.state.currentPage} / ${this.totalPages}`
+            this.$store.commit('setCurrentPage', this.$store.state.currentPage)
             this.check()
         },
         /**
         * Behaviors of arrows depending on the current page
         */
         nextPage() {
-            this.currentPage += 1;
+            this.$store.state.currentPage += 1;
             this.updatePage()
-            this.$store.commit('setCurrentPage', this.currentPage)
+            this.$store.commit('setCurrentPage', this.$store.state.currentPage)
         },
         previousPage() {
-            this.currentPage -= 1;
+            this.$store.state.currentPage -= 1;
             this.updatePage()
-            this.$store.commit('setCurrentPage', this.currentPage)
+            this.$store.commit('setCurrentPage', this.$store.state.currentPage)
         },
         firstPage() {
-            this.currentPage = 1;
+            this.$store.state.currentPage = 1;
             this.updatePage()
-            this.$store.commit('setCurrentPage', this.currentPage)
+            this.$store.commit('setCurrentPage', this.$store.state.currentPage)
         },
         lastPage() {
-            this.currentPage = this.totalPages;
+            this.$store.state.currentPage = this.totalPages;
             this.updatePage()
         },
         check() {
-            document.querySelector('.next').disabled = this.currentPage === this.totalPages ? true : false;
-            document.querySelector('.previous').disabled = this.currentPage === 1 ? true : false;
-            document.querySelector('.first').disabled = this.currentPage === 1 ? true : false;
-            document.querySelector('.last').disabled = this.currentPage === this.totalPages ? true : false;
+            document.querySelector('.next').disabled = this.$store.state.currentPage === this.totalPages ? true : false;
+            document.querySelector('.previous').disabled = this.$store.state.currentPage === 1 ? true : false;
+            document.querySelector('.first').disabled = this.$store.state.currentPage === 1 ? true : false;
+            document.querySelector('.last').disabled = this.$store.state.currentPage === this.totalPages ? true : false;
+        }
+    }, 
+
+    watch: {
+        /**
+        * Reactive to any change on search 
+        * update current page to 1
+        * filter re-initialized
+        * @params {number, number} newValue, oldValue
+        */
+        items(newValue, oldValue) {
+            this.$store.commit('setCurrentPage', 1)
         }
     }
 }

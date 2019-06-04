@@ -1,7 +1,7 @@
 {
   "name": "BackofficeBen",
   "version": "1.0.0",
-  "description": "My breathtaking Nuxt.js project",
+  "description": "My Flatsharing backoffice page Nuxt.js project",
   "author": "Anne Lagarde",
   "private": true,
   "scripts": {
