@@ -36,12 +36,18 @@
 import axios from 'axios'
 
 export default {
+    /**
+    * Async operation to fetch data before setting the component data
+    * Here fetch the id of the current user
+    * @param {object} - context
+    * @returns {number} - id
+    */
     asyncData(context) {
-        console.log(context.params.id)
         return {
             id: context.params.id
         }
     },
+
     data() {
         return {
             id: null,

@@ -127,7 +127,7 @@ export default {
         */
         filteredUsers() {
             return this.$store.state.users.filter(user => {
-                return user.firstname.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+                return user.lastname.toLowerCase().indexOf(this.search.toLowerCase()) > -1
             }).slice(this.begin, this.end)
         },
         /**

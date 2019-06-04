@@ -4,7 +4,7 @@
         <th class="listItems__table__body-entries">{{ house.name }}</th>
         <th class="listItems__table__body-entries">{{ date }}</th>
         <th class="listItems__table__body-entries">
-            <p v-for="name in names">{{ names.join() }}</p>
+            <p v-for="name in names">{{ name }}</p>
         </th>
         <th class="listItems__table__body-actions">
             <nuxt-link class="buttonRow" to="houses/invitation">
