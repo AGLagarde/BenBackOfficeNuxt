@@ -78,7 +78,9 @@
                         }
                     },
                     headers: {
-                        "Access-Control-Allow-Origin": "*"
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
                     },
                 }).then(response => {
                     this.$store.commit('setToken', response.data.data.token)
