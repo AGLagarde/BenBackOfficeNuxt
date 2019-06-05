@@ -1,6 +1,7 @@
 .listItems {
     width: calc(100% - #{$widthNav}); 
     margin-left: $widthNav;
+    margin-bottom: 70px;
 
     &__actions {
         display: flex; 

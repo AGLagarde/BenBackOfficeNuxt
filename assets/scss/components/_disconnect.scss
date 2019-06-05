@@ -19,13 +19,13 @@
     &__up {
         position: fixed;
         bottom: 3%;
-        right: 3%;
-        width: 140px;
+        right: 1%;
+        width: 120px;
         height: 45px;
         text-transform: uppercase;
         @include font (26px, $grey, 500, 1.2em);
         letter-spacing: 2.5px;
-        color: $grey;
+        color: $greyInk;
         background-color: $white;
         border: none;
         outline: none;
