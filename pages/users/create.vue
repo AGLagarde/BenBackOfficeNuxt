@@ -17,7 +17,7 @@
             </div>
             <div> <!-- password -->
                 <label for="password" class="item__form-label">Password</label>
-                <input type="password" name="password" class="item__form-input" placeholder="Password" v-model:value="newUser.password"/>
+                <input type="password" name="password" class="item__form-input" placeholder="Password" v-model:value="newUser.password" autocomplete="new-password"/>
             </div>
             <div> <!-- buttons -->
                 <nuxt-link class="item__form-submit" to="/users">Annuler</nuxt-link>

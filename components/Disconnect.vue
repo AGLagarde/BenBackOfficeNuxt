@@ -16,7 +16,7 @@ export default {
     data() {
         return {
             /** endpoint (/me) missing in the api */
-            authUser: this.$store.state.authUser
+            // authUser: this.$store.state.authUser
         }
     },
 

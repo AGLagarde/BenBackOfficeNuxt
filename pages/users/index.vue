@@ -112,16 +112,6 @@ export default {
 
     computed: {
         /**
-        * Set the portion of each slice for a page and transmits it to the store
-        * @returns {number, number} begin and end 
-        */
-        portion() {
-            this.begin = ((this.currentPageUpdated - 1) * this.numberPerPage)
-            this.end = this.begin + this.numberPerPage
-            this.$store.commit('setPortion', this.begin, this.end)
-            return  this.begin, this.end
-        },
-        /**
         * Searchbar filters results of users depending on their firstname 
         * @returns {array} filteredUsers
         */
