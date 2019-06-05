@@ -58,9 +58,9 @@
                         Authorization: `BEARER ${this.token}`
                     },
                 }).then(response => {
+                    alert('Your house has been created')
                     this.$store.commit('addHouse', response.data.data.house)
                     this.goback()
-                    //return response.data.data.house
                 }).catch(error => {
                     alert('You already belong to a house, you cannot create a new one')
                     console.log(error)

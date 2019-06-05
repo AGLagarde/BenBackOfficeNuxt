@@ -58,7 +58,7 @@ export default {
          * Verification of a match of valid email format to be able to send 
          * @param {boolean} -- required true to function
          */
-        valideEmail: function() {
+        valideEmail() {
             var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return !re.test(this.newEmail);
         }
