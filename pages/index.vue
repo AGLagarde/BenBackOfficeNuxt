@@ -1,29 +1,30 @@
 <template>
   <div class="login">
     <!-- admin@hetic.net / admin -->
-    <!-- DYNAMIQUE -->
     <picture>
       <img src="../assets/img/red_ben.png" alt="logo ben">
     </picture>
-
     <div class="login__line">
       <label for="email" class="login__label" >Login</label>
-      <input class="login__input"
-             type="email" name="email"
-             placeholder="email"
-             v-model:value="connexion.email"
+      <input 
+        class="login__input"
+        type="email" name="email"
+        placeholder="email"
+        v-model:value="connexion.email"
       >
     </div>
     <div class="login__line">
       <label for="password" class="login__label" >Password</label>
-      <input class="login__input"
-             type="password" name="password"
-             placeholder="password"
-             v-model:value="connexion.password"
+      <input 
+        class="login__input"
+        type="password" name="password"
+        placeholder="password"
+        v-model:value="connexion.password"
       >
     </div>
-    <button class="login__button"
-            v-on:click.prevent="login(connexion.email, connexion.password)"
+    <button 
+        class="login__button"
+        v-on:click.prevent="login(connexion.email, connexion.password)"
     >CONNECT</button>
   </div>
 </template>
