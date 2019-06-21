@@ -19,6 +19,11 @@ $ yarn start
 $ yarn run generate
 ```
 
+
+to connect use this login / password : 
+admin@hetic.net / admin
+
+
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
 
 Link to api : http://ulysse.idequanet.com/ben/web/
