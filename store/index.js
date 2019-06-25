@@ -8,7 +8,8 @@ const createStore = () => {
             houses: [],
             selectedTab: 1,
             currentPage: 1,
-            numberPerPage: 15
+            numberPerPage: 15,
+            search: "",
         },
 
         getters: {
@@ -21,6 +22,21 @@ const createStore = () => {
             },
             endPortion(state) {
                 return (state.currentPage * state.numberPerPage) -1
+            },
+            filteredUsers(state, getters) {
+            return state.users
+                .filter(user => {
+                return (
+                    user.lastname
+                    .toLowerCase()
+                    .indexOf(state.search.toLowerCase()) > -1
+                );
+                });
+            },
+            totalPages(state, getters) {
+                return Math.ceil(
+                getters.filteredUsers.length / state.numberPerPage
+                );
             }
         },
 
@@ -36,7 +52,7 @@ const createStore = () => {
             // get current page
             setCurrentPage (state, page) {
                 state.currentPage = page
-            }, 
+            },
             // get all users from users/index.vue
             setUsers (state, users) {
                 state.users = users
@@ -65,8 +81,11 @@ const createStore = () => {
                     return house.id !== id
                 })
             },
+            setSearch(state, value) {
+                state.search = value;
+            }
         }
-    })
+    });
 }
 
 export default createStore

@@ -35,7 +35,7 @@
                     <th>Actions</th>
                 </tr>
                 <UserOneRow
-                    v-for="user in filteredUsers"
+                    v-for="user in filteredUsers.slice($store.getters.beginPortion, $store.getters.endPortion)"
                     :key="user.id"
                     :user="user"
                 ></UserOneRow>
@@ -66,7 +66,6 @@ export default {
             begin: this.$store.state.beginPortion,
             end: this.$store.state.endPortion,
             isCreating: false,
-            search: '',
             isFiltered: true
         }
     },
@@ -116,9 +115,15 @@ export default {
         * @returns {array} filteredUsers
         */
         filteredUsers() {
-            return this.$store.state.users.filter(user => {
-                return user.lastname.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-             }).slice(this.$store.getters.beginPortion, this.$store.getters.endPortion)
+            return this.$store.getters.filteredUsers;
+        },
+        search: {
+            get() {
+                return this.$store.state.search;
+            },
+            set(value) {
+                this.$store.commit('setSearch', value)
+            }
         },
         /**
         * TotalItems is equal to all users from the DB obtained by the getAllUsers method
@@ -132,7 +137,7 @@ export default {
         * @returns {number} totalPages
         */
         totalPages () {
-            return Math.ceil(this.totalItems.length / this.numberPerPage)
+            return this.$store.getters.totalPages;
         },
         /**
         * Dynamically linked to the current page of the store
