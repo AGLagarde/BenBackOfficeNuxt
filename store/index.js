@@ -9,7 +9,7 @@ const createStore = () => {
             selectedTab: 1,
             currentPage: 1,
             numberPerPage: 15,
-            search: "",
+            search: ''
         },
 
         getters: {
@@ -31,6 +31,16 @@ const createStore = () => {
                     .toLowerCase()
                     .indexOf(state.search.toLowerCase()) > -1
                 );
+                });
+            },
+            filteredHouses(state, getters) {
+                return state.houses
+                    .filter(house => {
+                    return (
+                        house.name
+                        .toLowerCase()
+                        .indexOf(state.search.toLowerCase()) > -1
+                    );
                 });
             },
             totalPages(state, getters) {

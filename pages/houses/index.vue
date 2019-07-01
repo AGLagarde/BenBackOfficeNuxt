@@ -35,7 +35,7 @@
                     <th>Actions</th>
                 </tr>
                 <HouseOneRow
-                    v-for="house in filteredHouses"
+                    v-for="house in filteredHouses.slice($store.getters.beginPortion, $store.getters.endPortion)"
                     :key="house.id"
                     :house="house"
                 ></HouseOneRow>
@@ -64,7 +64,6 @@
                 begin: this.$store.state.beginPortion,
                 end: this.$store.state.endPortion,
                 isCreating: false,
-                search: '',
                 isFiltered: true
             }
         },
@@ -107,10 +106,16 @@
             * @returns {array} filteredHouses
             */
             filteredHouses() {
-                return this.$store.state.houses.filter(house => {
-                    return house.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-                }).slice(this.$store.getters.beginPortion, this.$store.getters.endPortion)
+                return this.$store.getters.filteredHouses;
             }, 
+            search: {
+                get() {
+                    return this.$store.state.search;
+                },
+                set(value) {
+                    this.$store.commit('setSearch', value)
+                }
+            },
             /**
             * Linked to items all got by the getAllHouses method
             * @returns {array} totalItems
@@ -123,7 +128,7 @@
             * @returns {number} totalPages
             */
             totalPages () {
-                return Math.ceil(this.totalItems.length / this.numberPerPage)
+                return this.$store.getters.totalPages;
             },
             /**
             * Dynamically linked to the current page of the store
