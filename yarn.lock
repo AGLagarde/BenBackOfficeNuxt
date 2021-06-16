@@ -3648,12 +3648,6 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-git@^2.5.4:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/git/-/git-0.1.5.tgz#9ef62df93f851c27542143bf52d1c68b1017ca15"
-  dependencies:
-    mime "1.2.9"
-
 glob-parent@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-3.1.0.tgz#9e6af6299d8d3bd2bd40430832bd113df906c5ae"
@@ -4820,10 +4814,6 @@ mime-types@^2.1.12, mime-types@~2.1.19, mime-types@~2.1.24:
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.24.tgz#b6f8d0b3e951efb77dedeca194cff6d16f676f81"
   dependencies:
     mime-db "1.40.0"
-
-mime@1.2.9:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/mime/-/mime-1.2.9.tgz#009cd40867bd35de521b3b966f04e2f8d4d13d09"
 
 mime@1.6.0:
   version "1.6.0"
@@ -6103,8 +6093,8 @@ postcss-values-parser@^2.0.0, postcss-values-parser@^2.0.1:
     uniq "^1.0.1"
 
 postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.14, postcss@^7.0.16, postcss@^7.0.2, postcss@^7.0.5, postcss@^7.0.6:
-  version "7.0.16"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.16.tgz#48f64f1b4b558cb8b52c88987724359acb010da2"
+  version "7.0.36"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.36.tgz#056f8cffa939662a8f5905950c07d5285644dfcb"
   dependencies:
     chalk "^2.4.2"
     source-map "^0.6.1"
